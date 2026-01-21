@@ -35,8 +35,13 @@ export async function buildTradeTransaction(userPublicKey: string, ticker: strin
             timestamp: Date.now()
         });
 
-        // Official Memo Program v2 ID
-        const memoProgramId = new PublicKey("MemoSq4gqABAxKfaeyJnKsBwJjyGqsaqA8A1k6wA");
+        // Use Memo Program v1 - known to remain stable
+        let memoProgramId: PublicKey;
+        try {
+            memoProgramId = new PublicKey("Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo");
+        } catch (e: any) {
+            throw new Error(`Failed to parse Memo Program ID: ${e.message}`);
+        }
 
         const instruction = new TransactionInstruction({
             keys: [{ pubkey: new PublicKey(userPublicKey), isSigner: true, isWritable: true }],
