@@ -44,6 +44,10 @@
     "**/*.mts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "neural-agent",
+    "scripts",
+    "anchor",
+    "tests"
   ]
 }
