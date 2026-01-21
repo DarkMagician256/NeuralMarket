@@ -2,12 +2,15 @@ import CortexClient from './CortexClient';
 import { createClient } from '@supabase/supabase-js';
 
 // Server-side fetching for initial state
+export const dynamic = 'force-dynamic'; // Prevent static gen failure on Vercel
+
 export default async function CortexPage() {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+    // Robust check to avoid crash if envs are missing
     if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your-project')) {
-        console.warn('⚠️ Supabase environment variables missing in CortexPage. Falling back to empty state.');
+        console.warn('⚠️ CortexPage: Missing Supabase envs, rendering empty state.');
         return <CortexClient initialThoughts={[]} />;
     }
 

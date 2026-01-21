@@ -1,14 +1,11 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 // @ts-ignore
 import { toast } from 'sonner';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Removed manual init to use shared client
 
 export interface AgentNotification {
     id: string;
@@ -43,52 +40,52 @@ export function usePushNotifications(enabled: boolean = true) {
         if (isWhaleAlert || isAlphaSignal || isExecution) {
             toast(
                 <div className="font-mono" >
-            <div className="flex items-center gap-2 mb-1" >
-            <span className={`text-lg ${style.color}`}> { style.icon } </span>
-                < span className = {`text-[10px] ${style.bg} ${style.color} px-2 py-0.5 rounded uppercase`
-    }>
-    { notification.thought_type }
-    </span>
-    </div>
-    < div className = "text-sm text-white leading-relaxed" >
-    { notification.thought_content }
-    </div>
-    < div className = "text-[9px] text-gray-500 mt-2" >
-    Agent: { notification.agent_id }
-    </div>
-    </div>,
+                    <div className="flex items-center gap-2 mb-1" >
+                        <span className={`text-lg ${style.color}`}> {style.icon} </span>
+                        < span className={`text-[10px] ${style.bg} ${style.color} px-2 py-0.5 rounded uppercase`
+                        }>
+                            {notification.thought_type}
+                        </span>
+                    </div>
+                    < div className="text-sm text-white leading-relaxed" >
+                        {notification.thought_content}
+                    </div>
+                    < div className="text-[9px] text-gray-500 mt-2" >
+                        Agent: {notification.agent_id}
+                    </div>
+                </div>,
                 {
-            duration: isWhaleAlert ? 8000 : 5000,
-            className: `${style.bg} border border-white/10`,
+                    duration: isWhaleAlert ? 8000 : 5000,
+                    className: `${style.bg} border border-white/10`,
+                }
+            );
         }
-    );
-}
     }, []);
 
-useEffect(() => {
-    if (!enabled || !supabaseUrl || !supabaseAnonKey) return;
+    useEffect(() => {
+        if (!enabled) return;
 
-    // Subscribe to real-time agent thoughts
-    const channel = supabase
-        .channel('push-notifications')
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'agent_thoughts',
-            },
-            (payload) => {
-                const newThought = payload.new as any;
-                showNotification(newThought);
-            }
-        )
-        .subscribe();
+        // Subscribe to real-time agent thoughts
+        const channel = supabase
+            .channel('push-notifications')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'agent_thoughts',
+                },
+                (payload) => {
+                    const newThought = payload.new as any;
+                    showNotification(newThought);
+                }
+            )
+            .subscribe();
 
-    return () => {
-        supabase.removeChannel(channel);
-    };
-}, [enabled, showNotification]);
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [enabled, showNotification]);
 
-return { showNotification };
+    return { showNotification };
 }
