@@ -22,23 +22,23 @@ export default async function MarketPage({ params }: { params: Promise<{ ticker:
             <MarketHeader market={market} />
 
             {/* 2. Main Grid Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[800px]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:h-[800px]">
 
                 {/* Chart Area (8 cols) */}
                 <div className="lg:col-span-8 flex flex-col gap-6">
-                    <div className="flex-1 min-h-[500px]">
+                    <div className="flex-1 min-h-[400px] lg:min-h-[500px]">
                         <NeuralChart ticker={ticker} />
                     </div>
 
                     {/* Bottom Modules */}
-                    <div className="h-[250px] grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="h-auto lg:h-[250px] grid grid-cols-1 md:grid-cols-2 gap-6">
                         <CortexTerminal ticker={ticker} />
                         <OrderBook />
                     </div>
                 </div>
 
-                {/* Trade Panel (4 cols) - Sticky on large screens */}
-                <div className="lg:col-span-4 h-full">
+                {/* Trade Panel (4 cols) */}
+                <div className="lg:col-span-4 h-auto lg:h-full">
                     <TradePanel ticker={ticker} />
                 </div>
             </div>
