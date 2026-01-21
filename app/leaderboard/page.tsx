@@ -2,14 +2,17 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRegistry } from '@/hooks/useRegistry';
+import { useRegistry, RegistryAgent } from '@/hooks/useRegistry';
 import MarketAgentCard from '@/components/markets/MarketAgentCard';
+import { AgentDetailModal } from '@/components/cortex/AgentDetailModal';
 import { Loader2, Search, Trophy } from 'lucide-react';
 
 export default function LeaderboardPage() {
     const { agents, loading } = useRegistry();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterArchetype, setFilterArchetype] = useState<string>('ALL');
+    const [selectedAgent, setSelectedAgent] = useState<RegistryAgent | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Filter Logic
     const filteredAgents = agents.filter(agent => {
@@ -115,6 +118,10 @@ export default function LeaderboardPage() {
                                             key={agent.agentId}
                                             agent={agent}
                                             rank={index + 1}
+                                            onClick={() => {
+                                                setSelectedAgent(agent);
+                                                setIsModalOpen(true);
+                                            }}
                                         />
                                     ))
                                 ) : (
@@ -135,6 +142,16 @@ export default function LeaderboardPage() {
                     )}
                 </div>
             </div>
+
+            {/* Agent Detail Modal */}
+            <AgentDetailModal
+                agent={selectedAgent}
+                // Calculate rank based on current sorted list or original list 
+                // Using agents indexOf + 1 assuming agents is sorted by rank
+                rank={selectedAgent ? agents.indexOf(selectedAgent) + 1 : undefined}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

@@ -13,7 +13,7 @@ const archetypeStyles: Record<string, { color: string; border: string; icon: any
     'UNKNOWN': { color: 'text-gray-400', border: 'border-gray-500', icon: Bot, bg: 'bg-gray-500/10' },
 };
 
-export default function MarketAgentCard({ agent, rank }: { agent: RegistryAgent; rank: number }) {
+export default function MarketAgentCard({ agent, rank, onClick }: { agent: RegistryAgent; rank: number; onClick?: () => void }) {
     const style = archetypeStyles[agent.archetypeName] || archetypeStyles['UNKNOWN'];
     const Icon = style.icon;
     const isProfitable = agent.totalPnl >= 0;
@@ -21,17 +21,18 @@ export default function MarketAgentCard({ agent, rank }: { agent: RegistryAgent;
     return (
         <motion.div
             layout
+            onClick={onClick}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.02, y: -5 }}
-            className={`glass-panel p-5 relative group border transition-all ${style.border} hover:bg-white/5 overflow-hidden`}
+            className={`glass-panel p-5 relative group border transition-all ${style.border} hover:bg-white/5 overflow-hidden cursor-pointer`}
         >
             {/* Rank Badge */}
             <div className="absolute top-0 right-0 p-3">
                 {rank <= 3 ? (
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm shadow-lg ${rank === 1 ? 'bg-yellow-400 text-yellow-900 shadow-yellow-400/20' :
-                            rank === 2 ? 'bg-gray-300 text-gray-900 shadow-gray-300/20' :
-                                'bg-amber-600 text-amber-100 shadow-amber-600/20'
+                        rank === 2 ? 'bg-gray-300 text-gray-900 shadow-gray-300/20' :
+                            'bg-amber-600 text-amber-100 shadow-amber-600/20'
                         }`}>
                         #{rank}
                     </div>
@@ -92,7 +93,13 @@ export default function MarketAgentCard({ agent, rank }: { agent: RegistryAgent;
 
             {/* Footer / CTA */}
             <div className="pt-3 border-t border-white/5 flex gap-2">
-                <button className="flex-1 py-2 rounded bg-white/5 hover:bg-white/10 text-xs font-mono font-bold transition-colors">
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onClick?.();
+                    }}
+                    className="flex-1 py-2 rounded bg-white/5 hover:bg-white/10 text-xs font-mono font-bold transition-colors"
+                >
                     VIEW DETAILS
                 </button>
             </div>
