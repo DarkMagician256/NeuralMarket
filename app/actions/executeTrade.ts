@@ -8,7 +8,18 @@ export async function buildTradeTransaction(userPublicKey: string, ticker: strin
         const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || 'https://api.devnet.solana.com');
         const builderCode = process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2';
 
-        console.log(`Building trade tx for user: ${userPublicKey}, Ticker: ${ticker}`);
+        console.log(`Building trade tx for user: "${userPublicKey}", Ticker: ${ticker}`);
+
+        if (!userPublicKey || userPublicKey.trim() === '') {
+            throw new Error("User public key is missing or empty");
+        }
+
+        // Validate PubKey format early
+        try {
+            new PublicKey(userPublicKey);
+        } catch (e) {
+            throw new Error(`Invalid User PublicKey format received: "${userPublicKey}"`);
+        }
 
         // In a real DFlow integration, we'd use their SDK to get the swap instruction
         // const dflowInstruction = await dflow.getTradeInstruction({ ... });
