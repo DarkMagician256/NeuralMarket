@@ -4,8 +4,11 @@ import { Connection, PublicKey, Transaction, TransactionInstruction } from "@sol
 
 export async function buildTradeTransaction(userPublicKey: string, ticker: string, outcome: string, amount: number) {
     try {
-        const connection = new Connection(process.env.RPC_URL || 'https://api.mainnet-beta.solana.com');
+        // Use Devnet for this stage of the hackathon unless specified otherwise
+        const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || 'https://api.devnet.solana.com');
         const builderCode = process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2';
+
+        console.log(`Building trade tx for user: ${userPublicKey}, Ticker: ${ticker}`);
 
         // In a real DFlow integration, we'd use their SDK to get the swap instruction
         // const dflowInstruction = await dflow.getTradeInstruction({ ... });
@@ -17,10 +20,13 @@ export async function buildTradeTransaction(userPublicKey: string, ticker: strin
             builderCode,
             ticker,
             outcome,
-            amount
+            amount,
+            timestamp: Date.now()
         });
 
-        const memoProgramId = new PublicKey("MemoSq4gqABmAn9BnTCCqksSzoCy6n8WvCcK6A9f69");
+        // Official Memo Program v2 ID
+        const memoProgramId = new PublicKey("MemoSq4gqABAxKfaeyJnKsBwJjyGqsaqA8A1k6wA");
+
         const instruction = new TransactionInstruction({
             keys: [{ pubkey: new PublicKey(userPublicKey), isSigner: true, isWritable: true }],
             programId: memoProgramId,
@@ -28,15 +34,15 @@ export async function buildTradeTransaction(userPublicKey: string, ticker: strin
         });
 
         const transaction = new Transaction().add(instruction);
-        const { blockhash } = await connection.getLatestBlockhash();
+        const { blockhash } = await connection.getLatestBlockhash('finalized');
         transaction.recentBlockhash = blockhash;
         transaction.feePayer = new PublicKey(userPublicKey);
 
         // Serialize and return to client
         return transaction.serialize({ verifySignatures: false }).toString('base64');
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error building trade transaction:", error);
-        throw new Error("Failed to build transaction");
+        throw new Error(`Failed to build transaction: ${error.message || error}`);
     }
 }
 
