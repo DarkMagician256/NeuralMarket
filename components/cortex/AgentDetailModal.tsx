@@ -226,7 +226,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                                 COPY TRADE (SOON)
                             </button>
                             <a
-                                href={`https://explorer.solana.com/address/${agent.agentId}?cluster=devnet`}
+                                href={`https://explorer.solana.com/address/${agent.pubkey}?cluster=devnet`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex-1 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
