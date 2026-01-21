@@ -218,7 +218,7 @@ export default function ProfilePage() {
                                             <td className="py-3 font-bold">{tx.ticker}</td>
                                             <td className={`py-3 ${tx.type === 'BUY' ? 'text-green-400' : 'text-red-400'}`}>{tx.type}</td>
                                             <td className="py-3">${tx.amount.toLocaleString()}</td>
-                                            <td className="py-3">{tx.price}¢</td>
+                                            <td className="py-3">{tx.price} SOL</td>
                                             <td className="py-3 text-right pr-2">
                                                 <span className={`text-[10px] px-2 py-0.5 rounded border ${tx.status === 'COMPLETED' ? 'border-green-500/30 text-green-400 bg-green-500/10' :
                                                     'border-yellow-500/30 text-yellow-400 bg-yellow-500/10'

@@ -8,8 +8,8 @@ const mockStream = [
     "Scanning social sentiment for TICKER...",
     "Analysis: BULLISH divergence detected on 4h timeframe.",
     "Whale Alert: Wallet 8x...F2 bought 50k YES shares.",
-    "Kalshi API: Volume spike +145% in last hour.",
-    "Recommendation: STRONG BUY > 45¢ entry."
+    "Processing new DFlow order batch...",
+    "Recommendation: STRONG BUY > 0.45 SOL entry."
 ];
 
 export default function CortexTerminal({ ticker }: { ticker: string }) {
