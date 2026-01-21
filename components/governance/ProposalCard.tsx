@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ThumbsUp, MessageSquare, Clock } from 'lucide-react';
+import { ThumbsUp, MessageSquare, Clock, Check } from 'lucide-react';
 
 interface Proposal {
     id: number;
@@ -13,7 +14,16 @@ interface Proposal {
 }
 
 export default function ProposalCard({ proposal }: { proposal: Proposal }) {
-    const percentComplete = Math.min(100, (proposal.votes / 5000) * 100); // Assume 5000 is threshold
+    const [hasVoted, setHasVoted] = useState(false);
+    const [votes, setVotes] = useState(proposal.votes);
+
+    const handleVote = () => {
+        if (hasVoted) return;
+        setHasVoted(true);
+        setVotes((prev: number) => prev + 100);
+    };
+
+    const percentComplete = Math.min(100, (votes / 5000) * 100); // Assume 5000 is threshold
 
     return (
         <motion.div
@@ -38,7 +48,7 @@ export default function ProposalCard({ proposal }: { proposal: Proposal }) {
 
             {/* Progress Bar */}
             <div className="mb-2 flex justify-between text-xs font-mono">
-                <span className="text-gray-400">{proposal.votes.toLocaleString()} VP</span>
+                <span className="text-gray-400">{votes.toLocaleString()} VP</span>
                 <span className="text-gray-500">Threshold: 5,000</span>
             </div>
             <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden mb-6">
@@ -50,8 +60,23 @@ export default function ProposalCard({ proposal }: { proposal: Proposal }) {
             </div>
 
             <div className="flex gap-4">
-                <button className="flex-1 py-2 bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/50 rounded-lg flex items-center justify-center gap-2 transition-all font-bold text-sm">
-                    <ThumbsUp size={16} /> VOTE
+                <button
+                    onClick={handleVote}
+                    disabled={hasVoted}
+                    className={`flex-1 py-2 border rounded-lg flex items-center justify-center gap-2 transition-all font-bold text-sm ${hasVoted
+                        ? 'bg-green-500/20 border-green-500 text-green-500 cursor-default'
+                        : 'bg-white/5 hover:bg-cyan-500/20 border-white/10 hover:border-cyan-500/50'
+                        }`}
+                >
+                    {hasVoted ? (
+                        <>
+                            <Check size={16} /> VOTED
+                        </>
+                    ) : (
+                        <>
+                            <ThumbsUp size={16} /> VOTE
+                        </>
+                    )}
                 </button>
                 <button className="px-4 py-2 bg-transparent hover:bg-white/5 rounded-lg border border-transparent hover:border-white/10 transition-all flex items-center gap-2 text-gray-400 hover:text-white">
                     <MessageSquare size={16} />

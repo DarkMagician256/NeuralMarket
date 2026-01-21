@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRegistry, RegistryAgent } from '@/hooks/useRegistry';
+import LeaderboardList from '@/components/cortex/Leaderboard';
 import MarketAgentCard from '@/components/markets/MarketAgentCard';
 import { AgentDetailModal } from '@/components/cortex/AgentDetailModal';
 import { Loader2, Search, Trophy } from 'lucide-react';
@@ -95,6 +96,11 @@ export default function LeaderboardPage() {
                             </button>
                         ))}
                     </div>
+                </div>
+
+                {/* Top Performers List Module */}
+                <div className="mb-8">
+                    <LeaderboardList />
                 </div>
 
                 {/* AGENT LEADERBOARD CONTENT */}

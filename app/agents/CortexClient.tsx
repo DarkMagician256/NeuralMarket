@@ -9,7 +9,7 @@ import NeuralReasoningVis from '@/components/cortex/NeuralReasoningVis';
 import TelemetryPanel from '@/components/cortex/TelemetryPanel';
 import AlphaStream from '@/components/cortex/AlphaStream';
 import GlobalActivity from '@/components/cortex/GlobalActivity';
-import Leaderboard from '@/components/cortex/Leaderboard';
+
 import Link from 'next/link';
 import { useNeuralVault } from '@/hooks/useNeuralVault';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
@@ -94,10 +94,7 @@ export default function CortexClient({ initialThoughts }: { initialThoughts: any
             {/* GLOBAL SYNC FEED - ALL PROGRAM ACTIVITY */}
             <GlobalActivity />
 
-            {/* LEADERBOARD - TOP PERFORMING AGENTS */}
-            <div className="mt-6 md:mt-8">
-                <Leaderboard />
-            </div>
+
         </div>
     );
 }
