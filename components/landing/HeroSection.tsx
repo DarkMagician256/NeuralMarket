@@ -1,0 +1,99 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+
+export default function HeroSection() {
+    return (
+        <div className="relative min-h-screen flex flex-col justify-center pb-20 md:pb-40 items-center text-center overflow-hidden z-20 pt-20 md:pt-0">
+
+            {/* Mesh Background Override for brighter load */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05050A]/50 to-[#05050A]" />
+
+            <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="relative z-10 max-w-5xl px-4 sm:px-6 flex flex-col items-center"
+            >
+                {/* Logo - Responsive sizing */}
+                <div className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 mb-4 md:mb-6 animate-float">
+                    <Image
+                        src="/neural_logo_v2.png"
+                        alt="Neural Core"
+                        fill
+                        className="object-contain drop-shadow-[0_0_30px_rgba(6,182,212,0.6)]"
+                    />
+                </div>
+
+                {/* Main Headline - Responsive font sizes */}
+                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter mb-3 md:mb-4 leading-[1.1]">
+                    AUTONOMOUS AGENTS<br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600 animate-pulse">
+                        FOR PREDICTION MARKETS.
+                    </span>
+                </h1>
+
+                {/* Subtitle - Responsive */}
+                <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto font-mono px-2">
+                    Deploy neural swarms to analyze real-world events and execute trades autonomously.
+                </p>
+
+                {/* LOGOS SECTION - Responsive */}
+                <div className="flex flex-col items-center gap-3 md:gap-4 mb-8 md:mb-14 w-full">
+                    <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-500 font-mono">Official Integrations</span>
+
+                    {/* Desktop: Single row with dividers */}
+                    <div className="hidden sm:flex items-center gap-6 md:gap-10 lg:gap-14 bg-white/5 px-6 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl border border-white/5 backdrop-blur-md hover:border-white/10 transition-all shadow-2xl shadow-black/50">
+                        {/* Solana */}
+                        <div className="relative h-5 md:h-6 w-16 md:w-24 opacity-80 hover:opacity-100 transition-opacity">
+                            <Image src="/logos/solana.png" alt="Solana" fill className="object-contain" />
+                        </div>
+
+                        <div className="h-5 md:h-6 w-px bg-white/10" />
+
+                        {/* Kalshi */}
+                        <div className="relative h-5 md:h-7 w-20 md:w-28 opacity-90 hover:opacity-100 transition-opacity">
+                            <Image src="/logos/kalshi.png" alt="Kalshi" fill className="object-contain" />
+                        </div>
+
+                        <div className="h-5 md:h-6 w-px bg-white/10" />
+
+                        {/* Shipyard - Solana Mexico */}
+                        <div className="relative h-6 md:h-8 w-16 md:w-20 opacity-90 hover:opacity-100 transition-opacity">
+                            <Image src="/logos/shipyard.png" alt="Shipyard" fill className="object-contain" />
+                        </div>
+                    </div>
+
+                    {/* Mobile: Grid layout without dividers */}
+                    <div className="flex sm:hidden items-center justify-center gap-6 bg-white/5 px-6 py-4 rounded-xl border border-white/5 backdrop-blur-md w-full max-w-sm">
+                        <div className="relative h-4 w-14 opacity-80">
+                            <Image src="/logos/solana.png" alt="Solana" fill className="object-contain" />
+                        </div>
+                        <div className="relative h-5 w-16 opacity-90">
+                            <Image src="/logos/kalshi.png" alt="Kalshi" fill className="object-contain" />
+                        </div>
+                        <div className="relative h-6 w-14 opacity-90">
+                            <Image src="/logos/shipyard.png" alt="Shipyard" fill className="object-contain" />
+                        </div>
+                    </div>
+                </div>
+
+                {/* CTA Buttons - Responsive */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 w-full px-4 sm:px-0">
+                    <Link href="/markets" className="w-full sm:w-auto">
+                        <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-cyan-500 text-black font-bold text-sm sm:text-base md:text-lg rounded-full hover:scale-105 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] transition-all flex items-center justify-center gap-2">
+                            INITIALIZE TERMINAL <ArrowRight size={18} className="sm:w-5 sm:h-5" />
+                        </button>
+                    </Link>
+
+                    <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-white/20 text-white font-bold text-sm sm:text-base md:text-lg rounded-full hover:bg-white/5 transition-all">
+                        WATCH DEMO
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}

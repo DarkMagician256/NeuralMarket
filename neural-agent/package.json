@@ -1,0 +1,33 @@
+{
+    "name": "oraculo-sentient-agent",
+    "version": "1.0.0",
+    "description": "Autonomous Prediction Market Agent for Solana (Kalshi + DFlow + ElizaOS)",
+    "main": "dist/agent.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/agent.js",
+        "dev": "ts-node src/agent.ts",
+        "lint": "eslint src/**/*.ts",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@elizaos/core": "^0.1.0",
+        "@elizaos/plugin-solana": "^0.1.0",
+        "@quantish/kalshi-sdk": "^1.0.5",
+        "@solana/web3.js": "^1.91.0",
+        "@supabase/supabase-js": "^2.90.1",
+        "bs58": "^5.0.0",
+        "dotenv": "^16.4.5",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.0",
+        "eslint": "^8.56.0",
+        "jest": "^29.7.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    }
+}

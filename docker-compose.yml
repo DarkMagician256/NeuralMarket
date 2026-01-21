@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # Neural Agent: The "Cortex" Backend
+  neural-agent:
+    build: 
+      context: ./neural-agent
+      dockerfile: Dockerfile
+    container_name: neural-agent
+    env_file: .env.local
+    restart: always
+    environment:
+      - NODE_ENV=production
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Dashboard: The "Livewire" Frontend
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: neural-dashboard
+    ports:
+      - "3000:3000"
+    env_file: .env.local
+    depends_on:
+      - neural-agent
+    restart: always
