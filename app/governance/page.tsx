@@ -6,12 +6,12 @@ import { Plus, Flame, Vote } from 'lucide-react';
 import ProposalCard from '@/components/governance/ProposalCard';
 
 const mockProposals = [
-    { id: 1, title: 'Will GTA VI be delayed to 2027?', category: 'CULTURE', votes: 4200, author: 'Satoshi_Nakamoto', timeLeft: '24H' },
-    { id: 2, title: 'Solana to flip Ethereum by Q4 2025?', category: 'CRYPTO', votes: 3800, author: 'Anatoly_Fan', timeLeft: '3D' },
-    { id: 3, title: 'US Fed cuts rates by >50bps in March?', category: 'ECONOMY', votes: 1200, author: 'J_POWELL', timeLeft: '5D' },
-    { id: 4, title: 'SpaceX lands Starship intact?', category: 'SCIENCE', votes: 850, author: 'ElonMom', timeLeft: '7D' },
+    { id: 1, title: 'Will GTA VI be delayed to 2028?', category: 'CULTURE', votes: 4200, author: 'Satoshi_Nakamoto', timeLeft: '24H' },
+    { id: 2, title: 'Solana to flip Ethereum by Q4 2026?', category: 'CRYPTO', votes: 3800, author: 'Anatoly_Fan', timeLeft: '3D' },
+    { id: 3, title: 'US Fed cuts rates by >50bps in March 2026?', category: 'ECONOMY', votes: 1200, author: 'J_POWELL', timeLeft: '5D' },
+    { id: 4, title: 'SpaceX lands Starship on Mars by 2030?', category: 'SCIENCE', votes: 850, author: 'ElonMom', timeLeft: '7D' },
     { id: 5, title: 'Taylor Swift engages Travis Kelce?', category: 'CULTURE', votes: 5000, author: 'Swiftie_DAO', timeLeft: '12H' },
-    { id: 6, title: 'OpenAI releases GPT-5 in 2025?', category: 'SCIENCE', votes: 4850, author: 'Sam_A', timeLeft: '48H' },
+    { id: 6, title: 'OpenAI releases GPT-6 in 2027?', category: 'SCIENCE', votes: 4850, author: 'Sam_A', timeLeft: '48H' },
 ];
 
 export default function GovernancePage() {
