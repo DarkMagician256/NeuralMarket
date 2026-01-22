@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Building2, BrainCircuit, Zap, Users, ShieldCheck, LineChart } from 'lucide-react';
+import { Building2, BrainCircuit, Zap, Users, ShieldCheck, LineChart, Repeat } from 'lucide-react';
 
 export default function BentoGrid() {
     return (
@@ -129,37 +129,61 @@ export default function BentoGrid() {
                     </div>
                 </motion.div>
 
-                {/* 5. Horizontal Feature - GOVERNANCE */}
+                {/* 5. Standard Feature - GOVERNANCE */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="md:col-span-2 glass-panel p-6 md:p-8 relative overflow-hidden group flex items-center opacity-70 hover:opacity-100 transition-opacity min-h-[200px]"
+                    className="glass-panel p-6 md:p-8 relative overflow-hidden group flex flex-col justify-between min-h-[250px]"
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-900/10 via-black to-transparent z-0" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-900/20 via-black to-black z-0" />
 
-                    <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center w-full">
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="p-2 md:p-3 bg-white/5 rounded-xl border border-white/10 grayscale">
-                                    <ShieldCheck className="text-gray-400" size={24} />
-                                </div>
-                                <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] md:text-xs font-mono text-gray-400">COMING SOON</span>
+                    <div className="relative z-10">
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="p-2 md:p-3 bg-yellow-500/20 rounded-xl border border-yellow-500/30">
+                                <ShieldCheck className="text-yellow-400" size={24} />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold mb-2 text-gray-300">Community Governance</h3>
-                            <p className="text-gray-500 text-sm mb-6">
-                                The Neural Council will vote on new market listings and protocol parameters.
-                            </p>
-
-                            <div className="flex gap-4 opacity-50">
-                                <div className="text-xs text-gray-600 flex items-center font-mono">
-                                    [SYSTEM_LOCKED]
-                                </div>
-                            </div>
+                            <div className="px-2 py-1 bg-white/10 rounded text-[10px] uppercase font-mono tracking-wider text-gray-400">DAO</div>
                         </div>
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">Governance</h3>
+                        <p className="text-gray-400 text-sm">
+                            Neural Council voting on new markets & parameters.
+                        </p>
+                    </div>
+                </motion.div>
 
-                        <div className="hidden md:flex justify-center opacity-30">
-                            <Users size={120} className="text-gray-500" />
+                {/* 6. Large Feature - JUPITER SWAP */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="md:col-span-2 glass-panel p-6 md:p-8 relative overflow-hidden group flex items-center min-h-[250px]"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-900/20 via-black to-green-900/20 z-0 opacity-50 group-hover:opacity-80 transition-opacity" />
+
+                    {/* Jupiter Logo Abstract */}
+                    <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-black/50 to-transparent z-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity">
+                        <Repeat size={120} className="text-orange-400 rotate-45" />
+                    </div>
+
+                    <div className="relative z-10 w-full md:w-2/3">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-2 md:p-3 bg-gradient-to-br from-orange-500/20 to-green-500/20 rounded-xl border border-white/10">
+                                <Repeat className="text-orange-400" size={24} />
+                            </div>
+                            <span className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[10px] md:text-xs font-mono text-orange-300">NATIVE SWAPS</span>
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">Jupiter Integrated</h3>
+                        <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-6">
+                            Seamlessly swap SOL, USDC, or BONK directly within the execution interface. Powered by Jupiter V6 API for best price routing.
+                        </p>
+
+                        <div className="flex gap-2">
+                            {['SOL', 'USDC', 'BONK', 'WIF'].map(token => (
+                                <div key={token} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-gray-400">
+                                    {token}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </motion.div>

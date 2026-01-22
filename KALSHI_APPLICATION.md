@@ -1,76 +1,67 @@
-# Kalshi Builders Program Application: NeuralMarket
+### **🧠 NeuralMarket: The Institutional-Grade Gateway to Kalshi Markets on Solana**
 
----
-
-## 🧠 NeuralMarket: The Institutional-Grade Gateway to Kalshi Markets on Solana
-
-### WHAT IT IS:
+**WHAT IT IS:**
 NeuralMarket is a fully functional prediction markets interface deployed on Solana that brings crypto-native users to Kalshi's liquidity. We've built the bridge between the $2T crypto ecosystem and Kalshi's regulated prediction markets.
 
-### LIVE DEMO & PROOF OF WORK:
+**LIVE DEMO & PROOF OF WORK:**
+- **Live App:** https://neural-market.vercel.app
+- **GitHub:** https://github.com/Eras256/NeuralMarket
+- **Smart Contract (Devnet):** https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet
 
-- **Live App**: [https://neural-market.vercel.app](https://neural-market.vercel.app/)
-- **GitHub**: [https://github.com/Eras256/NeuralMarket](https://github.com/Eras256/NeuralMarket)
-- **Smart Contract (Devnet)**: [https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
+**VERIFIED ON-CHAIN TRANSACTIONS:**
+- **Trade Execution (Real Kalshi Market):** [View on Explorer](https://explorer.solana.com/tx/2r2jjBR85EXBpa2BtY7QTtgopND9XQW59GGCDUebYjML9WBTMviVCXzKzJ4WEMbapqtG2yhtCBQwUaJntTKQRM4T?cluster=devnet)
+- **Create Agent:** [View on Explorer](https://explorer.solana.com/tx/5bKAHwE8oZQbHboQ2w4h6Hxj1YjUeswmBSsG829pryZqFdnmuAtz7KRF8CDJCZTAv9KK4aZ8zbznvdT6xEgYo1Hg?cluster=devnet)
+- **Deactivate Agent:** [View on Explorer](https://explorer.solana.com/tx/61wq5JrKFutbfzB3hKqaCj77Nu9qEapGwLskaXW4CfMgDbVR5s6YjE1BkHy3ShK7NtSK8ujD9YxVXYEETPMkkcfR?cluster=devnet)
+- **Reactivate Agent:** [View on Explorer](https://explorer.solana.com/tx/NEFwrNdBxFse9XqcGWsVjx5JvDWcvCNSR3TfLcNm6p6WBcuCV6zZEG5BNYjBbdA6NrLiKGweCCnbyDQhoLWNCY3?cluster=devnet)
 
-### VERIFIED ON-CHAIN TRANSACTIONS:
+**KEY FEATURES (Already Built):**
+✅ **Live Kalshi Integration** (Real-time markets v2 API)
+✅ **ElizaOS "Sentient" Agents** (Reasoning engine broadcasting live telemetry)
+✅ **Sovereign Node Architecture** (Dockerized full-stack for self-hosting)
+✅ **Verified Security** (SAST Audit passed + Security Policy established)
+✅ **Solana Wallet Integration** (Phantom, Solflare)
+✅ **On-Chain Settlement Protocol** (NeuralVault Program on Devnet)
+✅ **Real-time Leaderboard** (Derived from on-chain history)
+✅ **Builder Code Monetization** (Revenue attribution ready)
 
-- **Trade Execution (Real Kalshi Market)**: [View on Explorer](https://explorer.solana.com/tx/2r2jjBR85EXBpa2BtY7QTtgopND9XQW59GGCDUebYjML9WBTMviVCXzKzJ4WEMbapqtG2yhtCBQwUaJntTKQRM4T?cluster=devnet)
-- **Create Agent**: [View on Explorer](https://explorer.solana.com/tx/5bKAHwE8oZQbHboQ2w4h6Hxj1YjUeswmBSsG829pryZqFdnmuAtz7KRF8CDJCZTAv9KK4aZ8zbznvdT6xEgYo1Hg?cluster=devnet)
-- **Deactivate Agent**: [View on Explorer](https://explorer.solana.com/tx/61wq5JrKFutbfzB3hKqaCj77Nu9qEapGwLskaXW4CfMgDbVR5s6YjE1BkHy3ShK7NtSK8ujD9YxVXYEETPMkkcfR?cluster=devnet)
-- **Reactivate Agent**: [View on Explorer](https://explorer.solana.com/tx/NEFwrNdBxFse9XqcGWsVjx5JvDWcvCNSR3TfLcNm6p6WBcuCV6zZEG5BNYjBbdA6NrLiKGweCCnbyDQhoLWNCY3?cluster=devnet)
-
-### KEY FEATURES (Already Built):
-✅ Full Solana wallet integration (Phantom, Solflare)
-✅ On-chain trade recording (Memo + Custom Anchor Program)
-✅ Live Kalshi API integration (Real-time markets)
-✅ Agent creation/deactivation/reactivation on-chain
-✅ AI Agent system with 5 deployed trading agents
-✅ Real-time leaderboard from on-chain data
-✅ Persistent governance voting system
-✅ Trade history with Solana Explorer verification
-✅ Builder Code monetization ready (ORACULO_V2)
-
-### SMART CONTRACT CAPABILITIES:
+**SMART CONTRACT CAPABILITIES:**
 The `neural_vault` program deployed on Devnet supports:
 - `createAgentStandalone` - Deploy autonomous trading agents
-- `recordTradeStandalone` - Record trades on-chain with PnL tracking
-- `submitTradeIntent` - DFlow-ready order submission
-- `deactivateAgent` / `reactivateAgent` - Agent lifecycle management
+- `recordTradeStandalone` - Record trades with verified PnL
+- `submitTradeIntent` - DFlow-ready order emission for solvers
+- `deactivateAgent` / `reactivateAgent` - Lifecycle management
 
-### INTEGRATIONS:
-- **DFlow**: Fully implemented client (`lib/dflow.ts`) ready for mainnet execution. Currently operating in "Intent Recording Mode" via NeuralVault until Developer API Access is granted for liquidity routing.
-- **Jupiter**: Native swap integration for payments
-- **Solana**: Primary blockchain (Devnet now, Mainnet ready)
-- **Kalshi**: API v2 for market data and oracle resolution
+**INTEGRATIONS:**
+- **DFlow**: Fully implemented client (`lib/dflow.ts`). Doing intent recording on-chain, ready for Mainnet switch.
+- **ElizaOS**: Core AI engine powering the "Oraculo" agent behavior and reasoning.
+- **Jupiter**: Native swap integration for payments.
+- **Kalshi**: API v2 for market data and oracle resolution.
 
-### HOW KALSHI BENEFITS:
-1. Access to millions of Solana users who prefer crypto interfaces
-2. Every trade includes Builder Code = revenue attribution
-3. Free marketing through crypto community exposure
-4. Proof that Kalshi works seamlessly with blockchain infrastructure
+**HOW KALSHI BENEFITS:**
+1. Access to millions of Solana users via a native crypto interface.
+2. "Sovereign AI" narrative attracts institutional & power users.
+3. Every trade includes Builder Code = direct revenue attribution.
+4. Proof of legitimate DeFi/TradFi hybrids.
 
-### GRANT REQUEST:
+**GRANT REQUEST:**
 Seeking **$15,000-$25,000** to:
-1. Deploy smart contracts to **Mainnet** and audit security
-2. Launch AI agents that **auto-trade** based on market signals
-3. Activate the **DFlow execution rails** (codebase is 100% ready, pending API credentials)
-4. Marketing push to **crypto trading communities**
+1. **Infrastructure**: Audit & Deploy NeuralVault contracts to Solana Mainnet.
+2. **Liquidity**: Activate the **DFlow execution rails** (API Key pending) for instant settlement.
+3. **Scale**: spin up 100+ AI Agents using the finalized Docker architecture.
+4. **Growth**: Marketing push to crypto trading communities (Solana/DeFi).
 
-### TEAM:
+**TEAM:**
 Three-person founding team with complementary expertise:
+- **Lead Developer**: Full-stack Solana engineer. Built NeuralVault contract & ElizaOS integration.
+- **Marketing & Commercial Lead**: GTM strategy & partnerships.
+- **UX/UI Designer**: Institutional-grade visual systems.
 
-- **Lead Developer**: Full-stack Solana developer responsible for smart contracts, blockchain integration, and platform architecture. Built the entire technical infrastructure including the NeuralVault program.
-- **Marketing & Commercial Lead**: Responsible for go-to-market strategy, partnerships, and business development. Experience in crypto trading and market analysis.
-- **UX/UI Designer**: Responsible for the premium visual experience and user interface. Focus on creating institutional-grade designs that appeal to both crypto natives and traditional traders.
-
-*Committed to full-time development and growth of NeuralMarket.*
-
-### TIMELINE:
-- **Week 1-2**: Mainnet deployment preparation & security audit
-- **Week 3-4**: DFlow execution integration
-- **Week 5-8**: User acquisition & marketing launch
-- **Ongoing**: AI agent improvements & new features
+**TIMELINE:**
+- **Week 1**: **Mainnet Security Hardening** (Multisig setup for NeuralVault upgrade authority).
+- **Week 2**: **DFlow Mainnet connection** & Liquidity testing.
+- **Week 3**: **Public Beta Launch** (Whitelisted users trading with real USDC).
+- **Week 4**: **"Agent Swarm" Activation** (Deploying 50+ diverse ElizaOS agents on VPS).
+- **Week 5+**: **Global Marketing Campaign** & User Acquisition.
 
 ---
-**We're not just applying with an idea - we have a working product with verified on-chain activity and real-time market data ready for scale.**
+**This is not a prototype. This is a Release Candidate ready for liquidity.**
