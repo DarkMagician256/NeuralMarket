@@ -167,6 +167,10 @@ export type NeuralVault = {
           }
         },
         {
+          "name": "treasury",
+          "writable": true
+        },
+        {
           "name": "user",
           "writable": true,
           "signer": true

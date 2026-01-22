@@ -41,7 +41,15 @@ A premium trading interface that connects crypto-native users to prediction mark
 
 ---
 
-## 📦 Installation
+## 💰 Protocol Monetization (On-Chain)
+
+NeuralMarket generates revenue through a **0.05 SOL Protocol Fee** charged every time a user deploys a new Autonomous Agent. This fee represents a license to use the NeuralVault infrastructure.
+
+**Verified Fee Transaction (Devnet):**
+- [View Fee Execution on Explorer](https://explorer.solana.com/tx/4GvXwpBGdqhAZVwc7z9XjpX3uz8oSTtgKV6fnuSom4YtYVAPs3T7pPNcC5mymGb53VTeUDGj82Jy9b2b2EPTGZ?cluster=devnet)
+_(Note: In this demo deployment, the fee is paid to the deployer wallet acting as Treasury)_
+
+## 🧪 Testing & Validation
 
 ### Prerequisites
 

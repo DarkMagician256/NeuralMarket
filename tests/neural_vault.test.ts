@@ -70,6 +70,9 @@ describe("Neural Vault Bankrun Tests", () => {
         Buffer.from("TestAgent").copy(nameBuffer);
         const nameArray = Array.from(nameBuffer);
 
+        // Create explicit Treasury account for fees
+        const treasury = anchor.web3.Keypair.generate();
+
         await program.methods.createAgentStandalone(
             agentId,
             0, // Archetype: Sniper
@@ -78,7 +81,8 @@ describe("Neural Vault Bankrun Tests", () => {
             1, // Leverage
             nameArray, // Name
         ).accounts({
-            user: payer.publicKey
+            user: payer.publicKey,
+            treasury: treasury.publicKey,
         }).rpc();
 
         // 2. Submit Intent

@@ -314,6 +314,9 @@ pub struct CreateAgentStandalone<'info> {
         bump
     )]
     pub agent: Account<'info, Agent>,
+    /// CHECK: Protocol Treasury Wallet (Funds sent here)
+    #[account(mut)]
+    pub treasury: AccountInfo<'info>,
     #[account(mut)]
     pub user: Signer<'info>,
     pub system_program: Program<'info, System>,
