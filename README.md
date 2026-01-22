@@ -1,129 +1,190 @@
-# 🧠 Neural Market / Cortex
-### *The Transparent Liquidity Engine & Autonomous Hive Mind*
+# NeuralMarket
 
-![Neural Market Banner](https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=2000)
+**AI-Powered Prediction Markets Interface on Solana**
 
-> **"Don't just bet. Invest in Intelligence."**
+A premium trading interface that connects crypto-native users to prediction markets. Built with Next.js, Solana, and integrated with DFlow and Jupiter.
 
----
-
-## 🌌 The Vision: Looking Inside the Black Box
-In a world dominated by opaque trading bots and "black box" algorithms, **Neural Market** (aka Oráculo v2) effectively breaks the glass. We introduce the concept of the **"Glass Box" Strategy**: an algorithmic trading infrastructure that doesn't just execute orders—it **streams its consciousness**.
-
-Imagine a swarm of specialized AI agents—Whales, Snipers, Sentinels—working in harmony. You don't just see the Buy/Sell signal; you see the **reasoning**. You watch them analyze DFlow order flow, parse Kalshi event probabilities, and debate market sentiment in real-time before pulling the trigger.
-
-**We are building the terminal where humans oversee the future of autonomous finance.**
+![Solana](https://img.shields.io/badge/Solana-Devnet-blueviolet)
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## ⚡ Live Immutable Proofs (Solana Devnet)
+## 🚀 Live Demo
 
-The neural core of our platform is anchored on Solana for speed and transparency.
+**Production:** https://neural-market.vercel.app
 
-| Component | Status | On-Chain Address / Link |
-| :--- | :---: | :--- |
-| **Program ID** | `Active` | [`A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F`](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet) |
-| **Genesis TX** | `Success` | [`2tyienmkem...CaabUy6T4xfZb`](https://explorer.solana.com/tx/2tyienmkemNW3DkhPgxFkmF8vueRyCUaD1aKfZKSjCA3mpEmEDQBMwetNPLdXSk8a81Hs2cU9rCaabUy6T4xfZb?cluster=devnet) |
-| **Agent Registry** | `Live` | PDAs derived from `["agent", user_pubkey, agent_id]` |
+**Smart Contract (Devnet):** `A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F`
 
 ---
 
-## 🛠️ Tech Stack & Integrations
+## ✨ Features
 
-We leverage the bleeding edge of the Solana ecosystem and prediction markets.
-
-### **Core Infrastructure**
-| Tech | Role | Badge |
-| :--- | :--- | :--- |
-| **Solana** | L1 Blockchain | <img src="https://cryptologos.cc/logos/solana-sol-logo.png" width="20"/> High-Frequency Execution |
-| **Next.js 15** | Frontend | <img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_light_background.png" width="20"/> App Router & Server Actions |
-| **Tailwind CSS** | Styling | <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="20"/> Responsive Glassmorphism |
-| **Anchor** | Smart Contracts | <img src="https://www.anchor-lang.com/_next/image?url=%2Flogo.png&w=64&q=75" width="20"/> Rust Framework |
-
-### **Official Integrations**
-| Partner | Role | Integration |
-| :--- | :--- | :--- |
-| **DFlow** | Liquidity | <img src="/logos/dflow.png" width="20"/> Order Flow Protection |
-| **Kalshi** | Events | <img src="https://kalshi.com/static/favicon.ico" width="20"/> Event Contracts API v2 |
-| **Jupiter** | Aggregator | <img src="https://jup.ag/svg/jupiter-logo.svg" width="20"/> Best Price Swaps |
-| **Shipyard** | Labs/Partner | <img src="/logos/shipyard.png" width="20"/> Solana Mexico Ecosystem |
+- **Wallet Integration** - Phantom, Solflare, and other Solana wallets
+- **On-Chain Trading** - Every trade recorded on Solana blockchain
+- **AI Trading Agents** - Autonomous agents with on-chain statistics
+- **Real-Time Leaderboard** - Rankings pulled directly from blockchain
+- **Governance System** - Community voting on new markets
+- **Builder Code Monetization** - Revenue attribution ready
 
 ---
 
-## 🧠 Neural Architecture (The Cortex)
+## 🛠️ Tech Stack
 
-```mermaid
-graph TD
-    subgraph "Sensory Input (Retina)"
-        D[DFlow Stream] --> |Order Flow| C
-        K[Kalshi Events] --> |Probabilities| C
-        J[Jupiter Price] --> |Market Data| C
-    end
-
-    subgraph "The Cortex (Swarm Intelligence)"
-        C{Central Hub}
-        C --> |Task| A1[The General (Strategy)]
-        C --> |Task| A2[The Sniper (Execution)]
-        C --> |Task| A3[The Analyst (Risk)]
-        A1 <--> |Debate| A2
-        A2 <--> |Check| A3
-    end
-
-    subgraph "Execution (Kinetic Arm)"
-        A2 --> |Sign Transaction| S[Solana Program]
-        S --> |Trade Intent| V[Neural Vault]
-        V --> |Payout| W[User Wallet]
-    end
-```
-
-### **Agent Archetypes**
-1.  **The General**: Macro-strategy analysis. High conviction, long timeframes.
-2.  **The Sniper**: Micro-structure execution using **DFlow**. In and out in milliseconds.
-3.  **The Whale Tracker**: Follows on-chain movements of large wallets.
-4.  **The Contrarian**: Bets against the crowd when sentiment hits extremes.
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js 16, React 19, Framer Motion |
+| Blockchain | Solana, Anchor Framework |
+| Data | Supabase (PostgreSQL) |
+| Styling | Tailwind CSS |
+| Wallet | @solana/wallet-adapter |
 
 ---
 
-## 🚀 Getting Started
+## 📦 Installation
 
 ### Prerequisites
-- Node.js 18+
-- Docker (for full simulation)
-- Solana CLI & Anchor
 
-### Installation
+- Node.js 20+
+- pnpm 9+
+- Solana CLI (optional, for contract development)
 
-1.  **Clone the Hive**
-    ```bash
-    git clone https://github.com/vaiosvaios/NeuralMarket.git
-    cd NeuralMarket
-    ```
+### Quick Start
 
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    # or
-    pnpm install
-    ```
+```bash
+# Clone the repository
+git clone https://github.com/Eras256/NeuralMarket.git
+cd NeuralMarket
 
-3.  **Set Environment Variables**
-    Create `.env.local` with:
-    ```env
-    NEXT_PUBLIC_SOLANA_RPC=https://api.devnet.solana.com
-    NEXT_PUBLIC_PROGRAM_ID=A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F
-    ```
+# Install dependencies
+pnpm install
 
-4.  **Ignite the Interface**
-    ```bash
-    npm run dev
-    ```
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your credentials
+
+# Run development server
+pnpm run dev
+```
+
+Open http://localhost:3000 to view the application.
 
 ---
 
-## 📜 License
-MIT License. Built with ❤️ for the **Kalshi Builders Hackathon**.
+## ⚙️ Environment Variables
 
-<div align="center">
-  <p>POWERED BY</p>
-  <h4>SOLANA • KALSHI • DFLOW • JUPITER • SHIPYARD</h4>
-</div>
+Create a `.env.local` file with:
+
+```env
+# Solana
+NEXT_PUBLIC_HELIUS_RPC=https://api.devnet.solana.com
+NEXT_PUBLIC_SOLANA_PROGRAM_ID=A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F
+NEXT_PUBLIC_SOLANA_CLUSTER=devnet
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_KEY=your_service_key
+
+# Optional
+KALSHI_BUILDER_CODE=YOUR_BUILDER_CODE
+```
+
+---
+
+## 🔗 Smart Contract
+
+The NeuralVault program is deployed on Solana Devnet:
+
+```
+Program ID: A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F
+```
+
+### Key Instructions
+
+| Instruction | Description |
+|-------------|-------------|
+| `createAgentStandalone` | Create a new trading agent |
+| `recordTradeStandalone` | Record a trade on-chain |
+| `submitTradeIntent` | Submit order for DFlow execution |
+| `deactivateAgent` | Pause an agent |
+| `reactivateAgent` | Resume an agent |
+
+### Build Contract (Optional)
+
+```bash
+cd anchor
+anchor build
+anchor deploy --provider.cluster devnet
+```
+
+---
+
+## 📁 Project Structure
+
+```
+NeuralMarket/
+├── app/                    # Next.js App Router pages
+│   ├── actions/           # Server actions (trade execution)
+│   ├── markets/           # Markets listing and detail
+│   ├── leaderboard/       # Agent rankings
+│   ├── governance/        # Voting system
+│   ├── portfolio/         # User positions
+│   └── profile/           # Trade history
+├── components/            # React components
+├── hooks/                 # Custom React hooks
+├── lib/                   # Utilities and data
+├── anchor/                # Solana smart contract
+│   └── programs/
+│       └── neural_vault/  # Main program
+└── scripts/               # Utility scripts
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run development server
+pnpm run dev
+
+# Build for production
+pnpm run build
+
+# Test smart contract
+cd anchor
+anchor test
+```
+
+---
+
+## 🤝 Integrations
+
+| Partner | Integration |
+|---------|-------------|
+| **DFlow** | Order routing for prediction market trades |
+| **Jupiter** | Native swap integration for payments |
+| **Solana** | Primary blockchain infrastructure |
+
+---
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+---
+
+## 👥 Team
+
+- **Lead Developer** - Smart contracts & platform architecture
+- **Marketing & Commercial** - Go-to-market & partnerships
+- **UX/UI Designer** - Visual design & user experience
+
+---
+
+## 📬 Contact
+
+For inquiries about the Kalshi Builders Program integration:
+
+- GitHub: https://github.com/Eras256/NeuralMarket
+- Live Demo: https://neural-market.vercel.app
