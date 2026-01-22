@@ -13,7 +13,7 @@ export async function getUserTrades(walletAddress: string) {
     const { data, error } = await supabase
         .from('trades')
         .select('*')
-        .eq('user', walletAddress)
+        .eq('wallet_address', walletAddress)
         .order('created_at', { ascending: false });
 
     if (error) {

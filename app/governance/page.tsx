@@ -2,20 +2,28 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Flame, Vote } from 'lucide-react';
+import { Plus, Flame, Vote, Loader2, Wallet } from 'lucide-react';
 import ProposalCard from '@/components/governance/ProposalCard';
-
-const mockProposals = [
-    { id: 1, title: 'Will GTA VI be delayed to 2028?', category: 'CULTURE', votes: 4200, author: 'Satoshi_Nakamoto', timeLeft: '24H' },
-    { id: 2, title: 'Solana to flip Ethereum by Q4 2026?', category: 'CRYPTO', votes: 3800, author: 'Anatoly_Fan', timeLeft: '3D' },
-    { id: 3, title: 'US Fed cuts rates by >50bps in March 2026?', category: 'ECONOMY', votes: 1200, author: 'J_POWELL', timeLeft: '5D' },
-    { id: 4, title: 'SpaceX lands Starship on Mars by 2030?', category: 'SCIENCE', votes: 850, author: 'ElonMom', timeLeft: '7D' },
-    { id: 5, title: 'Taylor Swift engages Travis Kelce?', category: 'CULTURE', votes: 5000, author: 'Swiftie_DAO', timeLeft: '12H' },
-    { id: 6, title: 'OpenAI releases GPT-6 in 2027?', category: 'SCIENCE', votes: 4850, author: 'Sam_A', timeLeft: '48H' },
-];
+import { useGovernance } from '@/hooks/useGovernance';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export default function GovernancePage() {
+    const { proposals, loading, vote } = useGovernance();
+    const { publicKey } = useWallet();
     const [filter, setFilter] = useState('ALL');
+
+    // Filter Logic
+    const filteredProposals = proposals.filter(p => {
+        if (filter === 'ALL') return true;
+        if (filter === 'TRENDING') return p.votes > 3000;
+        if (filter === 'NEW') return true; // Could filter by created_at
+        if (filter === 'ENDING SOON') return ['12H', '24H', '48H'].includes(p.time_left);
+        return true;
+    });
+
+    // Stats calculations
+    const totalVotes = proposals.reduce((acc, p) => acc + p.votes, 0);
+    const topProposal = proposals.reduce((max, p) => p.votes > max.votes ? p : max, proposals[0]);
 
     return (
         <div className="min-h-screen pt-20 md:pt-24 pb-16 md:pb-20 container mx-auto px-3 sm:px-4">
@@ -30,6 +38,12 @@ export default function GovernancePage() {
                         Staked-weighted governance to propose new prediction markets.
                         Top voted proposals are automatically submitted to Kalshi/DFlow for listing.
                     </p>
+                    {!publicKey && (
+                        <div className="mt-3 flex items-center gap-2 text-yellow-500/80 text-xs bg-yellow-500/10 border border-yellow-500/20 px-3 py-2 rounded-lg">
+                            <Wallet size={14} />
+                            Connect wallet to vote on proposals
+                        </div>
+                    )}
                 </div>
                 <button className="w-full sm:w-auto px-4 md:px-6 py-2.5 md:py-3 bg-white/10 border border-white/10 hover:bg-white/20 rounded-full font-bold text-sm flex items-center justify-center gap-2 transition-all group">
                     <Plus size={16} className="group-hover:rotate-90 transition-transform" /> REQUEST NEW MARKET
@@ -38,9 +52,9 @@ export default function GovernancePage() {
 
             {/* Stats - Responsive */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 mb-8 md:mb-12">
-                <StatsCard label="TOTAL PROPOSALS" value="142" />
-                <StatsCard label="VOTES CAST (24H)" value="89,450" />
-                <StatsCard label="MARKETS ENACTED" value="12" highlight />
+                <StatsCard label="TOTAL PROPOSALS" value={proposals.length.toString()} />
+                <StatsCard label="VOTES CAST (TOTAL)" value={totalVotes.toLocaleString()} />
+                <StatsCard label="TOP PROPOSAL VOTES" value={topProposal?.votes.toLocaleString() || '0'} highlight />
             </div>
 
             {/* Filters - Responsive with horizontal scroll */}
@@ -60,19 +74,31 @@ export default function GovernancePage() {
                 ))}
             </div>
 
-            {/* Grid - Responsive */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {mockProposals.map((p, i) => (
-                    <motion.div
-                        key={p.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                    >
-                        <ProposalCard proposal={p} />
-                    </motion.div>
-                ))}
-            </div>
+            {/* Loading State */}
+            {loading ? (
+                <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                    <Loader2 className="w-8 h-8 text-purple-400 animate-spin" />
+                    <div className="text-sm font-mono text-gray-500">LOADING PROPOSALS...</div>
+                </div>
+            ) : (
+                /* Grid - Responsive */
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    {filteredProposals.map((p, i) => (
+                        <motion.div
+                            key={p.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                        >
+                            <ProposalCard
+                                proposal={p}
+                                onVote={() => vote(p.id)}
+                                canVote={!!publicKey}
+                            />
+                        </motion.div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
