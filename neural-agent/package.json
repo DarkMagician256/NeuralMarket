@@ -5,8 +5,8 @@
     "main": "dist/agent.js",
     "scripts": {
         "build": "echo 'Build skipped (using tsx)'",
-        "start": "tsx src/agent.ts",
-        "dev": "tsx src/agent.ts",
+        "start": "bun run src/agent.ts",
+        "dev": "bun run src/agent.ts",
         "lint": "eslint src/**/*.ts",
         "test": "jest"
     },
