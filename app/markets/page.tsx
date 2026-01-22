@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { TrendingUp, Globe, Clock, ArrowRight, Zap } from 'lucide-react';
 import MarketPredictionCard from '@/components/markets/MarketPredictionCard';
 import { getLiveMarkets } from '@/app/actions/getMarkets';
@@ -81,13 +82,15 @@ export default async function MarketsPage() {
                             <div className="text-lg md:text-xl font-bold text-white">${totalVolume.toFixed(1)}M</div>
                         </div>
                     </div>
-                    <div className="glass-panel p-3 md:p-4 flex items-center gap-3 md:gap-4 group cursor-pointer hover:border-cyan-500/30 transition-colors">
+
+                    {/* Link to Governance */}
+                    <Link href="/governance" className="glass-panel p-3 md:p-4 flex items-center gap-3 md:gap-4 group cursor-pointer hover:border-cyan-500/30 transition-colors">
                         <div className="p-1.5 md:p-2 bg-cyan-500/20 rounded-lg text-cyan-400"><ArrowRight size={18} /></div>
                         <div>
                             <div className="text-[10px] md:text-xs text-cyan-400 font-mono uppercase">New Requests</div>
                             <div className="text-sm md:text-base font-bold text-white group-hover:text-cyan-400 transition-colors">Propose New Market</div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
                 {/* Markets Grid */}

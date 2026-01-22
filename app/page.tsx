@@ -1,9 +1,9 @@
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import LiveTicker from "@/components/landing/LiveTicker";
+import HowItWorks from "@/components/landing/HowItWorks";
 import BentoGrid from "@/components/landing/BentoGrid";
 import GlobalFooter from "@/components/layout/GlobalFooter";
-import NeuralMesh from "@/components/ui/NeuralMesh";
 import NeuralMeshWrapper from "../components/ui/NeuralMeshWrapper";
 
 export default function Home() {
@@ -19,6 +19,7 @@ export default function Home() {
         <Navbar />
         <HeroSection />
         <LiveTicker />
+        <HowItWorks />
         <BentoGrid />
         <GlobalFooter />
       </div>

@@ -42,7 +42,7 @@ export default function LeaderboardPage() {
                             >
                                 <Trophy className="text-yellow-400" size={24} />
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white">
-                                    GLOBAL LEADERBOARD
+                                    AI AGENTS
                                 </h1>
                             </motion.div>
                             <p className="text-gray-400 font-mono text-xs sm:text-sm max-w-xl">

@@ -30,10 +30,10 @@ export default function CortexClient({ initialThoughts }: { initialThoughts: any
             <div className="flex flex-col gap-4 mb-6 md:mb-8">
                 <div>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter flex flex-wrap items-center gap-2">
-                        CORTEX <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">SWARM INTELLIGENCE</span>
+                        NEURAL <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">SWARM INTELLIGENCE</span>
                     </h1>
                     <p className="text-gray-500 font-mono text-[10px] sm:text-xs md:text-sm mt-1 uppercase tracking-widest">
-                        Autonomous Quant Fund Management System v4.2
+                        Autonomous Swarm Management System v5.0
                     </p>
                 </div>
 
@@ -47,14 +47,14 @@ export default function CortexClient({ initialThoughts }: { initialThoughts: any
                             }`}
                     >
                         <Power size={16} />
-                        {isArmed ? 'DEACTIVATE' : 'ACTIVATE SYSTEM'}
+                        {isArmed ? 'DEACTIVATE SWARM' : 'ACTIVATE SWARM'}
                     </button>
 
                     <Link href="/agents/create" className="w-full sm:w-auto">
                         <button
                             className="w-full flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-sm transition-all bg-cyan-500 text-black border border-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] md:hover:scale-105"
                         >
-                            INITIALIZE SWARM
+                            DEPLOY NEW AGENT
                         </button>
                     </Link>
                 </div>

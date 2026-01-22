@@ -41,41 +41,25 @@ export default function HeroSection() {
                     Deploy neural swarms to analyze real-world events and execute trades autonomously.
                 </p>
 
-                {/* LOGOS SECTION - Responsive */}
-                <div className="flex flex-col items-center gap-3 md:gap-4 mb-8 md:mb-14 w-full">
-                    <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-500 font-mono">Official Integrations</span>
-
-                    {/* Desktop: Single row with dividers */}
-                    <div className="hidden sm:flex items-center gap-6 md:gap-10 lg:gap-14 bg-white/5 px-6 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl border border-white/5 backdrop-blur-md hover:border-white/10 transition-all shadow-2xl shadow-black/50">
-                        {/* Solana */}
-                        <div className="relative h-5 md:h-6 w-16 md:w-24 opacity-80 hover:opacity-100 transition-opacity">
+                {/* LOGOS SECTION - Responsive & Matching Markets Page */}
+                <div className="flex flex-col items-center gap-2 mb-8 md:mb-14 w-full">
+                    <span className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em] sm:tracking-[0.3em]">
+                        Official Data & Execution
+                    </span>
+                    <div className="flex items-center gap-3 sm:gap-5 bg-white/5 px-4 sm:px-6 py-3 sm:py-4 rounded-xl border border-white/5 backdrop-blur-sm shadow-xl shadow-black/50 flex-wrap justify-center">
+                        <div className="relative h-4 sm:h-5 w-16 sm:w-20 opacity-80 hover:opacity-100 transition-opacity">
                             <Image src="/logos/solana.png" alt="Solana" fill className="object-contain" />
                         </div>
-
-                        <div className="h-5 md:h-6 w-px bg-white/10" />
-
-                        {/* Kalshi */}
-                        <div className="relative h-5 md:h-7 w-20 md:w-28 opacity-90 hover:opacity-100 transition-opacity">
+                        <div className="h-3 sm:h-4 w-px bg-white/10" />
+                        <div className="relative h-4 sm:h-5 w-16 sm:w-20 opacity-80 hover:opacity-100 transition-opacity">
+                            <Image src="/logos/jupiter.png" alt="Jupiter" fill className="object-contain" />
+                        </div>
+                        <div className="h-3 sm:h-4 w-px bg-white/10" />
+                        <div className="relative h-5 sm:h-6 w-20 sm:w-24 opacity-80 hover:opacity-100 transition-opacity">
                             <Image src="/logos/kalshi.png" alt="Kalshi" fill className="object-contain" />
                         </div>
-
-                        <div className="h-5 md:h-6 w-px bg-white/10" />
-
-                        {/* Shipyard - Solana Mexico */}
-                        <div className="relative h-6 md:h-8 w-16 md:w-20 opacity-90 hover:opacity-100 transition-opacity">
-                            <Image src="/logos/shipyard.png" alt="Shipyard" fill className="object-contain" />
-                        </div>
-                    </div>
-
-                    {/* Mobile: Grid layout without dividers */}
-                    <div className="flex sm:hidden items-center justify-center gap-6 bg-white/5 px-6 py-4 rounded-xl border border-white/5 backdrop-blur-md w-full max-w-sm">
-                        <div className="relative h-4 w-14 opacity-80">
-                            <Image src="/logos/solana.png" alt="Solana" fill className="object-contain" />
-                        </div>
-                        <div className="relative h-5 w-16 opacity-90">
-                            <Image src="/logos/kalshi.png" alt="Kalshi" fill className="object-contain" />
-                        </div>
-                        <div className="relative h-6 w-14 opacity-90">
+                        <div className="h-3 sm:h-4 w-px bg-white/10" />
+                        <div className="relative h-6 sm:h-7 w-16 sm:w-20 opacity-80 hover:opacity-100 transition-opacity">
                             <Image src="/logos/shipyard.png" alt="Shipyard" fill className="object-contain" />
                         </div>
                     </div>
@@ -89,9 +73,7 @@ export default function HeroSection() {
                         </button>
                     </Link>
 
-                    <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-white/20 text-white font-bold text-sm sm:text-base md:text-lg rounded-full hover:bg-white/5 transition-all">
-                        WATCH DEMO
-                    </button>
+
                 </div>
             </motion.div>
         </div>

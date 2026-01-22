@@ -6,11 +6,13 @@ import { Plus, Flame, Vote, Loader2, Wallet } from 'lucide-react';
 import ProposalCard from '@/components/governance/ProposalCard';
 import { useGovernance } from '@/hooks/useGovernance';
 import { useWallet } from '@solana/wallet-adapter-react';
+import AccessDeniedModal from '@/components/ui/AccessDeniedModal';
 
 export default function GovernancePage() {
     const { proposals, loading, vote } = useGovernance();
     const { publicKey } = useWallet();
     const [filter, setFilter] = useState('ALL');
+    const [isRestrictedModalOpen, setIsRestrictedModalOpen] = useState(false);
 
     // Filter Logic
     const filteredProposals = proposals.filter(p => {
@@ -45,7 +47,10 @@ export default function GovernancePage() {
                         </div>
                     )}
                 </div>
-                <button className="w-full sm:w-auto px-4 md:px-6 py-2.5 md:py-3 bg-white/10 border border-white/10 hover:bg-white/20 rounded-full font-bold text-sm flex items-center justify-center gap-2 transition-all group">
+                <button
+                    onClick={() => setIsRestrictedModalOpen(true)}
+                    className="w-full sm:w-auto px-4 md:px-6 py-2.5 md:py-3 bg-white/10 border border-white/10 hover:bg-white/20 rounded-full font-bold text-sm flex items-center justify-center gap-2 transition-all group"
+                >
                     <Plus size={16} className="group-hover:rotate-90 transition-transform" /> REQUEST NEW MARKET
                 </button>
             </div>
@@ -99,6 +104,13 @@ export default function GovernancePage() {
                     ))}
                 </div>
             )}
+
+            <AccessDeniedModal
+                isOpen={isRestrictedModalOpen}
+                onClose={() => setIsRestrictedModalOpen(false)}
+                title="COUNCIL ACCESS ONLY"
+                message="Submitting new governance proposals requires a Neural Council Membership NFT and active reputation stake. Please go to DAO Dashboard to qualify."
+            />
         </div>
     );
 }

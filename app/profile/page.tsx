@@ -18,6 +18,8 @@ interface TradeRecord {
     signature?: string;
 }
 
+import MyActivity from '@/components/profile/MyActivity';
+
 export default function ProfilePage() {
     const { publicKey } = useWallet();
     const [autonomyEnabled, setAutonomyEnabled] = useState(true);
@@ -280,6 +282,8 @@ export default function ProfilePage() {
                             </table>
                         </div>
                     </div>
+
+                    <MyActivity />
                 </div>
             </div>
         </div>

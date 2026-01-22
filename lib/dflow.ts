@@ -1,56 +1,86 @@
 import { Connection, Keypair, Transaction, PublicKey } from '@solana/web3.js';
-import bs58 from 'bs58';
 
-// Types derived from DFlow OpenAPI spec
-export interface MarketEvent {
-    ticker: string;
-    title: string;
-    category: string;
-    expiration: string;
-    volume: number;
+// DFlow API Base URL (Based on public docs jan 2026)
+const DFLOW_API_BASE = "https://api.dflow.net/v1";
+
+export interface DFlowQuote {
+    inputMint: string;
+    outputMint: string;
+    amount: string;
+    outAmount: string;
+    priceImpact: number;
+    fee: number;
 }
-
-export interface Order {
-    ticker: string;
-    side: "YES" | "NO";
-    amount: number;
-    price: number; // 0.0 - 1.0 (Prob)
-}
-
-const DFLOW_API_URL = "https://prediction-markets-api.dflow.net";
 
 export class DFlowClient {
     private apiKey: string | undefined;
 
-    // Client-side initialization (public data)
-    constructor(apiKey?: string) {
-        this.apiKey = apiKey;
+    constructor() {
+        this.apiKey = process.env.DFLOW_API_KEY;
     }
 
-    // Fetch Markets
-    async getMarkets(category?: string): Promise<MarketEvent[]> {
-        const url = new URL(`${DFLOW_API_URL}/events`);
-        if (category) url.searchParams.append("category", category);
+    /**
+     * Get a swap quote from DFlow liquidity layer
+     * This connects to real liquidity for prediction tokens
+     */
+    async getQuote(
+        inputMint: string,
+        outputMint: string,
+        amount: number
+    ): Promise<DFlowQuote | null> {
+        if (!this.apiKey) {
+            console.log("[DFlow] No API Key provided. Skipping real quote.");
+            return null;
+        }
 
-        // In a real implementation this would fetch. Mocking for now as API is hypothetical.
-        // return fetch(url.toString()).then(res => res.json());
+        try {
+            const url = `${DFLOW_API_BASE}/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}`;
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${this.apiKey}`
+                }
+            });
 
-        return [
-            { ticker: "TRUMP2028", title: "Trump to win 2028 Election?", category: "Politics", expiration: "2028-11-05", volume: 1500000 },
-            { ticker: "SOL1000", title: "Solana > $1000 by EOY?", category: "Crypto", expiration: "2026-12-31", volume: 5000000 },
-            { ticker: "AGI-2026", title: "AGI Achieved in 2026?", category: "Tech", expiration: "2026-12-31", volume: 200000 },
-        ];
+            if (!response.ok) {
+                console.warn(`[DFlow] API Error: ${response.status}`);
+                return null;
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("[DFlow] Quote fetch failed:", error);
+            return null;
+        }
     }
 
-    // Get Orderbook
-    async getOrderBook(ticker: string) {
-        // Mock
-        return {
-            bids: [[0.45, 1000], [0.44, 5000]],
-            asks: [[0.48, 2000], [0.50, 10000]],
-        };
+    /**
+     * Execute a trade via DFlow (Construct transaction)
+     */
+    async createSwapTransaction(quote: DFlowQuote, userPublicKey: string): Promise<string | null> {
+        if (!this.apiKey) return null;
+
+        try {
+            const response = await fetch(`${DFLOW_API_BASE}/swap`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quote,
+                    userPublicKey
+                })
+            });
+
+            if (!response.ok) return null;
+
+            const { transaction } = await response.json();
+            return transaction; // Returns base64 transaction
+        } catch (error) {
+            console.error("[DFlow] Swap creation failed:", error);
+            return null;
+        }
     }
 }
 
-// Singleton for client-side use
-export const dflowPublic = new DFlowClient();
+export const dflowClient = new DFlowClient();

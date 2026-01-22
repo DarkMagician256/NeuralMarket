@@ -17,8 +17,8 @@ const WalletMultiButton = dynamic(
 
 const navLinks = [
     { href: '/markets', label: 'MARKETS', hoverColor: 'hover:text-cyan-400' },
-    { href: '/leaderboard', label: 'LEADERBOARD', hoverColor: 'hover:text-yellow-400' },
-    { href: '/agents', label: 'CORTEX AI', hoverColor: 'hover:text-cyan-400' },
+    { href: '/leaderboard', label: 'AI AGENTS', hoverColor: 'hover:text-yellow-400' },
+    { href: '/agents', label: 'SWARM AI', hoverColor: 'hover:text-cyan-400' },
     { href: '/portfolio', label: 'PORTFOLIO', hoverColor: 'hover:text-cyan-400' },
     { href: '/governance', label: 'GOVERNANCE', hoverColor: 'hover:text-purple-400' },
 ];
@@ -74,7 +74,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex items-center gap-2 md:gap-4">
-                        {/* Launch Terminal - Hidden on mobile */}
+                        {/* Launch Swarm - Hidden on mobile */}
                         <Link href="/markets" className="hidden md:block">
                             <button className="px-4 md:px-5 py-2 text-xs font-bold bg-white text-black rounded-full hover:bg-cyan-400 hover:scale-105 transition-all">
                                 LAUNCH TERMINAL
@@ -150,8 +150,8 @@ export default function Navbar() {
                                             <Link
                                                 href={link.href}
                                                 className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all ${pathname === link.href
-                                                        ? 'bg-cyan-500/20 text-cyan-400 border-l-2 border-cyan-400'
-                                                        : 'hover:bg-white/5 text-gray-300'
+                                                    ? 'bg-cyan-500/20 text-cyan-400 border-l-2 border-cyan-400'
+                                                    : 'hover:bg-white/5 text-gray-300'
                                                     }`}
                                             >
                                                 {link.label}
