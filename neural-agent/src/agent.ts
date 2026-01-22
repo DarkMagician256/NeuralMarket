@@ -1,9 +1,9 @@
 import { AgentRuntime, Character, ModelProviderName, ICacheManager, elizaLogger } from '@elizaos/core';
 import { solanaPlugin } from '@elizaos/plugin-solana';
-import { config } from './config/env';
-import { executeKalshiTrade } from './actions/kalshiTrade';
-import { announceStrategy } from './actions/announce';
-import { TelemetryService, ThoughtType } from './services/telemetry';
+import { config } from './config/env.js';
+import { executeKalshiTrade } from './actions/kalshiTrade.js';
+import { announceStrategy } from './actions/announce.js';
+import { TelemetryService, ThoughtType } from './services/telemetry.js';
 
 // --- Neural Link Protocol: Logger Interceptor ---
 const telemetry = TelemetryService.getInstance();

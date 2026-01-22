@@ -1,5 +1,5 @@
 import { Action, IAgentRuntime, Memory, State, HandlerCallback } from '@elizaos/core';
-import { TelemetryService, ThoughtType } from '../services/telemetry';
+import { TelemetryService, ThoughtType } from '../services/telemetry.js';
 
 export const announceStrategy: Action = {
     name: 'ANNOUNCE_STRATEGY',

@@ -1,8 +1,8 @@
 import { Action, IAgentRuntime, Memory, State, HandlerCallback, elizaLogger } from '@elizaos/core';
 import { Connection, Keypair } from '@solana/web3.js';
 import bs58 from 'bs58';
-import { config } from '../config/env';
-import { TelemetryService, ThoughtType } from '../services/telemetry';
+import { config } from '../config/env.js';
+import { TelemetryService, ThoughtType } from '../services/telemetry.js';
 
 /**
  * ORACULO Custom Action: Execute Trade on Kalshi via DFlow

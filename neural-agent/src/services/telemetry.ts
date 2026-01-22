@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { elizaLogger } from '@elizaos/core';
-import { config } from '../config/env';
+import { config } from '../config/env.js';
 
 export enum ThoughtType {
     ANALYSIS = 'ANALYSIS',
