@@ -1,11 +1,22 @@
-
-import React from 'react';
-
-export default function LegalLayout({ children }: { children: React.ReactNode }) {
+export default function LegalLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     return (
-        <div className="min-h-screen bg-[#05050A] text-gray-300 pt-24 pb-12">
-            <div className="container mx-auto px-4 max-w-4xl">
-                <div className="glass-panel p-8 md:p-12 border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+        <div className="min-h-screen bg-[#0a0a0f] text-gray-300">
+            <div className="w-full bg-gradient-to-b from-black/50 to-transparent border-b border-white/5 py-12 md:py-20">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-widest mb-4">LEGAL CENTER</h1>
+                    <p className="text-gray-400 max-w-2xl mx-auto">
+                        Institutional-grade transparency for the NeuralMarket protocol.
+                        These documents govern your use of our non-custodial interface.
+                    </p>
+                </div>
+            </div>
+
+            <div className="container mx-auto px-4 py-12">
+                <div className="bg-[#05050A] border border-white/10 rounded-2xl p-6 md:p-12 shadow-2xl">
                     {children}
                 </div>
             </div>

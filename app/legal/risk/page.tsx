@@ -1,68 +1,62 @@
-
 import React from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 export default function RiskDisclosure() {
     return (
-        <article className="prose prose-invert prose-red max-w-none">
-            <h1 className="text-4xl font-black tracking-tighter text-white mb-2">RISK DISCLOSURE</h1>
-            <p className="text-gray-500 font-mono text-sm mb-8 uppercase tracking-widest">Last Updated: January 20, 2026</p>
+        <div className="container mx-auto px-4 py-12 max-w-4xl text-gray-300 font-sans">
+            <div className="flex items-center gap-4 mb-6 text-red-500">
+                <AlertTriangle size={40} />
+                <h1 className="text-3xl md:text-4xl font-bold text-white">Risk Disclosure</h1>
+            </div>
+            <p className="text-sm text-gray-500 mb-8 font-mono">Last Updated: January 21, 2026</p>
 
-            <div className="p-6 bg-red-500/10 border border-red-500/50 rounded-lg mb-8">
-                <h2 className="text-red-400 font-bold text-lg mb-2">CRITICAL WARNING</h2>
-                <p className="text-gray-300 text-sm">
-                    Trading cryptocurrency, prediction markets, and using AI automation involves a substantial risk of loss and is not suitable for every investor. You could lose all of your deposited funds.
+            <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-xl mb-8">
+                <p className="font-bold text-red-200">
+                    CRITICAL WARNING: CRYPTOCURRENCY TRADING AND EVENT MARKETS INVOLVE A SUBSTANTIAL RISK OF LOSS AND ARE NOT SUITABLE FOR EVERY INVESTOR. YOU COULD LOSE ALL OF YOUR INVESTED CAPITAL.
                 </p>
             </div>
 
-            <div className="space-y-8 text-justify">
+            <div className="space-y-8">
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">1. AI MODEL RISK</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">1. Smart Contract Risks</h2>
                     <p>
-                        Neural Market relies on probabilistic Artificial Intelligence models ("Cortex Agents").
+                        NeuralMarket utilizes the `NeuralVault` smart contract on the Solana blockchain. While we perform internal audits, smart contracts are experimental software. Bugs, hacks, or exploits could result in the irreversible loss of funds.
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li><strong>Hallucinations:</strong> AI models can produce false, misleading, or nonsensical outputs ("hallucinations"). An agent might execute a trade based on a "false positive" signal.</li>
-                        <li><strong>Market Adaptation:</strong> Past performance of the AI models in backtesting or simulation does not guarantee future results. Market conditions can change rapidly, rendering models obsolete.</li>
-                        <li><strong>Black Box Nature:</strong> The decision-making process of neural networks is opaque. It may not always be possible to determine why an agent took a specific action.</li>
+                </section>
+
+                <section>
+                    <h2 className="text-xl font-bold text-white mb-4">2. Prediction Market Volatility</h2>
+                    <p>
+                        Binary options and event contracts are "all-or-nothing" instruments. If an event outcome resolves against your position, the value of that position becomes zero ($0). Volatility can be extreme as events approach resolution deadlines.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-xl font-bold text-white mb-4">3. AI & Automation Risks</h2>
+                    <p>
+                        Agents powered by ElizaOS are probabilistic tools, not clairvoyant entities.
+                    </p>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li><strong>Hallucinations:</strong> AI models may generate convincing but factually incorrect analysis.</li>
+                        <li><strong>Execution Errors:</strong> Automated bots may fail to execute trades during periods of high network congestion.</li>
+                        <li><strong>Algorithm Drift:</strong> Market conditions may render a previously profitable strategy userless.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">2. SMART CONTRACT RISK</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">4. Solana Network Risks</h2>
                     <p>
-                        The Protocol operates on smart contracts running on the Solana Blockchain. While we strive for security:
-                    </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li><strong>Bugs & Exploits:</strong> Code vulnerabilities could be exploited by malicious actors, leading to the theft of funds locked in the protocol.</li>
-                        <li><strong>Composability Risk:</strong> Interactions with other DeFi protocols (e.g., DEXs, Oracles) introduce additional points of failure.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3 className="text-xl font-bold text-white mb-3">3. MARKET & LIQUIDITY RISK</h3>
-                    <p>
-                        Assets traded on Neural Market are subject to extreme volatility.
-                    </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li><strong>Slippage:</strong> Low liquidity environments can result in significant slippage, meaning you execute trades at a worse price than expected.</li>
-                        <li><strong>Flash Crashes:</strong> Automated liquidations and high-frequency trading can cause rapid price collapses in seconds.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3 className="text-xl font-bold text-white mb-3">4. REGULATORY RISK</h3>
-                    <p>
-                        The regulatory landscape for cryptocurrencies, AI, and prediction markets is evolving. New regulations or enforcement actions could impact the functionality of The Protocol or restrict your ability to access it.
+                        The Solana blockchain may experience "beta" performance issues, including congestion, dropped transactions, or RPC node failures. These infrastructure issues may prevent you from closing a position before market resolution.
                     </p>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">5. USER RESPONSIBILITY</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">5. Regulatory Status</h2>
                     <p>
-                        You acknowledge that you are solely responsible for securing your wallet, managing your private keys, and verifying the parameters of any AI agent you deploy. Neural Market developers assume no responsibility for user error.
+                        While Kalshi is CFTC-regulated, crypto-assets used to bridge to Kalshi (like USDC/SOL) carry their own regulatory uncertainties. Changes in laws or regulations in your jurisdiction could adversely affect your ability to use this Platform.
                     </p>
                 </section>
             </div>
-        </article>
+        </div>
     );
 }

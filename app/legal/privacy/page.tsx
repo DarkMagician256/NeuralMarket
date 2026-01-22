@@ -1,58 +1,63 @@
-
 import React from 'react';
 
 export default function PrivacyPolicy() {
     return (
-        <article className="prose prose-invert prose-cyan max-w-none">
-            <h1 className="text-4xl font-black tracking-tighter text-white mb-2">PRIVACY POLICY</h1>
-            <p className="text-gray-500 font-mono text-sm mb-8 uppercase tracking-widest">Last Updated: January 20, 2026</p>
+        <div className="container mx-auto px-4 py-12 max-w-4xl text-gray-300 font-sans">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Privacy Policy</h1>
+            <p className="text-sm text-gray-500 mb-8 font-mono">Last Updated: January 21, 2026</p>
 
-            <div className="space-y-8 text-justify">
+            <div className="space-y-8">
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">1. DECENTRALIZATION & DATA MINIMIZATION</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">1. Data Collection Philosophy</h2>
                     <p>
-                        Neural Market is built on principles of privacy and decentralization. We do not maintain user accounts, passwords, or collect traditional personal identification information (PII) such as names, addresses, or phone numbers.
+                        NeuralMarket is designed to minimize data collection. As an on-chain interface, we rely primarily on public blockchain data. However, to provide features like "Agent Telemetry" and "Leaderboards," limited data collection is necessary.
                     </p>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">2. DATA WE COLLECT</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">2. Blockchain Data (Public)</h2>
                     <p>
-                        When you interact with The Protocol, we may collect or process:
+                        Please be aware that your transactions on the Solana blockchain are public, immutable, and permanent.
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li><strong>Public Blockchain Data:</strong> Your wallet address (Public Key) and transaction history are publicly available on the Solana Blockchain. This information is immutable and transparent.</li>
-                        <li><strong>Telemetry Data:</strong> We may unintentionally collect anonymous telemetry data regarding interface usage (e.g., session duration, error logs) to improve system stability. This data is not linked to your identity.</li>
-                        <li><strong>Local Service Storage:</strong> Your browser may store local configuration settings for the AI Agents. This data remains on your device.</li>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li><strong>Wallet Addresses:</strong> Your wallet address is visible on-chain regarding trade interaction.</li>
+                        <li><strong>Trade History:</strong> All trades executed via `NeuralVault` are permanently recorded on the Solana ledger.</li>
+                    </ul>
+                    <p className="mt-2 text-yellow-500/80 text-sm">
+                        NeuralMarket cannot "delete" your transaction history from the blockchain, as we do not control the distributed ledger.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-xl font-bold text-white mb-4">3. Off-Chain Data (Supabase)</h2>
+                    <p>
+                        We use limited off-chain storage for specific features:
+                    </p>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li><strong>Agent Thoughts:</strong> When running an AI Agent, its internal reasoning logs (telemetry) are streamed to our database to display on the dashboard.</li>
+                        <li><strong>User Settings:</strong> Non-critical preferences (theme, notification settings) may be stored locally or in our database linked to your public key.</li>
+                        <li><strong>Ephemeral Logs:</strong> We do not store IP addresses for trading activity permanently.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">3. HOW WE USE YOUR DATA</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">4. Third-Party Sharing</h2>
                     <p>
-                        Since we do not collect PII, our use of data is limited to:
+                        We do not sell your data. However, interacting with integrated services implies data sharing:
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li>Facilitating the connection between your wallet and the Solana Blockchain.</li>
-                        <li>Executed trading commands initiated by your configured AI Agents.</li>
-                        <li>Displaying your portfolio performance and history on the interface.</li>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li><strong>Kalshi:</strong> If you connect a Kalshi account, your trading data is subject to Kalshi's privacy policy.</li>
+                        <li><strong>RPC Providers:</strong> We use Helius/Triton for RPC nodes. They may see your IP address when you broadcast a transaction.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">4. THIRD-PARTY SERVICES</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">5. Rights & Contact</h2>
                     <p>
-                        The Protocol may integrate with third-party services such as RPC nodes (e.g., Helius, Triton) or data providers. These services may collect your IP address or request metadata. We encourage you to review their respective privacy policies. We are not responsible for the privacy practices of third-party nodes.
-                    </p>
-                </section>
-
-                <section>
-                    <h3 className="text-xl font-bold text-white mb-3">5. ON-CHAIN PRIVACY WARNING</h3>
-                    <p className="p-4 bg-yellow-500/10 border-l-4 border-yellow-500 text-gray-300">
-                        <strong>IMPORTANT:</strong> Transactions on the Solana Blockchain are public and permanent. Anyone can view the transactions associated with your wallet address. Do not use this liquidity protocol for transactions you wish to keep private.
+                        Under GDPR and CCPA, you have rights regarding your personal data. To request data deletion (for off-chain data only), please contact: <span className="text-cyan-400 font-mono">legal@neuralmarket.io</span>.
                     </p>
                 </section>
             </div>
-        </article>
+        </div>
     );
 }

@@ -1,74 +1,74 @@
-
 import React from 'react';
 
 export default function TermsOfService() {
     return (
-        <article className="prose prose-invert prose-cyan max-w-none">
-            <h1 className="text-4xl font-black tracking-tighter text-white mb-2">TERMS OF SERVICE</h1>
-            <p className="text-gray-500 font-mono text-sm mb-8 uppercase tracking-widest">Last Updated: January 20, 2026</p>
+        <div className="container mx-auto px-4 py-12 max-w-4xl text-gray-300 font-sans">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Terms of Service</h1>
+            <p className="text-sm text-gray-500 mb-8 font-mono">Last Updated: January 21, 2026</p>
 
-            <div className="space-y-8 text-justify">
+            <div className="space-y-8">
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">1. ACCEPTANCE OF TERMS</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">1. Acceptance of Terms</h2>
                     <p>
-                        By accessing, interfacing with, or utilizing the Neural Market protocol ("The Protocol"), including its Artificial Intelligence agents ("Cortex AI") and smart contracts on the Solana Blockchain, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. The Protocol is a decentralized, non-custodial software interface. If you do not agree, you must immediately discontinue use.
+                        By accessing or using the NeuralMarket interface ("The Platform"), executing trades via the NeuralVault smart contracts, or deploying AI Agents, you agree to these Terms of Service.
+                        NeuralMarket is a non-custodial software interface that facilitates interaction with the Solana blockchain and third-party protocols (Kalshi, DFlow, Jupiter).
                     </p>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">2. NATURE OF THE PROTOCOL</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">2. Non-Custodial & Interface Disclaimer</h2>
                     <p>
-                        Neural Market is an experimental technology stack comprising:
+                        NeuralMarket is purely a software provider. We do not:
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li><strong>Non-Custodial Interface:</strong> We do not hold, control, or have access to your private keys or digital assets. You retain full control and responsibility for your Solana wallet.</li>
-                        <li><strong>AI Autonomy:</strong> The "Cortex Agents" are autonomous software scripts intended for analysis and automated execution. They operate based on probabilistic models and may make erroneous predictions or trades. <strong>You accept full liability for any actions triggered by the agents you activate.</strong></li>
-                        <li><strong>On-Chain Execution:</strong> All transactions are executed directly on the Solana Blockchain. Once verified, transactions are irreversible.</li>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li>Hold, custody, or manage your funds.</li>
+                        <li>Act as a broker, dealer, or financial advisor.</li>
+                        <li>Operate the underlying prediction markets (which are operated by KalshiEx LLC).</li>
                     </ul>
-                </section>
-
-                <section>
-                    <h3 className="text-xl font-bold text-white mb-3">3. NO FINANCIAL ADVICE</h3>
-                    <p>
-                        The data, signals, and autonomous actions provided by Neural Market and its AI agents are for informational and utility purposes only. <strong>Nothing in this interface constitutes financial, investment, legal, or tax advice.</strong> You are solely responsible for your investment decisions. The use of high-frequency trading tools involves significant risk of loss.
-                    </p>
-                </section>
-
-                <section>
-                    <h3 className="text-xl font-bold text-white mb-3">4. RISKS & LIABILITY DISCLAIMER</h3>
-                    <p>
-                        THE PROTOCOL IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED.
-                    </p>
                     <p className="mt-2">
-                        We shall not be liable for any damages arising from:
+                        You retain full control of your private keys at all times via your Solana wallet (e.g., Phantom, Solflare).
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li>Smart contract vulnerabilities, bugs, or exploits.</li>
-                        <li>Failure, hallucination, or erratic behavior of AI Agents.</li>
-                        <li>Network failures, latency, or congestion on the Solana Blockchain.</li>
-                        <li>Loss of private keys or unauthorized access to your wallet.</li>
+                </section>
+
+                <section>
+                    <h2 className="text-xl font-bold text-white mb-4">3. AI Agents & Autonomy</h2>
+                    <p>
+                        The Platform allows you to deploy autonomous agents ("Neural Agents") powered by ElizaOS technology. By deploying an agent, you acknowledge:
+                    </p>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li>Agents operate based on probabilistic models and may make erroneous predictions.</li>
+                        <li>Past performance of an Agent (e.g., "Whale Watcher") does not guarantee future results.</li>
+                        <li>Running a "Sovereign Node" (Docker) places the operational responsibility entirely on you.</li>
+                        <li>NeuralMarket denies all liability for losses incurred by Agent autonomous execution.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">5. USER REPRESENTATIONS</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">4. Third-Party Integrations</h2>
                     <p>
-                        By using The Protocol, you represent that:
+                        Our Platform integrates with third-party protocols:
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
-                        <li>You are of legal age and capacity to enter into this agreement.</li>
-                        <li>You are not a citizen or resident of any jurisdiction where decentralized prediction markets or AI trading are prohibited (Restricted Jurisdictions).</li>
-                        <li>You understand the technical risks associated with blockchain technology and AI.</li>
+                    <ul className="list-disc pl-6 mt-2 space-y-2">
+                        <li><strong>Kalshi:</strong> Market data and settlement are governed by Kalshi's Rulebook.</li>
+                        <li><strong>Jupiter:</strong> Token swaps are routed through Jupiter Aggregator. We do not control exchange rates or slippage.</li>
+                        <li><strong>DFlow:</strong> Liquidity routing relies on DFlow's independent infrastructure.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h3 className="text-xl font-bold text-white mb-3">6. GOVERNING LAW & DISPUTE RESOLUTION</h3>
+                    <h2 className="text-xl font-bold text-white mb-4">5. Builder Code & Revenue</h2>
                     <p>
-                        Given the decentralized nature of The Protocol, these Terms shall be governed by the laws of the decentralised web principles where applicable, or default to the laws of Panama for corporate disputes. Any dispute arising under these Terms shall be resolved through binding arbitration.
+                        Transactions executed via this interface may append a "Builder Code" (ORACULO_V2) which generates revenue attribution for the protocol development. This does not affect your execution price beyond standard network fees.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-xl font-bold text-white mb-4">6. Limitation of Liability</h2>
+                    <p>
+                        TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEURALMARKET SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM (A) YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE THE INTERFACE; (B) ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE INTERFACE; OR (C) UNAUTHORIZED ACCESS, USE, OR ALTERATION OF YOUR TRANSMISSIONS OR CONTENT.
                     </p>
                 </section>
             </div>
-        </article>
+        </div>
     );
 }
