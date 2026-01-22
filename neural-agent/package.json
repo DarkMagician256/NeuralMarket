@@ -2,7 +2,6 @@
     "name": "oraculo-sentient-agent",
     "version": "1.0.0",
     "description": "Autonomous Prediction Market Agent for Solana (Kalshi + DFlow + ElizaOS)",
-    "type": "module",
     "main": "dist/agent.js",
     "scripts": {
         "build": "echo 'Build skipped (using tsx)'",
