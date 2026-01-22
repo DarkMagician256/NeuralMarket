@@ -1,49 +1,156 @@
 "use server";
 
-// This action runs only on the server, keeping API keys safe
-export async function getLiveMarkets() {
+import { kalshiClient, KalshiMarket } from '@/lib/kalshi';
+import { KALSHI_MARKETS } from '@/lib/kalshiData';
+
+export interface Market {
+    id: string;
+    ticker: string;
+    title: string;
+    category: string;
+    probability: number;
+    volume: string;
+    change24h: number;
+    cortexSignal?: 'BULLISH' | 'BEARISH' | 'NEUTRAL';
+    yesPrice?: number;
+    noPrice?: number;
+    expiration?: string;
+}
+
+/**
+ * Fetch live markets from Kalshi API
+ * Falls back to mock data if API fails
+ */
+export async function getLiveMarkets(): Promise<Market[]> {
     try {
-        // In a real prod app, we'd fetch from Kalshi/DFlow APIs here
-        // const response = await fetch('https://api.kalshi.com/v2/events', {
-        //   headers: { 'Authorization': process.env.KALSHI_API_KEY! }
-        // });
+        console.log('[Kalshi] Fetching live markets...');
 
-        // For the hackathon demo, we return structured live-simulated data 
-        // that mimics the Kalshi SDK response but from our "Source of Truth"
+        // Try to fetch real Kalshi markets
+        const kalshiMarkets = await kalshiClient.getMarkets(20, 'open');
 
-        // Fetch Real-time data from CoinGecko
-        const res = await fetch(
-            'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,ripple,render-token,fetch-ai,pepe,bonk,chainlink,jupiter-exchange-solana&order=market_cap_desc&sparkline=false&price_change_percentage=24h',
-            { next: { revalidate: 30 } } // Cache for 30s
-        );
+        if (kalshiMarkets && kalshiMarkets.length > 0) {
+            console.log(`[Kalshi] Fetched ${kalshiMarkets.length} live markets`);
 
-        if (!res.ok) throw new Error('Failed to fetch from CG');
+            return kalshiMarkets.map((market: KalshiMarket) => {
+                const yesPrice = market.yes_bid || market.last_price || 0.5;
+                const probability = Math.round(yesPrice * 100);
 
-        const coins = await res.json();
+                // Determine signal based on recent activity
+                let cortexSignal: 'BULLISH' | 'BEARISH' | 'NEUTRAL' = 'NEUTRAL';
+                if (probability > 60) cortexSignal = 'BULLISH';
+                else if (probability < 40) cortexSignal = 'BEARISH';
 
-        // Transform into "Prediction Markets"
-        return coins.map((coin: any) => {
-            const isBullish = coin.price_change_percentage_24h > 0;
-            const probability = Math.min(95, Math.max(5, 50 + (coin.price_change_percentage_24h * 2)));
+                // Format volume
+                const volumeNum = market.volume_24h || market.volume || 0;
+                const volumeStr = volumeNum >= 1000000
+                    ? `$${(volumeNum / 1000000).toFixed(1)}M`
+                    : volumeNum >= 1000
+                        ? `$${(volumeNum / 1000).toFixed(0)}K`
+                        : `$${volumeNum}`;
 
-            let category = 'CRYPTO';
-            if (['render-token', 'fetch-ai'].includes(coin.id)) category = 'SCIENCE';
-            if (['pepe', 'bonk'].includes(coin.id)) category = 'CULTURE';
-            if (['bitcoin', 'ethereum'].includes(coin.id)) category = 'ECONOMY';
+                return {
+                    id: market.ticker,
+                    ticker: market.ticker,
+                    title: market.title || market.subtitle || market.ticker,
+                    category: mapCategory(market.category),
+                    probability,
+                    volume: volumeStr,
+                    change24h: 0, // Would need historical data
+                    cortexSignal,
+                    yesPrice: market.yes_bid,
+                    noPrice: market.no_bid,
+                    expiration: market.expiration_time
+                };
+            });
+        }
 
-            return {
-                id: `live_${coin.id}`,
-                ticker: `${coin.symbol.toUpperCase()}-PRED`,
-                title: `Will ${coin.name} close Green today?`,
-                category,
-                probability: Math.floor(probability),
-                volume: `$${(coin.total_volume / 1000000).toFixed(1)}M`,
-                change24h: coin.price_change_percentage_24h,
-                cortexSignal: isBullish ? 'BULLISH' : 'BEARISH'
-            };
-        });
+        throw new Error('No markets returned from API');
+
     } catch (error) {
-        console.error("Error fetching live markets:", error);
-        return [];
+        console.error('[Kalshi] API error, using fallback data:', error);
+
+        // Fallback to mock data
+        return KALSHI_MARKETS.map(market => ({
+            id: market.ticker,
+            ticker: market.ticker,
+            title: market.title,
+            category: market.category,
+            probability: Math.round(market.yesPrice * 100),
+            volume: `$${(market.volume / 1000000).toFixed(1)}M`,
+            change24h: 0,
+            cortexSignal: market.yesPrice > 0.6 ? 'BULLISH' as const :
+                market.yesPrice < 0.4 ? 'BEARISH' as const : 'NEUTRAL' as const,
+            yesPrice: market.yesPrice,
+            noPrice: market.noPrice,
+            expiration: market.expiration
+        }));
     }
+}
+
+/**
+ * Fetch single market details
+ */
+export async function getMarketDetails(ticker: string): Promise<Market | null> {
+    try {
+        const market = await kalshiClient.getMarket(ticker);
+
+        if (market) {
+            const yesPrice = market.yes_bid || market.last_price || 0.5;
+            return {
+                id: market.ticker,
+                ticker: market.ticker,
+                title: market.title || market.ticker,
+                category: mapCategory(market.category),
+                probability: Math.round(yesPrice * 100),
+                volume: `$${((market.volume_24h || 0) / 1000000).toFixed(1)}M`,
+                change24h: 0,
+                yesPrice: market.yes_bid,
+                noPrice: market.no_bid,
+                expiration: market.expiration_time
+            };
+        }
+
+        // Fallback to mock
+        const mockMarket = KALSHI_MARKETS.find(m => m.ticker === ticker);
+        if (mockMarket) {
+            return {
+                id: mockMarket.ticker,
+                ticker: mockMarket.ticker,
+                title: mockMarket.title,
+                category: mockMarket.category,
+                probability: Math.round(mockMarket.yesPrice * 100),
+                volume: `$${(mockMarket.volume / 1000000).toFixed(1)}M`,
+                change24h: 0,
+                yesPrice: mockMarket.yesPrice,
+                noPrice: mockMarket.noPrice,
+                expiration: mockMarket.expiration
+            };
+        }
+
+        return null;
+    } catch (error) {
+        console.error('[Kalshi] Error fetching market details:', error);
+        return null;
+    }
+}
+
+/**
+ * Map Kalshi categories to our categories
+ */
+function mapCategory(category?: string): string {
+    if (!category) return 'POLITICS';
+
+    const categoryMap: Record<string, string> = {
+        'Politics': 'POLITICS',
+        'Economics': 'ECONOMICS',
+        'Crypto': 'CRYPTO',
+        'Finance': 'ECONOMICS',
+        'Tech': 'SCIENCE',
+        'Science': 'SCIENCE',
+        'Sports': 'CULTURE',
+        'Entertainment': 'CULTURE',
+        'Culture': 'CULTURE'
+    };
+
+    return categoryMap[category] || category.toUpperCase();
 }

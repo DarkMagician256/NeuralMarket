@@ -1,36 +1,38 @@
-'use client';
-
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { TrendingUp, Globe, Clock, ArrowRight, Zap } from 'lucide-react';
 import MarketPredictionCard from '@/components/markets/MarketPredictionCard';
-import TestIntentButton from '@/components/debug/TestIntentButton';
-import { KALSHI_MARKETS } from '@/lib/kalshiData';
-import { TrendingUp, Globe, Clock, ArrowRight } from 'lucide-react';
+import { getLiveMarkets } from '@/app/actions/getMarkets';
 
-export default function MarketsPage() {
+export const revalidate = 30; // Revalidate every 30 seconds
+
+export default async function MarketsPage() {
+    // Fetch real Kalshi markets on the server
+    const markets = await getLiveMarkets();
+
+    // Calculate stats
+    const totalVolume = markets.reduce((acc, m) => {
+        const vol = parseFloat(m.volume.replace(/[$,KM]/g, '')) || 0;
+        return acc + vol;
+    }, 0);
+
     return (
         <div className="min-h-screen pb-16 md:pb-20 pt-24 md:pt-28 px-3 sm:px-4 md:px-8">
             <div className="container mx-auto max-w-7xl">
 
-                {/* Header Section - Responsive */}
+                {/* Header Section */}
                 <div className="flex flex-col gap-6 md:gap-8 mb-8 md:mb-12 border-b border-white/10 pb-6 md:pb-8">
-                    {/* Title & Description */}
                     <div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="flex flex-wrap items-center gap-3 md:gap-4 mb-2 md:mb-3"
-                        >
+                        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-2 md:mb-3">
                             <div className="p-2 md:p-3 bg-green-500/10 rounded-xl">
                                 <TrendingUp className="text-green-400" size={24} />
                             </div>
                             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white">
                                 PREDICTION MARKETS
                             </h1>
-                            <div className="ml-2 opacity-0 hover:opacity-100 transition-opacity hidden lg:block">
-                                <TestIntentButton />
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/20 rounded-full text-green-400 text-xs font-mono animate-pulse">
+                                <Zap size={12} /> LIVE
                             </div>
-                        </motion.div>
+                        </div>
                         <p className="text-gray-400 font-mono text-xs sm:text-sm max-w-2xl leading-relaxed">
                             Access live event contracts powered by Kalshi and DFlow.
                             Deploy your Neural Agents to analyze outcomes and execute trades on
@@ -38,7 +40,7 @@ export default function MarketsPage() {
                         </p>
                     </div>
 
-                    {/* Partner Integrations - Responsive */}
+                    {/* Partner Integrations */}
                     <div className="flex flex-col items-start sm:items-end gap-2">
                         <span className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                             Official Data & Execution
@@ -63,20 +65,20 @@ export default function MarketsPage() {
                     </div>
                 </div>
 
-                {/* Market Stats - Responsive */}
+                {/* Market Stats */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-8 md:mb-10">
                     <div className="glass-panel p-3 md:p-4 flex items-center gap-3 md:gap-4">
                         <div className="p-1.5 md:p-2 bg-blue-500/20 rounded-lg text-blue-400"><Globe size={18} /></div>
                         <div>
                             <div className="text-[10px] md:text-xs text-gray-500 font-mono uppercase">Active Markets</div>
-                            <div className="text-lg md:text-xl font-bold text-white">{KALSHI_MARKETS.length} Live Events</div>
+                            <div className="text-lg md:text-xl font-bold text-white">{markets.length} Live Events</div>
                         </div>
                     </div>
                     <div className="glass-panel p-3 md:p-4 flex items-center gap-3 md:gap-4">
                         <div className="p-1.5 md:p-2 bg-purple-500/20 rounded-lg text-purple-400"><Clock size={18} /></div>
                         <div>
                             <div className="text-[10px] md:text-xs text-gray-500 font-mono uppercase">24h Volume</div>
-                            <div className="text-lg md:text-xl font-bold text-white">$4.2M</div>
+                            <div className="text-lg md:text-xl font-bold text-white">${totalVolume.toFixed(1)}M</div>
                         </div>
                     </div>
                     <div className="glass-panel p-3 md:p-4 flex items-center gap-3 md:gap-4 group cursor-pointer hover:border-cyan-500/30 transition-colors">
@@ -88,19 +90,20 @@ export default function MarketsPage() {
                     </div>
                 </div>
 
-                {/* Markets Grid - Responsive */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-                >
-                    {KALSHI_MARKETS.map((market, index) => (
+                {/* Markets Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    {markets.map((market, index) => (
                         <div key={market.ticker} className="hover:scale-[1.01] transition-transform duration-300">
                             <MarketPredictionCard market={market} />
                         </div>
                     ))}
-                </motion.div>
+                </div>
+
+                {markets.length === 0 && (
+                    <div className="text-center py-20">
+                        <p className="text-gray-500 font-mono">Loading markets from Kalshi...</p>
+                    </div>
+                )}
 
                 <div className="mt-8 md:mt-12 text-center">
                     <p className="text-[10px] md:text-xs text-gray-600 font-mono">
