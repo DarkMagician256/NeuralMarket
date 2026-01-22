@@ -153,7 +153,7 @@ export default function PerformanceChart() {
                             }}
                             labelStyle={{ color: '#fff', fontFamily: 'monospace', fontSize: '11px' }}
                             itemStyle={{ color: isPositive ? '#22c55e' : '#ef4444' }}
-                            formatter={(value: number) => [`${value.toFixed(2)} SOL`, 'PnL']}
+                            formatter={(value) => [`${Number(value ?? 0).toFixed(2)} SOL`, 'PnL']}
                         />
                         <Area
                             type="monotone"
