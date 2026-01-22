@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies (Bun installs npm packages natively and fast)
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Copy source code
 COPY . .
