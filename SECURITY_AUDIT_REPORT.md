@@ -99,6 +99,18 @@ export const RPC_ENDPOINT =
 
 ---
 
+## 🔑 API CREDENTIALS STATUS
+
+| Service | Status | Notes |
+|---------|--------|-------|
+| **Kalshi API** | ✅ READY | API Key ID, Private Key (RSA 2048-bit), Builder Code configured |
+| **Helius RPC** | ✅ READY | Devnet endpoint with API key configured |
+| **Supabase** | ✅ READY | Anon Key (frontend) + Service Key (backend) configured |
+| **DFlow** | ⏳ PENDING | Placeholder - needs production API key |
+| **OpenAI** | ⏳ PENDING | Placeholder - needs production API key |
+
+---
+
 ## 📋 MAINNET SECURITY CHECKLIST
 
 ### Pre-Launch Requirements
@@ -107,7 +119,10 @@ export const RPC_ENDPOINT =
 - [x] Anchor Program ID locked
 - [x] Rate limiting implemented for external APIs
 - [x] Treasury wallet configurable via environment
+- [x] Premium RPC Provider configured (Helius Devnet)
+- [x] Kalshi API credentials configured
 - [ ] Upgrade authority secured (Multisig with Squads Protocol)
+- [ ] Switch to Mainnet Helius RPC
 - [ ] External security audit completed
 - [ ] Penetration testing performed
 
@@ -123,10 +138,12 @@ export const RPC_ENDPOINT =
    - Posthog for usage analytics
    - Datadog/Grafana for infrastructure monitoring
 
-3. **Premium RPC Provider:**
-   - Helius (recommended)
-   - QuickNode
-   - Triton
+3. **Environment Updates for Mainnet:**
+   ```bash
+   # Update in .env.local for Mainnet launch
+   NEXT_PUBLIC_HELIUS_RPC=https://mainnet.helius-rpc.com/?api-key=<YOUR_KEY>
+   NEXT_PUBLIC_SOLANA_CLUSTER=mainnet-beta
+   ```
 
 ---
 
@@ -140,5 +157,6 @@ Response Timeline:
 
 ---
 
-**Audit Performed By:** Internal Security Team
+**Audit Performed By:** Internal Security Team  
+**Last Updated:** 2026-01-22  
 **Next Scheduled Review:** Pre-Mainnet Launch

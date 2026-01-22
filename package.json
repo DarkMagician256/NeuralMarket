@@ -17,7 +17,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@coral-xyz/anchor": "^0.32.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@solana/wallet-adapter-base": "^0.9.27",
@@ -41,6 +40,7 @@
     "use-sound": "^5.0.0"
   },
   "devDependencies": {
+    "@coral-xyz/anchor": "^0.32.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/react": "^16.0.0",
     "@types/chai": "^5.2.3",
