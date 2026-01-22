@@ -7,6 +7,11 @@ import idl from '../../anchor/target/idl/neural_vault.json';
 const PROGRAM_ID = new PublicKey("A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F");
 const DEFAULT_AGENT_ID = new BN(1001); // TITAN_ALPHA - our demo agent
 
+// Use development logging only
+const isDev = process.env.NODE_ENV === 'development';
+const log = isDev ? console.log : () => { };
+const logWarn = isDev ? console.warn : () => { };
+
 export async function buildTradeTransaction(
     userPublicKey: string,
     ticker: string,
@@ -15,10 +20,14 @@ export async function buildTradeTransaction(
     agentId?: number // Optional: Associate trade with specific agent
 ) {
     try {
-        const connection = new Connection(process.env.NEXT_PUBLIC_RPC_URL || 'https://api.devnet.solana.com');
+        const connection = new Connection(
+            process.env.NEXT_PUBLIC_HELIUS_RPC ||
+            process.env.NEXT_PUBLIC_RPC_URL ||
+            'https://api.devnet.solana.com'
+        );
         const builderCode = process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2';
 
-        console.log(`[NeuralVault] Building trade for user: "${userPublicKey}", Agent: ${agentId || 'Default'}`);
+        log(`[NeuralVault] Building trade for user: "${userPublicKey}", Agent: ${agentId || 'Default'}`);
 
         if (!userPublicKey || userPublicKey.trim() === '') {
             throw new Error("User public key is missing or empty");
@@ -75,7 +84,7 @@ export async function buildTradeTransaction(
             const agentInfo = await connection.getAccountInfo(agentPda);
 
             if (agentInfo) {
-                console.log("[NeuralVault] Agent found! Using recordTradeStandalone.");
+                log("[NeuralVault] Agent found! Using recordTradeStandalone.");
 
                 const amountLamports = new BN(Math.floor(amount * 1_000_000_000));
                 const isProfitable = outcome === 'YES';
@@ -95,14 +104,14 @@ export async function buildTradeTransaction(
                     .instruction();
                 transaction.add(recordTradeIx);
 
-                console.log("[NeuralVault] recordTradeStandalone instruction added.");
+                log("[NeuralVault] recordTradeStandalone instruction added.");
             } else {
-                console.log("[NeuralVault] Agent not found. Trade recorded via Memo only.");
+                log("[NeuralVault] Agent not found. Trade recorded via Memo only.");
             }
 
         } catch (anchorError: any) {
             console.error("[NeuralVault] Anchor integration warning:", anchorError.message);
-            console.log("[NeuralVault] Proceeding with Memo-only transaction.");
+            log("[NeuralVault] Proceeding with Memo-only transaction.");
         }
 
         // --- 3. FINALIZE ---
@@ -110,7 +119,7 @@ export async function buildTradeTransaction(
         transaction.recentBlockhash = blockhash;
         transaction.feePayer = userPubkeyObj;
 
-        console.log(`[NeuralVault] Transaction built with ${transaction.instructions.length} instructions.`);
+        log(`[NeuralVault] Transaction built with ${transaction.instructions.length} instructions.`);
 
         return transaction.serialize({ verifySignatures: false }).toString('base64');
 
@@ -142,10 +151,11 @@ export async function recordTrade(tradeData: {
     const { createClient } = await import('@supabase/supabase-js');
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    // Prefer service key for server-side operations
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
 
     if (!supabaseUrl || !supabaseKey) {
-        console.warn("[Supabase] Not configured. Trade not persisted to DB.");
+        logWarn("[Supabase] Not configured. Trade not persisted to DB.");
         return { success: false, error: "Supabase not configured" };
     }
 
@@ -164,6 +174,6 @@ export async function recordTrade(tradeData: {
         return { success: false, error: error.message };
     }
 
-    console.log("[Supabase] Trade saved:", tradeData.signature);
+    log("[Supabase] Trade saved:", tradeData.signature);
     return { success: true };
 }

@@ -45,7 +45,7 @@ export default function TestIntentButton() {
                 await (program.account as any).agent.fetch(agentPDA);
             } catch (e) {
                 needsCreation = true;
-                console.log("Agent 999 not found. Auto-creating in same TX...");
+                // Agent not found - will be created
             }
 
             const transaction = new web3.Transaction();
@@ -80,7 +80,6 @@ export default function TestIntentButton() {
             // 4. Send & Confirm
             const tx = await provider.sendAndConfirm(transaction, [], { commitment: 'confirmed' });
 
-            console.log("Intent Submitted:", tx);
             setLastSig(tx);
             setStatus('SUCCESS');
 

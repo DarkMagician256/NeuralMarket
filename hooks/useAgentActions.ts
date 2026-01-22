@@ -86,8 +86,6 @@ export function useAgentActions() {
             const volumeLamports = new BN(Math.floor(volume * 1_000_000_000));
             const pnlLamports = new BN(Math.floor(pnl * 1_000_000_000));
 
-            console.log("📤 Sending recordTradeStandalone tx...");
-
             const tx = await program.methods
                 .recordTradeStandalone(
                     agentIdBN,
@@ -100,8 +98,6 @@ export function useAgentActions() {
                     user: wallet.publicKey,
                 } as any)
                 .rpc();
-
-            console.log("✅ Transaction sent:", tx);
 
             // Don't wait for confirmation - return immediately with the hash
             return { success: true, txHash: tx };
@@ -138,7 +134,6 @@ export function useAgentActions() {
                 } as any)
                 .rpc();
 
-            console.log("✅ Deactivate tx sent:", tx);
             return { success: true, txHash: tx };
         } catch (error: any) {
             console.error("Failed to deactivate agent:", error);
@@ -173,7 +168,6 @@ export function useAgentActions() {
                 } as any)
                 .rpc();
 
-            console.log("✅ Reactivate tx sent:", tx);
             return { success: true, txHash: tx };
         } catch (error: any) {
             console.error("Failed to reactivate agent:", error);
@@ -197,8 +191,6 @@ export function useAgentActions() {
                 [Buffer.from("agent"), wallet.publicKey.toBuffer(), agentIdBN.toArrayLike(Buffer, 'le', 8)],
                 PROGRAM_ID
             );
-
-            console.log(`🏦 Staking ${amount} SOL to Agent: ${agentPda.toBase58()}`);
 
             // Create Transfer Transaction
             // Import dynamically to ensure it works on client side
@@ -225,7 +217,6 @@ export function useAgentActions() {
                 ...latestBlockhash
             }, 'confirmed');
 
-            console.log("✅ Deposit confirmed:", signature);
             return { success: true, txHash: signature };
 
         } catch (error: any) {

@@ -1,62 +1,91 @@
 import React from 'react';
-import { AlertTriangle } from 'lucide-react';
 
-export default function RiskDisclosure() {
+export default function RiskPage() {
     return (
-        <div className="container mx-auto px-4 py-12 max-w-4xl text-gray-300 font-sans">
-            <div className="flex items-center gap-4 mb-6 text-red-500">
-                <AlertTriangle size={40} />
-                <h1 className="text-3xl md:text-4xl font-bold text-white">Risk Disclosure</h1>
+        <div className="space-y-8 text-gray-300">
+            <div className="border-b border-red-500/20 pb-6">
+                <h1 className="text-3xl font-bold text-red-500 mb-2">CRITICAL RISK DISCLOSURE</h1>
+                <p className="text-sm text-gray-500">Mandatory reading before operating.</p>
             </div>
-            <p className="text-sm text-gray-500 mb-8 font-mono">Last Updated: January 21, 2026</p>
 
-            <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-xl mb-8">
-                <p className="font-bold text-red-200">
-                    CRITICAL WARNING: CRYPTOCURRENCY TRADING AND EVENT MARKETS INVOLVE A SUBSTANTIAL RISK OF LOSS AND ARE NOT SUITABLE FOR EVERY INVESTOR. YOU COULD LOSE ALL OF YOUR INVESTED CAPITAL.
+            <section className="bg-red-900/10 border border-red-500/30 p-6 rounded-lg space-y-4">
+                <h2 className="text-xl font-bold text-red-400 flex items-center gap-2">
+                    <span className="text-2xl">⚠️</span> RISK OF TOTAL LOSS
+                </h2>
+                <p>
+                    Trading crypto-assets, derivatives, and prediction markets carries <strong>EXTREME</strong> risk.
+                    You could lose the entirety of the funds (SOL/USDC) deposited in your agents or wallets.
+                    <strong>Never trade with money you cannot afford to lose.</strong>
                 </p>
-            </div>
+            </section>
 
-            <div className="space-y-8">
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">1. Smart Contract Risks</h2>
-                    <p>
-                        NeuralMarket utilizes the `NeuralVault` smart contract on the Solana blockchain. While we perform internal audits, smart contracts are experimental software. Bugs, hacks, or exploits could result in the irreversible loss of funds.
-                    </p>
-                </section>
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">1. SMART CONTRACT RISKS</h2>
+                <p>
+                    NeuralVault is experimental software. Although internally audited, it may contain unforeseen "bugs" or vulnerabilities resulting in fund loss.
+                    By using the protocol, you agree that NeuralMarket S.A.P.I. de C.V. is not liable for failures in the Solana Blockchain code, Anchor Framework, or third-party programs (Jupiter, DFlow).
+                </p>
+            </section>
 
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">2. Prediction Market Volatility</h2>
-                    <p>
-                        Binary options and event contracts are "all-or-nothing" instruments. If an event outcome resolves against your position, the value of that position becomes zero ($0). Volatility can be extreme as events approach resolution deadlines.
-                    </p>
-                </section>
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">2. REGULATORY RISKS (MEXICO)</h2>
+                <p>
+                    The legal framework for Virtual Assets is constantly evolving. Changes in the Fintech Law, provisions from Banco de México (Banxico), or the FIU (UIF) could affect service availability.
+                </p>
+            </section>
 
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">3. AI & Automation Risks</h2>
-                    <p>
-                        Agents powered by ElizaOS are probabilistic tools, not clairvoyant entities.
-                    </p>
-                    <ul className="list-disc pl-6 mt-2 space-y-2">
-                        <li><strong>Hallucinations:</strong> AI models may generate convincing but factually incorrect analysis.</li>
-                        <li><strong>Execution Errors:</strong> Automated bots may fail to execute trades during periods of high network congestion.</li>
-                        <li><strong>Algorithm Drift:</strong> Market conditions may render a previously profitable strategy userless.</li>
-                    </ul>
-                </section>
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">3. PREDICTION MARKET RISKS (KALSHI)</h2>
+                <p>
+                    Prediction markets are binary and volatile. Event resolution depends on external Oracles.
+                    Disputes in Oracle resolution (e.g., "Who won the election?") are outside NeuralMarket's control.
+                </p>
+            </section>
 
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">4. Solana Network Risks</h2>
-                    <p>
-                        The Solana blockchain may experience "beta" performance issues, including congestion, dropped transactions, or RPC node failures. These infrastructure issues may prevent you from closing a position before market resolution.
-                    </p>
-                </section>
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">4. AUTONOMOUS AGENTS (AI)</h2>
+                <p>
+                    Artificial Intelligence Agents ("ElizaOS", "Oracle") operate under probabilistic, not deterministic, logic.
+                    An Agent may make erroneous trading decisions ("hallucinate") based on incorrect market data.
+                    Past performance in simulations does not guarantee future results.
+                </p>
+            </section>
 
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">5. Regulatory Status</h2>
-                    <p>
-                        While Kalshi is CFTC-regulated, crypto-assets used to bridge to Kalshi (like USDC/SOL) carry their own regulatory uncertainties. Changes in laws or regulations in your jurisdiction could adversely affect your ability to use this Platform.
-                    </p>
-                </section>
-            </div>
+            {/* SEPARATOR */}
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent my-12 opacity-50"></div>
+
+            {/* SECTION 2: INTERNATIONAL REGULATORY WARNINGS */}
+            <section className="space-y-6 bg-black/20 p-6 rounded-xl border border-white/5">
+                <h2 className="text-xl font-semibold text-orange-500 flex items-center gap-2">
+                    <span className="text-2xl">🌐</span> INTERNATIONAL REGULATORY WARNINGS
+                </h2>
+
+                <div className="grid grid-cols-1 gap-4 text-sm text-gray-400">
+                    <div className="bg-orange-900/10 border border-orange-500/20 p-4 rounded">
+                        <strong className="text-orange-300 block mb-2">Lack of Protection in Foreign Jurisdictions</strong>
+                        <p>
+                            If you access NeuralMarket from outside Mexico, you likely DO NOT benefit from the protections of your local financial regulator (e.g., FCA in UK, SEC in USA, ASIC in Australia).
+                            Smart Contract transactions are irreversible and usually uninsured.
+                        </p>
+                    </div>
+
+                    <div>
+                        <strong className="text-white block mb-1">USA Residents:</strong>
+                        <p>
+                            NeuralMarket is an interface layer. While Kalshi markets are regulated by the CFTC, the NeuralVault autonomous agent layer is an experimental protocol not registered with the CFTC or SEC.
+                            <strong>U.S. users operate at their own risk regarding the use of unhosted wallets and AI agents.</strong>
+                        </p>
+                    </div>
+
+                    <div>
+                        <strong className="text-white block mb-1">UK Residents:</strong>
+                        <p>
+                            The Financial Conduct Authority (FCA) has banned the sale of crypto-derivatives to retail consumers.
+                            <strong>This service is not intended for UK retail clients.</strong>
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

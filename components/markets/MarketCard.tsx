@@ -11,6 +11,11 @@ export default function MarketCard({ market }: { market: Market }) {
     const isVolatile = Math.abs(market.change24h) > 5;
     const isCortexActive = !!market.cortexSignal;
 
+    const handleQuickTrade = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        router.push(`/markets/${market.ticker}?action=trade`);
+    };
+
     return (
         <motion.div
             layout
@@ -82,7 +87,7 @@ export default function MarketCard({ market }: { market: Market }) {
                 </div>
 
                 <button
-                    onClick={(e) => { e.stopPropagation(); console.log('Quick Trade', market.ticker) }}
+                    onClick={handleQuickTrade}
                     className="opacity-0 group-hover:opacity-100 transition-opacity bg-white text-black font-bold px-3 py-1 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0"
                 >
                     TRADE

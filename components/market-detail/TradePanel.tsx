@@ -56,7 +56,6 @@ export default function TradePanel({ ticker }: { ticker: string }) {
 
             // 3. Send and confirm via wallet
             const signature = await sendTransaction(transaction, connection);
-            console.log(`[ORACULO] Trade Transaction Sent: ${signature}`);
 
             // 4. Record for portfolio
             await recordTrade({

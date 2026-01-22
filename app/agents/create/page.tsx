@@ -26,6 +26,7 @@ const IDL: any = {
             "discriminator": [241, 88, 137, 72, 131, 130, 234, 142],
             "accounts": [
                 { "name": "agent", "writable": true, "pda": { "seeds": [{ "kind": "const", "value": [97, 103, 101, 110, 116] }, { "kind": "account", "path": "user" }, { "kind": "arg", "path": "agent_id" }] } },
+                { "name": "treasury", "writable": true },
                 { "name": "user", "writable": true, "signer": true },
                 { "name": "system_program", "address": "11111111111111111111111111111111" }
             ],
@@ -47,6 +48,9 @@ const ARCHETYPE_MAP: Record<string, number> = {
     'hedger': 2,
     'whale': 3
 };
+
+// Protocol Treasury Wallet (Devnet Deployer)
+const TREASURY_PUBKEY = new PublicKey("DEFMy6CUCtLebLVcxhZiau1VfbAFw3nKdNHFXCX8PmjA");
 
 export default function AgentWizardPage() {
     const router = useRouter();
@@ -97,6 +101,7 @@ export default function AgentWizardPage() {
             nameBytes.set(encodedName.slice(0, 32));
 
             setDeployStatus(prev => [...prev, `DEPLOYING AGENT: ${agentName}...`]);
+            setDeployStatus(prev => [...prev, "REQUIRED: 0.05 SOL PROTOCOL FEE"]);
             setDeployStatus(prev => [...prev, "REQUESTING WALLET SIGNATURE..."]);
 
             // Create agent using standalone method (no UserStats dependency)
@@ -111,6 +116,7 @@ export default function AgentWizardPage() {
                 )
                 .accounts({
                     agent: agentPda,
+                    treasury: TREASURY_PUBKEY,
                     user: wallet.publicKey,
                     systemProgram: SystemProgram.programId,
                 } as any)
@@ -236,12 +242,28 @@ export default function AgentWizardPage() {
                                         <p className="text-gray-400 mb-8 max-w-lg mx-auto">Review historical performance based on selected parameters. Results may vary in live markets.</p>
                                         <BacktestPreview risk={risk} capital={capital} leverage={leverage} />
 
-                                        <div className="mt-8 flex justify-center">
+                                        {/* PRICING TRANSPARENCY CARD */}
+                                        <div className="max-w-md mx-auto mt-8 bg-blue-900/10 border border-blue-500/20 rounded-lg p-4 backdrop-blur-sm">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-gray-400 text-sm flex items-center gap-2">
+                                                    <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    Protocol License Fee
+                                                </span>
+                                                <span className="text-xl font-bold text-white font-mono">0.05 SOL</span>
+                                            </div>
+                                            <div className="text-[10px] text-gray-500 text-left leading-tight border-t border-white/5 pt-2 mt-2">
+                                                By clicking Deploy, you confirm this is a non-refundable software license fee for utilizing the NeuralVault infrastructure. Gas fees (~0.000005 SOL) are separate.
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-6 flex justify-center">
                                             <button
                                                 onClick={handleDeploy}
                                                 className="px-12 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black text-xl rounded-lg hover:shadow-[0_0_50px_rgba(6,182,212,0.6)] hover:scale-105 transition-all flex items-center gap-3 border border-cyan-400/50"
                                             >
-                                                <Rocket size={24} /> DEPLOY TO MAINNET
+                                                <Rocket size={24} /> PAY 0.05 SOL & DEPLOY
                                             </button>
                                         </div>
                                     </div>

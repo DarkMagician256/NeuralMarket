@@ -1,63 +1,95 @@
 import React from 'react';
 
-export default function PrivacyPolicy() {
+export default function PrivacyPage() {
     return (
-        <div className="container mx-auto px-4 py-12 max-w-4xl text-gray-300 font-sans">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Privacy Policy</h1>
-            <p className="text-sm text-gray-500 mb-8 font-mono">Last Updated: January 21, 2026</p>
-
-            <div className="space-y-8">
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">1. Data Collection Philosophy</h2>
-                    <p>
-                        NeuralMarket is designed to minimize data collection. As an on-chain interface, we rely primarily on public blockchain data. However, to provide features like "Agent Telemetry" and "Leaderboards," limited data collection is necessary.
-                    </p>
-                </section>
-
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">2. Blockchain Data (Public)</h2>
-                    <p>
-                        Please be aware that your transactions on the Solana blockchain are public, immutable, and permanent.
-                    </p>
-                    <ul className="list-disc pl-6 mt-2 space-y-2">
-                        <li><strong>Wallet Addresses:</strong> Your wallet address is visible on-chain regarding trade interaction.</li>
-                        <li><strong>Trade History:</strong> All trades executed via `NeuralVault` are permanently recorded on the Solana ledger.</li>
-                    </ul>
-                    <p className="mt-2 text-yellow-500/80 text-sm">
-                        NeuralMarket cannot "delete" your transaction history from the blockchain, as we do not control the distributed ledger.
-                    </p>
-                </section>
-
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">3. Off-Chain Data (Supabase)</h2>
-                    <p>
-                        We use limited off-chain storage for specific features:
-                    </p>
-                    <ul className="list-disc pl-6 mt-2 space-y-2">
-                        <li><strong>Agent Thoughts:</strong> When running an AI Agent, its internal reasoning logs (telemetry) are streamed to our database to display on the dashboard.</li>
-                        <li><strong>User Settings:</strong> Non-critical preferences (theme, notification settings) may be stored locally or in our database linked to your public key.</li>
-                        <li><strong>Ephemeral Logs:</strong> We do not store IP addresses for trading activity permanently.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">4. Third-Party Sharing</h2>
-                    <p>
-                        We do not sell your data. However, interacting with integrated services implies data sharing:
-                    </p>
-                    <ul className="list-disc pl-6 mt-2 space-y-2">
-                        <li><strong>Kalshi:</strong> If you connect a Kalshi account, your trading data is subject to Kalshi's privacy policy.</li>
-                        <li><strong>RPC Providers:</strong> We use Helius/Triton for RPC nodes. They may see your IP address when you broadcast a transaction.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 className="text-xl font-bold text-white mb-4">5. Rights & Contact</h2>
-                    <p>
-                        Under GDPR and CCPA, you have rights regarding your personal data. To request data deletion (for off-chain data only), please contact: <span className="text-cyan-400 font-mono">legal@neuralmarket.io</span>.
-                    </p>
-                </section>
+        <div className="space-y-8 text-gray-300">
+            <div className="border-b border-white/10 pb-6">
+                <h1 className="text-3xl font-bold text-white mb-2">PRIVACY POLICY</h1>
+                <p className="text-sm text-gray-500">In compliance with the Federal Law on Protection of Personal Data Held by Private Parties (LFPDPPP - Mexico).</p>
+                <p className="text-sm text-gray-500">Fast Controller: NeuralMarket S.A.P.I. de C.V. (In Incorporation)</p>
             </div>
+
+            {/* SECTION 1: MEXICAN PRIVACY STANDARD */}
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">1. IDENTITY AND DOMICILE (MEXICO)</h2>
+                <p>
+                    NeuralMarket, domiciled specifically for legal notifications in Mexico City, Mexico, is responsible for the processing of your personal data,
+                    committing to safeguard it according to principles of legality, consent, information, and responsibility.
+                </p>
+            </section>
+
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">2. DATA WE COLLECT (AND PUBLIC DATA)</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="border border-white/10 p-4 rounded">
+                        <h3 className="font-bold text-white mb-2">Off-Chain Data (Private)</h3>
+                        <p className="text-sm">Technical telemetry, UI preferences, and error logs stored on our secure servers (Supabase).</p>
+                    </div>
+                    <div className="border border-white/10 p-4 rounded bg-white/5">
+                        <h3 className="font-bold text-white mb-2">On-Chain Data (Public)</h3>
+                        <p className="text-sm">
+                            Your Public Wallet Address, transaction history, balances, and Agent metadata.
+                            <br /><br />
+                            <span className="text-yellow-500 text-xs">LEGAL NOTE: Information recorded on the Solana Blockchain is public, immutable, and decentralized. NeuralMarket technically CANNOT edit, delete, or anonymize this data once mined.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">3. PURPOSE OF PROCESSING</h2>
+                <ul className="list-disc pl-5 space-y-2">
+                    <li>To provide access to the market visualization interface.</li>
+                    <li>To execute technical instructions for Agent creation (Software License).</li>
+                    <li>To comply with legal obligations and fraud prevention.</li>
+                </ul>
+                <p><strong>We do not sell your data to third parties.</strong></p>
+            </section>
+
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">4. ARCO RIGHTS (For Mexican Residents)</h2>
+                <p>
+                    You have the right to Access, Rectify, Cancel, or Oppose (ARCO) the processing of your <strong>Off-Chain</strong> personal data.
+                    To exercise these rights, send a request to <code>legal@neuralmarket.xyz</code>.
+                    <br />
+                    <em>Note: ARCO rights are not applicable to immutable information recorded on the Blockchain.</em>
+                </p>
+            </section>
+
+            {/* SEPARATOR */}
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent my-12 opacity-50"></div>
+
+            {/* SECTION 2: INTERNATIONAL PRIVACY ADDENDUM */}
+            <section className="space-y-6 bg-black/20 p-6 rounded-xl border border-white/5">
+                <h2 className="text-xl font-semibold text-blue-400 flex items-center gap-2">
+                    <span className="text-2xl">🛡️</span> INTERNATIONAL PRIVACY ADDENDUM (GDPR / CCPA)
+                </h2>
+
+                <div className="space-y-4 text-sm text-gray-400">
+                    <div>
+                        <strong className="text-white block mb-1">European Union (GDPR Notice):</strong>
+                        <p>
+                            For users in the EEA, we operate as a Data Controller. The legal basis for processing your Wallet Address is the "Performance of a Contract" (executing your Agent deployment).
+                            Please note that the "Right to Erasure" (Right to be Forgotten) <strong>cannot technically be applied</strong> to data committed to the Solana Blockchain, as it is immutable technology.
+                        </p>
+                    </div>
+
+                    <div>
+                        <strong className="text-white block mb-1">California, USA (CCPA/CPRA Notice):</strong>
+                        <p>
+                            We do not "sell" your personal information as defined by the CCPA.
+                            Residents of California may request a disclosure of the categories of information collected by contacting our Legal Department.
+                        </p>
+                    </div>
+
+                    <div>
+                        <strong className="text-white block mb-1">Cross-Border Transfer:</strong>
+                        <p>
+                            Your data may be processed in servers located in the United States or Mexico. By using the service, you consent to this international transfer.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

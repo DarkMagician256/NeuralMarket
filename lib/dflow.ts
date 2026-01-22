@@ -3,6 +3,11 @@ import { Connection, Keypair, Transaction, PublicKey } from '@solana/web3.js';
 // DFlow API Base URL (Based on public docs jan 2026)
 const DFLOW_API_BASE = "https://api.dflow.net/v1";
 
+// Use development logging only
+const isDev = process.env.NODE_ENV === 'development';
+const log = isDev ? console.log : () => { };
+const logWarn = isDev ? console.warn : () => { };
+
 export interface DFlowQuote {
     inputMint: string;
     outputMint: string;
@@ -20,6 +25,13 @@ export class DFlowClient {
     }
 
     /**
+     * Check if DFlow is configured
+     */
+    isConfigured(): boolean {
+        return !!this.apiKey;
+    }
+
+    /**
      * Get a swap quote from DFlow liquidity layer
      * This connects to real liquidity for prediction tokens
      */
@@ -29,7 +41,7 @@ export class DFlowClient {
         amount: number
     ): Promise<DFlowQuote | null> {
         if (!this.apiKey) {
-            console.log("[DFlow] No API Key provided. Skipping real quote.");
+            log("[DFlow] No API Key provided. Skipping real quote.");
             return null;
         }
 
@@ -42,7 +54,7 @@ export class DFlowClient {
             });
 
             if (!response.ok) {
-                console.warn(`[DFlow] API Error: ${response.status}`);
+                logWarn(`[DFlow] API Error: ${response.status}`);
                 return null;
             }
 

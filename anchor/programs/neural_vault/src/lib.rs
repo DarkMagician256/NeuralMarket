@@ -165,6 +165,25 @@ pub mod neural_vault {
         leverage: u8,
         name: [u8; 32],
     ) -> Result<()> {
+        // --- 1. CHARGE PROTOCOL FEE (0.05 SOL) ---
+        msg!("Charging Protocol Fee: 0.05 SOL");
+        let fee_lamports = 50_000_000; // 0.05 SOL
+        
+        let ix = anchor_lang::solana_program::system_instruction::transfer(
+            &ctx.accounts.user.key(),
+            &ctx.accounts.treasury.key(),
+            fee_lamports,
+        );
+        
+        anchor_lang::solana_program::program::invoke(
+            &ix,
+            &[
+                ctx.accounts.user.to_account_info(),
+                ctx.accounts.treasury.to_account_info(),
+                ctx.accounts.system_program.to_account_info(),
+            ],
+        )?;
+
         let agent = &mut ctx.accounts.agent;
         agent.bump = ctx.bumps.agent;
         agent.owner = ctx.accounts.user.key();

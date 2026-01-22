@@ -29,11 +29,11 @@ const program = new Program(idl, provider);
 
 // Demo agents to create (Batch 2)
 const DEMO_AGENTS = [
-    { id: 2001, name: "TITAN_ALPHA_V2", archetype: 0, risk: 7, capital: 5000000000, leverage: 3 },
-    { id: 2002, name: "NEURAL_PROPHET_V2", archetype: 1, risk: 4, capital: 10000000000, leverage: 1 },
-    { id: 2003, name: "HEDGE_MASTER_V2", archetype: 2, risk: 2, capital: 25000000000, leverage: 1 },
-    { id: 2004, name: "WHALE_HUNTER_V2", archetype: 3, risk: 9, capital: 100000000000, leverage: 5 },
-    { id: 2005, name: "SNIPER_ELITE_V2", archetype: 0, risk: 8, capital: 3000000000, leverage: 4 },
+    { id: 3001, name: "TITAN_ALPHA_V3", archetype: 0, risk: 7, capital: 5000000000, leverage: 3 },
+    { id: 3002, name: "NEURAL_PROPHET_V3", archetype: 1, risk: 4, capital: 10000000000, leverage: 1 },
+    { id: 3003, name: "HEDGE_MASTER_V3", archetype: 2, risk: 2, capital: 25000000000, leverage: 1 },
+    { id: 3004, name: "WHALE_HUNTER_V3", archetype: 3, risk: 9, capital: 100000000000, leverage: 5 },
+    { id: 3005, name: "SNIPER_ELITE_V3", archetype: 0, risk: 8, capital: 3000000000, leverage: 4 },
 ];
 
 function padName(name: string): number[] {
@@ -61,6 +61,7 @@ async function main() {
                 programId
             );
 
+
             console.log(`📦 Creating agent: ${agent.name} (ID: ${agent.id})`);
             console.log(`   PDA: ${agentPDA.toBase58()}`);
 
@@ -76,7 +77,7 @@ async function main() {
             )
                 .accounts({
                     agent: agentPDA,
-                    treasury: wallet.publicKey, // Paying 0.05 SOL to myself (Deployer)
+                    treasury: wallet.publicKey, // Treasury receives the 0.05 SOL fee
                     user: wallet.publicKey,
                     systemProgram: anchor.web3.SystemProgram.programId
                 })
