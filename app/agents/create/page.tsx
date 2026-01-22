@@ -49,8 +49,10 @@ const ARCHETYPE_MAP: Record<string, number> = {
     'whale': 3
 };
 
-// Protocol Treasury Wallet (Devnet Deployer)
-const TREASURY_PUBKEY = new PublicKey("DEFMy6CUCtLebLVcxhZiau1VfbAFw3nKdNHFXCX8PmjA");
+// Protocol Treasury Wallet - Configurable via environment variable
+const TREASURY_PUBKEY = new PublicKey(
+    process.env.NEXT_PUBLIC_TREASURY_WALLET || "DEFMy6CUCtLebLVcxhZiau1VfbAFw3nKdNHFXCX8PmjA"
+);
 
 export default function AgentWizardPage() {
     const router = useRouter();

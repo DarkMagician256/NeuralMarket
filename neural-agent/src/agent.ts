@@ -67,7 +67,10 @@ const oraculoCharacter: Character = {
     }
 };
 
-// Mock Database Adapter for Demo
+// Import Supabase adapter
+import { createSupabaseAdapter } from './adapters/supabaseAdapter';
+
+// Mock Database Adapter (fallback if Supabase not configured)
 const mockDatabaseAdapter = {
     db: {},
     init: async () => { },
@@ -106,15 +109,34 @@ const mockCacheManager: ICacheManager = {
     delete: async () => { },
 } as any;
 
+// Get database adapter (prefer Supabase, fallback to mock)
+function getDatabaseAdapter() {
+    const supabaseAdapter = createSupabaseAdapter(
+        config.SUPABASE_URL,
+        config.SUPABASE_SERVICE_KEY
+    );
+
+    if (supabaseAdapter) {
+        console.log("📦 Using Supabase Database Adapter for persistence");
+        return supabaseAdapter;
+    }
+
+    console.log("⚠️ Using Mock Database Adapter (no persistence)");
+    return mockDatabaseAdapter;
+}
+
 async function startAgent() {
     console.log("🚀 Initializing Oraculo Sentient Agent...");
     console.log(`📡 Neural Link Status: ONLINE`);
     console.log(`🔑 Monetization Active: Builder Code [${config.KALSHI_BUILDER_CODE}]`);
 
     try {
+        // Get appropriate database adapter
+        const databaseAdapter = getDatabaseAdapter();
+
         // Initialize Runtime
         const runtime = new AgentRuntime({
-            databaseAdapter: mockDatabaseAdapter,
+            databaseAdapter,
             token: config.OPENAI_API_KEY,
             modelProvider: ModelProviderName.OPENAI,
             character: oraculoCharacter,

@@ -16,6 +16,7 @@ export default defineConfig({
         include: [
             'tests/hooks/**/*.test.ts',
             'tests/hooks/**/*.test.tsx',
+            'tests/utils/**/*.test.ts',
         ],
         // Exclude mocha-based tests (they use ts-mocha separately)
         exclude: [

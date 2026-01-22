@@ -1,0 +1,18 @@
+# Robots.txt for NeuralMarket
+# https://neural-market.vercel.app
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://neural-market.vercel.app/sitemap.xml
+
+# Disallow admin/private areas (if any)
+Disallow: /api/
+Disallow: /_next/
+
+# Allow crawlers to see these pages
+Allow: /markets
+Allow: /leaderboard
+Allow: /governance
+Allow: /legal/
