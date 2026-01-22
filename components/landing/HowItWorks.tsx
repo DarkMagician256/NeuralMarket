@@ -47,31 +47,31 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Steps Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-4">
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 50 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="relative group"
+                            className="relative group flex lg:flex-col items-start lg:items-center gap-6 lg:gap-0"
                         >
-                            {/* Connector Line (Desktop) */}
+                            {/* Connector Line (Desktop Horizontal) */}
                             {index < steps.length - 1 && (
                                 <div className="hidden lg:block absolute top-8 left-1/2 w-full h-[2px] bg-gradient-to-r from-cyan-500/20 to-transparent z-0" />
                             )}
 
-                            {/* Connector Line (Mobile) */}
+                            {/* Connector Line (Mobile Vertical) */}
                             {index < steps.length - 1 && (
-                                <div className="lg:hidden absolute left-8 top-16 h-full w-[2px] bg-gradient-to-b from-cyan-500/20 to-transparent z-0" />
+                                <div className="lg:hidden absolute left-[32px] top-16 h-full w-[2px] bg-gradient-to-b from-cyan-500/20 to-transparent z-0" />
                             )}
 
-                            <div className="relative z-10 flex flex-col items-center text-center">
-                                {/* Hexagon Icon Wrapper */}
-                                <div className="w-16 h-16 mb-6 flex items-center justify-center relative">
-                                    <div className="absolute inset-0 bg-[#0a0a0f] border border-white/10 rotate-45 rounded-xl group-hover:border-cyan-500/50 group-hover:rotate-90 transition-all duration-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]" />
-                                    <div className="absolute inset-0 bg-cyan-500/5 rotate-45 rounded-xl animate-pulse" />
+                            {/* Icon Wrapper */}
+                            <div className="relative z-10 flex-shrink-0">
+                                <div className="w-16 h-16 flex items-center justify-center relative">
+                                    <div className="absolute inset-0 bg-[#0a0a0f] border border-white/10 lg:rotate-45 rounded-xl group-hover:border-cyan-500/50 group-hover:rotate-90 transition-all duration-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]" />
+                                    <div className="absolute inset-0 bg-cyan-500/5 lg:rotate-45 rounded-xl animate-pulse" />
                                     <div className="relative z-10 transform transition-transform group-hover:scale-110">
                                         {step.icon}
                                     </div>
@@ -79,8 +79,11 @@ export default function HowItWorks() {
                                         {index + 1}
                                     </div>
                                 </div>
+                            </div>
 
-                                <h3 className="text-xl font-bold font-mono tracking-wide mb-3 group-hover:text-cyan-400 transition-colors">
+                            {/* Text Content */}
+                            <div className="flex flex-col lg:items-center lg:text-center mt-2 lg:mt-6">
+                                <h3 className="text-xl font-bold font-mono tracking-wide mb-2 lg:mb-3 group-hover:text-cyan-400 transition-colors">
                                     {step.title}
                                 </h3>
                                 <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
