@@ -31,11 +31,11 @@ export default function BentoGrid() {
                             <div className="p-2 md:p-3 bg-purple-500/20 rounded-xl backdrop-blur-md border border-purple-500/30">
                                 <BrainCircuit className="text-purple-400" size={24} />
                             </div>
-                            <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] md:text-xs font-mono text-purple-300">CORE ENGINE</span>
+                            <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] md:text-xs font-mono text-purple-300">POWERED BY ELIZA OS</span>
                         </div>
                         <h3 className="text-2xl md:text-4xl font-bold mb-3 text-white group-hover:text-purple-300 transition-colors">Neural Swarm Intelligence</h3>
                         <p className="text-gray-400 max-w-lg text-sm md:text-base leading-relaxed">
-                            A decentralized network of specialized AI agents (Sniper, Whale Watcher, Macro Analyst) that form a consensus swarm to predict market outcomes with higher accuracy.
+                            A decentralized network of specialized AI agents (Sniper, Whale Watcher, Macro Analyst) running on <strong>ElizaOS</strong> that form a consensus swarm to predict market outcomes.
                         </p>
                     </div>
                 </motion.div>
@@ -120,11 +120,11 @@ export default function BentoGrid() {
                             <div className="p-2 md:p-3 bg-blue-500/20 rounded-xl border border-blue-500/30">
                                 <LineChart className="text-blue-400" size={24} />
                             </div>
-                            <div className="px-2 py-1 bg-white/10 rounded text-[10px] uppercase font-mono tracking-wider">Order Flow</div>
+                            <div className="px-2 py-1 bg-blue-500/10 rounded text-[10px] uppercase font-mono tracking-wider text-blue-400 border border-blue-500/20">DFlow Partner</div>
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold mb-2">Deep Liquidity</h3>
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">DFlow Liquidity</h3>
                         <p className="text-gray-400 text-sm">
-                            Aggregated liquidity via DFlow ensures minimal slippage for large volume trades.
+                            Aggregated liquidity via DFlow ensures minimal slippage using advanced order routing.
                         </p>
                     </div>
                 </motion.div>
