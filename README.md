@@ -120,6 +120,29 @@ anchor deploy --provider.cluster devnet
 
 ---
 
+---
+
+## 🐋 Run a Sovereign Node (Self-Hosted)
+For institutional setups requiring 100% uptime and local execution of AI Agents:
+
+The repository includes a production-ready `docker-compose` setup that orchestrates:
+1.  **Neural Dashboard**: The full Next.js interface (`Dockerfile.frontend`)
+2.  **Cortex Agent Service**: The backend daemon for autonomous trading (`neural-agent/Dockerfile`)
+
+### Quick Launch
+```bash
+# 1. Configure environment
+cp .env.example .env.local
+
+# 2. Launch the stack
+docker-compose up -d --build
+```
+
+- **Dashboard**: `http://localhost:3000`
+- **Agent Service**: Running in background (logs: `docker logs neural-agent`)
+
+---
+
 ## 📁 Project Structure
 
 ```
