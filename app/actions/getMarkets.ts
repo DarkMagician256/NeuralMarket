@@ -23,13 +23,13 @@ export interface Market {
  */
 export async function getLiveMarkets(): Promise<Market[]> {
     try {
-        console.log('[Kalshi] Fetching live markets...');
+        // console.log('[Kalshi] Fetching live markets...');
 
         // Try to fetch real Kalshi markets (increased limit to 100)
         const kalshiMarkets = await kalshiClient.getMarkets(100, 'open');
 
         if (kalshiMarkets && kalshiMarkets.length > 0) {
-            console.log(`[Kalshi] Fetched ${kalshiMarkets.length} live markets`);
+            // console.log(`[Kalshi] Fetched ${kalshiMarkets.length} live markets`);
 
             return kalshiMarkets.map((market: KalshiMarket) => {
                 const yesPrice = market.yes_bid || market.last_price || 0.5;
