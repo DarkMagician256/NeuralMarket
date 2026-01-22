@@ -23,6 +23,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.90.1
         version: 2.90.1(bufferutil@4.1.0)(utf-8-validate@5.0.10)
+      amqplib:
+        specifier: ^0.10.9
+        version: 0.10.9
       bs58:
         specifier: ^5.0.0
         version: 5.0.0
@@ -3654,6 +3657,10 @@ packages:
     resolution: {integrity: sha512-sBE9lpV7bup3rZ+q2j3JQaFAE9JwZvjWKX00vPlG8e9txctXbgLL56jZhSWZndqhDI9oI+0P4NldkuQIWdrUyg==}
     engines: {node: '>=18.0.0'}
 
+  amqplib@0.10.9:
+    resolution: {integrity: sha512-jwSftI4QjS3mizvnSnOrPGYiUnm1vI2OP1iXeOUz5pb74Ua0nbf6nPyyTzuiCLEE3fMpaJORXh2K/TQ08H5xGA==}
+    engines: {node: '>=10'}
+
   anchor-bankrun@0.3.0:
     resolution: {integrity: sha512-PYBW5fWX+iGicIS5MIM/omhk1tQPUc0ELAnI/IkLKQJ6d75De/CQRh8MF2bU/TgGyFi6zEel80wUe3uRol9RrQ==}
     engines: {node: '>= 10'}
@@ -3984,6 +3991,9 @@ packages:
   buffer-layout@1.2.2:
     resolution: {integrity: sha512-kWSuLN694+KTk8SrYvCqwP2WcgQjoRCiF5b4QDvkkz8EmgD+aWAIceGFKMIAdmF/pH+vpgNV3d3kAKorcdAmWA==}
     engines: {node: '>=4.5'}
+
+  buffer-more-ints@1.0.0:
+    resolution: {integrity: sha512-EMetuGFz5SLsT0QTnXzINh4Ksr+oo4i+UGTXEshiGCQWnsgSs7ZhJ8fzlwQ+OzEMs0MpDAMr1hxnblp5a4vcHg==}
 
   buffer-reverse@1.0.1:
     resolution: {integrity: sha512-M87YIUBsZ6N924W57vDwT/aOu8hw7ZgdByz6ijksLjmHJELBASmYTTlNHRgjE+pTsT9oJXGaDSgqqwfdHotDUg==}
@@ -15367,6 +15377,11 @@ snapshots:
       tweetnacl: 1.0.3
       vlq: 2.0.4
 
+  amqplib@0.10.9:
+    dependencies:
+      buffer-more-ints: 1.0.0
+      url-parse: 1.5.10
+
   anchor-bankrun@0.3.0(@coral-xyz/anchor@0.29.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@solana/web3.js@1.92.3(bufferutil@4.1.0)(utf-8-validate@5.0.10))(solana-bankrun@0.3.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)):
     dependencies:
       '@coral-xyz/anchor': 0.29.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -15842,6 +15857,8 @@ snapshots:
   buffer-from@1.1.2: {}
 
   buffer-layout@1.2.2: {}
+
+  buffer-more-ints@1.0.0: {}
 
   buffer-reverse@1.0.1: {}
 
