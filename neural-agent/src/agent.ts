@@ -68,7 +68,7 @@ const oraculoCharacter: Character = {
 };
 
 // Import Supabase adapter
-import { createSupabaseAdapter } from './adapters/supabaseAdapter';
+import { createSupabaseAdapter } from './adapters/supabaseAdapter.js';
 
 // Mock Database Adapter (fallback if Supabase not configured)
 const mockDatabaseAdapter = {
