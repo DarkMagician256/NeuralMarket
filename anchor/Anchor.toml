@@ -20,4 +20,4 @@ cluster = "Devnet"
 wallet = "/home/vaiosvaios/.config/solana/devnet-deployer.json"
 
 [scripts]
-test = "pnpm run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+test = "npx ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

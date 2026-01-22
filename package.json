@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:anchor": "cd anchor && anchor test",
+    "test:endpoints": "ts-mocha tests/**/*.test.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.32.1",

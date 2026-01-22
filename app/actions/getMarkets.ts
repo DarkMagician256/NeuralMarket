@@ -135,6 +135,26 @@ export async function getMarketDetails(ticker: string): Promise<Market | null> {
 }
 
 /**
+ * Get Real Orderbook Data
+ */
+export async function getRealOrderbook(ticker: string) {
+    try {
+        const orderbook = await kalshiClient.getOrderbook(ticker);
+        if (orderbook && orderbook.orderbook) {
+            return {
+                bids: orderbook.orderbook.yes || [],
+                asks: orderbook.orderbook.no || [] // Note: Structure depends on API response
+            };
+        }
+        return null;
+    } catch (e) {
+        console.error("Error fetching real orderbook:", e);
+        return null;
+    }
+}
+
+
+/**
  * Map Kalshi categories to our categories
  */
 function mapCategory(category?: string): string {
