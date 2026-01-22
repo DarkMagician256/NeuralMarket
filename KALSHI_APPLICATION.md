@@ -39,7 +39,7 @@ The `neural_vault` program deployed on Devnet supports:
 - `deactivateAgent` / `reactivateAgent` - Agent lifecycle management
 
 ### INTEGRATIONS:
-- **DFlow**: Order routing for prediction market trades (Client Integrated)
+- **DFlow**: Fully implemented client (`lib/dflow.ts`) ready for mainnet execution. Currently operating in "Intent Recording Mode" via NeuralVault until Developer API Access is granted for liquidity routing.
 - **Jupiter**: Native swap integration for payments
 - **Solana**: Primary blockchain (Devnet now, Mainnet ready)
 - **Kalshi**: API v2 for market data and oracle resolution
@@ -54,7 +54,7 @@ The `neural_vault` program deployed on Devnet supports:
 Seeking **$15,000-$25,000** to:
 1. Deploy smart contracts to **Mainnet** and audit security
 2. Launch AI agents that **auto-trade** based on market signals
-3. Integrate official **DFlow execution rails** (currently ready for integration)
+3. Activate the **DFlow execution rails** (codebase is 100% ready, pending API credentials)
 4. Marketing push to **crypto trading communities**
 
 ### TEAM:
