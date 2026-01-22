@@ -83,10 +83,11 @@ Seeking $15,000-$25,000 to:
 4. Marketing push to crypto trading communities
 
 TEAM:
-Two-person founding team combining business and design expertise:
+Three-person founding team with complementary expertise:
+• Lead Developer - Full-stack Solana developer responsible for smart contracts, blockchain integration, and platform architecture. Built the entire technical infrastructure including the NeuralVault program.
 • Marketing & Commercial Lead - Responsible for go-to-market strategy, partnerships, and business development. Experience in crypto trading and market analysis.
 • UX/UI Designer - Responsible for the premium visual experience and user interface. Focus on creating institutional-grade designs that appeal to both crypto natives and traditional traders.
-Technical development powered by AI-assisted programming, ensuring rapid iteration and high code quality. Committed to full-time development of NeuralMarket.
+Committed to full-time development and growth of NeuralMarket.
 
 TIMELINE:
 • Week 1-2: Kalshi API integration
