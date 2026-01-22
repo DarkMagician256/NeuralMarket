@@ -51,6 +51,10 @@ export default function HeroSection() {
                             <Image src="/logos/solana.png" alt="Solana" fill className="object-contain" />
                         </div>
                         <div className="h-3 sm:h-4 w-px bg-white/10" />
+                        <div className="relative h-5 sm:h-6 w-10 sm:w-14 opacity-80 hover:opacity-100 transition-opacity">
+                            <Image src="/logos/dflow_v2.png" alt="DFlow" fill className="object-contain" />
+                        </div>
+                        <div className="h-3 sm:h-4 w-px bg-white/10" />
                         <div className="relative h-4 sm:h-5 w-16 sm:w-20 opacity-80 hover:opacity-100 transition-opacity">
                             <Image src="/logos/jupiter.png" alt="Jupiter" fill className="object-contain" />
                         </div>

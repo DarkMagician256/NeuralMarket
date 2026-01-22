@@ -25,8 +25,8 @@ export async function getLiveMarkets(): Promise<Market[]> {
     try {
         console.log('[Kalshi] Fetching live markets...');
 
-        // Try to fetch real Kalshi markets
-        const kalshiMarkets = await kalshiClient.getMarkets(20, 'open');
+        // Try to fetch real Kalshi markets (increased limit to 100)
+        const kalshiMarkets = await kalshiClient.getMarkets(100, 'open');
 
         if (kalshiMarkets && kalshiMarkets.length > 0) {
             console.log(`[Kalshi] Fetched ${kalshiMarkets.length} live markets`);

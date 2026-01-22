@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { TrendingUp, Globe, Clock, ArrowRight, Zap } from 'lucide-react';
-import MarketPredictionCard from '@/components/markets/MarketPredictionCard';
 import { getLiveMarkets } from '@/app/actions/getMarkets';
+import MarketsGrid from '@/components/markets/MarketsGrid';
 
 export const revalidate = 30; // Revalidate every 30 seconds
 
 export default async function MarketsPage() {
-    // Fetch real Kalshi markets on the server
+    // Fetch real Kalshi markets on the server (now fetching 100)
     const markets = await getLiveMarkets();
 
     // Calculate stats
@@ -49,6 +49,10 @@ export default async function MarketsPage() {
                         <div className="flex items-center gap-3 sm:gap-5 bg-white/5 px-3 sm:px-5 py-2 sm:py-3 rounded-lg sm:rounded-xl border border-white/5 backdrop-blur-sm flex-wrap justify-center">
                             <div className="relative h-3 sm:h-4 w-12 sm:w-16 opacity-80 hover:opacity-100 transition-opacity">
                                 <Image src="/logos/solana.png" alt="Solana" fill className="object-contain" />
+                            </div>
+                            <div className="h-2 sm:h-3 w-px bg-white/10" />
+                            <div className="relative h-4 sm:h-5 w-8 sm:w-10 opacity-80 hover:opacity-100 transition-opacity">
+                                <Image src="/logos/dflow_v2.png" alt="DFlow" fill className="object-contain" />
                             </div>
                             <div className="h-2 sm:h-3 w-px bg-white/10" />
                             <div className="relative h-3 sm:h-4 w-12 sm:w-16 opacity-80 hover:opacity-100 transition-opacity">
@@ -93,20 +97,8 @@ export default async function MarketsPage() {
                     </Link>
                 </div>
 
-                {/* Markets Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                    {markets.map((market, index) => (
-                        <div key={market.ticker} className="hover:scale-[1.01] transition-transform duration-300">
-                            <MarketPredictionCard market={market} />
-                        </div>
-                    ))}
-                </div>
-
-                {markets.length === 0 && (
-                    <div className="text-center py-20">
-                        <p className="text-gray-500 font-mono">Loading markets from Kalshi...</p>
-                    </div>
-                )}
+                {/* Client-side Grid with Pagination */}
+                <MarketsGrid initialMarkets={markets} />
 
                 <div className="mt-8 md:mt-12 text-center">
                     <p className="text-[10px] md:text-xs text-gray-600 font-mono">
