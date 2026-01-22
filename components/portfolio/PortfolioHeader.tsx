@@ -1,59 +1,112 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, ArrowDownRight, Scan } from 'lucide-react';
-import { useNeuralVault } from '@/hooks/useNeuralVault';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Scan, ExternalLink } from 'lucide-react';
+import { useWallet, useConnection } from '@solana/wallet-adapter-react';
+import { PublicKey } from '@solana/web3.js';
+import { supabase } from '@/lib/supabase';
+
+const PROGRAM_ID = "A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F";
 
 export default function PortfolioHeader() {
-    const { balance, stats, agentAddress } = useNeuralVault();
+    const { publicKey } = useWallet();
+    const { connection } = useConnection();
+    const [balance, setBalance] = useState<number | null>(null);
+    const [stats, setStats] = useState({ total: 0, wins: 0 });
+    const [loading, setLoading] = useState(true);
 
-    // Calculate Accuracy from Real Chain Stats
-    const total = stats ? stats.predictionsCount.toNumber() : 0;
-    const correct = stats ? stats.correctPredictions.toNumber() : 0;
-    const accuracy = total > 0 ? (correct / total) * 100 : 0;
+    useEffect(() => {
+        if (!publicKey) {
+            setLoading(false);
+            return;
+        }
 
-    // Use Balance trend if we had history, for now showing Accuracy as key metric
+        // Fetch real SOL balance
+        const fetchBalance = async () => {
+            try {
+                const bal = await connection.getBalance(publicKey);
+                setBalance(bal / 1_000_000_000);
+            } catch (e) {
+                console.error("Failed to fetch balance:", e);
+            }
+        };
+
+        // Fetch trade stats from Supabase (real data)
+        const fetchTradeStats = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('trades')
+                    .select('outcome')
+                    .eq('wallet_address', publicKey.toBase58());
+
+                if (data && !error) {
+                    const total = data.length;
+                    const wins = data.filter(t => t.outcome === 'YES').length;
+                    setStats({ total, wins });
+                }
+            } catch (e) {
+                console.error("Failed to fetch trade stats:", e);
+            }
+            setLoading(false);
+        };
+
+        fetchBalance();
+        fetchTradeStats();
+
+        // Poll balance every 10s
+        const interval = setInterval(fetchBalance, 10000);
+        return () => clearInterval(interval);
+    }, [publicKey, connection]);
+
+    const accuracy = stats.total > 0 ? (stats.wins / stats.total) * 100 : 0;
     const isPositive = accuracy >= 50;
+    const walletAddress = publicKey?.toBase58() || 'NOT CONNECTED';
+    const shortAddress = walletAddress.length > 20
+        ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`
+        : walletAddress;
 
     return (
-        <div className="glass-panel p-8 relative overflow-hidden group">
+        <div className="glass-panel p-6 md:p-8 relative overflow-hidden group">
             {/* Scanning Effect */}
             <div className="absolute top-0 left-0 w-full h-[2px] bg-cyan-400/50 shadow-[0_0_15px_#22d3ee] animate-scan" />
 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                 <div>
-                    <h2 className="text-gray-400 text-sm font-mono tracking-widest mb-1 flex items-center gap-2">
-                        <Scan size={14} /> LIVE AGENT BALANCE (DEVNET)
+                    <h2 className="text-gray-400 text-xs sm:text-sm font-mono tracking-widest mb-1 flex items-center gap-2">
+                        <Scan size={14} /> WALLET BALANCE (DEVNET)
                     </h2>
-                    <div className="text-5xl md:text-6xl font-black text-white tracking-tight tabular-nums transition-all">
+                    <div className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight tabular-nums transition-all">
                         {balance !== null ? `${balance.toFixed(4)} SOL` : 'CONNECTING...'}
                     </div>
-                    <div className="text-xs text-cyan-500/70 font-mono mt-1 flex items-center gap-2">
-                        <span>{agentAddress}</span>
-                        <a
-                            href={`https://explorer.solana.com/address/${agentAddress}?cluster=devnet`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-white/10 px-1 rounded hover:bg-white/20 transition-colors"
-                        >
-                            EXPLORER ↗
-                        </a>
+                    <div className="text-[10px] sm:text-xs text-cyan-500/70 font-mono mt-1 flex items-center gap-2 flex-wrap">
+                        <span className="break-all">{shortAddress}</span>
+                        {publicKey && (
+                            <a
+                                href={`https://explorer.solana.com/address/${publicKey.toBase58()}?cluster=devnet`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-white/10 px-2 py-0.5 rounded hover:bg-white/20 transition-colors flex items-center gap-1"
+                            >
+                                <ExternalLink size={10} /> EXPLORER
+                            </a>
+                        )}
                     </div>
                 </div>
 
-                <div className="text-right flex flex-col items-end">
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 mb-4 bg-gradient-to-br from-purple-500/20 to-cyan-500/20">
+                <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                    <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white/10 mb-3 md:mb-4 bg-gradient-to-br from-purple-500/20 to-cyan-500/20">
                         <img
                             src={`https://api.dicebear.com/9.x/bottts/svg?seed=NeuralBot&backgroundColor=1d1d1d`}
                             alt="Agent Avatar"
                             className="object-cover w-full h-full"
                         />
                     </div>
-                    <div className="text-gray-400 text-sm font-mono tracking-widest mb-1">ON-CHAIN ACCURACY</div>
-                    <div className={`text-4xl font-bold flex items-center justify-end gap-2 ${isPositive ? 'text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]' : 'text-yellow-400'}`}>
-                        {accuracy.toFixed(1)}%
+                    <div className="text-gray-400 text-xs sm:text-sm font-mono tracking-widest mb-1">TRADE ACCURACY</div>
+                    <div className={`text-3xl sm:text-4xl font-bold flex items-center gap-2 ${isPositive ? 'text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]' : 'text-yellow-400'}`}>
+                        {loading ? '...' : `${accuracy.toFixed(1)}%`}
                     </div>
-                    <div className="text-xs text-gray-500 font-mono mt-1">
-                        BASED ON {total} VERIFIED PREDICTIONS
+                    <div className="text-[10px] sm:text-xs text-gray-500 font-mono mt-1">
+                        BASED ON {stats.total} VERIFIED TRADES
                     </div>
                 </div>
             </div>
