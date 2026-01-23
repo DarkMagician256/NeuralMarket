@@ -25,8 +25,8 @@ export default function OrderBook({ ticker, yesPrice = 0.5 }: OrderBookProps) {
                 if (mounted && realData && realData.bids && realData.bids.length > 0) {
                     // Normalize Kalshi data format [price, size]
                     setOrders({
-                        bids: realData.bids.map((b: any) => ({ price: b[0], size: b[1] })).slice(0, 10),
-                        asks: realData.asks.map((a: any) => ({ price: a[0], size: a[1] })).slice(0, 10)
+                        bids: realData.bids.map((b: any) => ({ price: b[0] / 100, size: b[1] })).slice(0, 10),
+                        asks: realData.asks.map((a: any) => ({ price: a[0] / 100, size: a[1] })).slice(0, 10)
                     });
                     setIsLoading(false);
                     return;

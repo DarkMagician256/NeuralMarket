@@ -24,7 +24,7 @@
         "tsx": "^4.21.0",
         "undici": "^7.19.0",
         "ws": "^8.19.0",
-        "zod": "3.22.4"
+        "zod": "^4.0.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.0",
@@ -35,13 +35,5 @@
     },
     "engines": {
         "node": ">=20.0.0"
-    },
-    "pnpm": {
-        "overrides": {
-            "zod": "3.22.4"
-        }
-    },
-    "resolutions": {
-        "zod": "3.22.4"
     }
 }

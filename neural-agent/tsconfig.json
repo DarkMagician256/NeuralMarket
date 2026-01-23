@@ -12,16 +12,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "resolveJsonModule": true,
-        "baseUrl": ".",
-        "paths": {
-            "zod/v3": [
-                "./src/zod-v3-compat.ts"
-            ],
-            "zod/v4/core": [
-                "./src/zod-v4-compat.ts"
-            ]
-        }
+        "resolveJsonModule": true
     },
     "include": [
         "src/**/*"

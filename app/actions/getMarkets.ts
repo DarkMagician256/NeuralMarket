@@ -32,8 +32,11 @@ export async function getLiveMarkets(): Promise<Market[]> {
             // console.log(`[Kalshi] Fetched ${kalshiMarkets.length} live markets`);
 
             return kalshiMarkets.map((market: KalshiMarket) => {
-                const yesPrice = market.yes_bid || market.last_price || 0.5;
-                const probability = Math.round(yesPrice * 100);
+                // Kalshi returns prices in cents (1-99).
+                // Use last_price first for general "value", then ask (buy price), then bid. 
+                // Using bid (sell price) alone causes "0%" display if no one is buying.
+                const priceValue = market.last_price || market.yes_ask || market.yes_bid || 50;
+                const probability = priceValue;
 
                 // Determine signal based on recent activity
                 let cortexSignal: 'BULLISH' | 'BEARISH' | 'NEUTRAL' = 'NEUTRAL';
@@ -57,8 +60,9 @@ export async function getLiveMarkets(): Promise<Market[]> {
                     volume: volumeStr,
                     change24h: 0, // Would need historical data
                     cortexSignal,
-                    yesPrice: market.yes_bid,
-                    noPrice: market.no_bid,
+                    // For the "Price" display, show the 'Ask' (Buy) price if available, otherwise Last
+                    yesPrice: (market.yes_ask || market.last_price || market.yes_bid || 50) / 100,
+                    noPrice: (market.no_ask || (100 - (market.last_price || 50)) || market.no_bid || 50) / 100,
                     expiration: market.expiration_time
                 };
             });
@@ -95,17 +99,17 @@ export async function getMarketDetails(ticker: string): Promise<Market | null> {
         const market = await kalshiClient.getMarket(ticker);
 
         if (market) {
-            const yesPrice = market.yes_bid || market.last_price || 0.5;
+            const yesPriceCents = market.yes_bid ?? market.last_price ?? 50;
             return {
                 id: market.ticker,
                 ticker: market.ticker,
                 title: market.title || market.ticker,
                 category: mapCategory(market.category),
-                probability: Math.round(yesPrice * 100),
+                probability: yesPriceCents,
                 volume: `$${((market.volume_24h || 0) / 1000000).toFixed(1)}M`,
                 change24h: 0,
-                yesPrice: market.yes_bid,
-                noPrice: market.no_bid,
+                yesPrice: (market.yes_bid !== undefined && market.yes_bid !== null) ? market.yes_bid / 100 : undefined,
+                noPrice: (market.no_bid !== undefined && market.no_bid !== null) ? market.no_bid / 100 : undefined,
                 expiration: market.expiration_time
             };
         }
