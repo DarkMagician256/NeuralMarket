@@ -15,6 +15,8 @@ const WalletMultiButton = dynamic(
     { ssr: false }
 );
 
+import { useWallet } from '@solana/wallet-adapter-react';
+
 const navLinks = [
     { href: '/markets', label: 'MARKETS', hoverColor: 'hover:text-cyan-400' },
     { href: '/leaderboard', label: 'AI AGENTS', hoverColor: 'hover:text-yellow-400' },
@@ -38,6 +40,11 @@ export default function Navbar() {
     React.useEffect(() => {
         setMobileMenuOpen(false);
     }, [pathname]);
+
+    const { publicKey } = useWallet();
+
+    // Generate avatar seed from wallet address or use default
+    const avatarSeed = publicKey ? publicKey.toBase58() : 'NeuralGuest';
 
     return (
         <>
@@ -88,7 +95,7 @@ export default function Navbar() {
                                 <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 p-[1px] group-hover:shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-all">
                                     <div className="w-full h-full rounded-full bg-black overflow-hidden relative">
                                         <Image
-                                            src={`https://api.dicebear.com/9.x/bottts/svg?seed=NeuralBot&backgroundColor=1d1d1d`}
+                                            src={`https://api.dicebear.com/9.x/bottts/svg?seed=${avatarSeed}&backgroundColor=1d1d1d`}
                                             alt="User Avatar"
                                             fill
                                             className="object-cover hover:scale-110 transition-transform"

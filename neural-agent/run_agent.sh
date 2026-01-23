@@ -1,7 +1,16 @@
 #!/bin/bash
 # Script to run agent with the best available Bun runtime
 
-# 1. Try Linux native bun
+# 0. Try local user install first (most reliable)
+LOCAL_BUN="$HOME/.bun/bin/bun"
+if [ -f "$LOCAL_BUN" ]; then
+    echo "🟢 Using local Bun ($LOCAL_BUN)"
+    export USE_LOCAL_AI=true
+    "$LOCAL_BUN" run src/agent.ts
+    exit 0
+fi
+
+# 1. Try Linux native bun in PATH
 if command -v bun &> /dev/null; then
     echo "🟢 Using native Bun"
     export USE_LOCAL_AI=true

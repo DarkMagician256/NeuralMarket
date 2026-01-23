@@ -31,11 +31,11 @@ export default function BentoGrid() {
                             <div className="p-2 md:p-3 bg-purple-500/20 rounded-xl backdrop-blur-md border border-purple-500/30">
                                 <BrainCircuit className="text-purple-400" size={24} />
                             </div>
-                            <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] md:text-xs font-mono text-purple-300">POWERED BY ELIZA OS</span>
+                            <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] md:text-xs font-mono text-purple-300">ELIZA OS • HYBRID CORE</span>
                         </div>
                         <h3 className="text-2xl md:text-4xl font-bold mb-3 text-white group-hover:text-purple-300 transition-colors">Neural Swarm Intelligence</h3>
                         <p className="text-gray-400 max-w-lg text-sm md:text-base leading-relaxed">
-                            A decentralized network of specialized AI agents (Sniper, Whale Watcher, Macro Analyst) running on <strong>ElizaOS</strong> that form a consensus swarm to predict market outcomes.
+                            A decentralized network of specialized AI agents running on <strong>ElizaOS</strong>. Powered by <strong className="text-cyan-400">DeepSeek R1</strong> & <strong>mxbai-embed</strong> for local privacy, or <strong>OpenAI</strong> for cloud scalability.
                         </p>
                     </div>
                 </motion.div>

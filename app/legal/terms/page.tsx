@@ -5,7 +5,7 @@ export default function TermsPage() {
         <div className="space-y-8 text-gray-300">
             <div className="border-b border-white/10 pb-6">
                 <h1 className="text-3xl font-bold text-white mb-2">TERMS OF SERVICE</h1>
-                <p className="text-sm text-gray-500">Last Updated: January 21, 2026</p>
+                <p className="text-sm text-gray-500">Last Updated: January 23, 2026</p>
                 <p className="text-sm text-gray-500">Jurisdiction: Mexico City, Mexico (Primary)</p>
             </div>
 
@@ -59,12 +59,35 @@ export default function TermsPage() {
             </section>
 
             <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-white">4. AUTONOMOUS AGENT LIABILITY (AI)</h2>
+                <h2 className="text-xl font-semibold text-white">4. AUTONOMOUS AGENTS LIABILITY (HYBRID AI ARCHITECTURE)</h2>
                 <p>
-                    "Agents" deployed via NeuralMarket are automation tools executed by the user.
-                    NeuralMarket provides the code ("the tool"), but <strong>DOES NOT manage or control</strong> the Agent's decisions once deployed.
-                    The user is the sole owner and responsible party for operations executed by their Agent.
+                    "Agents" deployed via NeuralMarket operate under a <strong>Hybrid Architecture</strong>.
                 </p>
+                <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
+                    <li>
+                        <strong>Local Mode (DeepSeek R1):</strong> When using local inference, YOU (The User) are the sole operator of the AI infrastructure.
+                        NeuralMarket provides the source code but has NO access to, control over, or liability for the reasoning outputs generated on your local hardware.
+                    </li>
+                    <li>
+                        <strong>Cloud Mode (OpenAI):</strong> When using cloud inference, data is processed via third-party APIs. We act solely as a pass-through interface.
+                    </li>
+                </ul>
+                <p className="mt-2 text-sm bg-red-900/10 p-2 rounded border border-red-500/20">
+                    <strong>Waiver:</strong> NeuralMarket is not liable for "hallucinations," execution errors, or financial losses caused by AI probabilistic generation, whether running locally or in the cloud.
+                </p>
+            </section>
+
+            <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-white">5. NEURAL COUNCIL GOVERNANCE</h2>
+                <p>
+                    Participation in the "Neural Council" DAO via tokens or NFTs grants <strong>Digital Utility Rights</strong> only (voting on protocol parameters).
+                    It does <strong>NOT</strong> represent:
+                </p>
+                <ul className="list-disc pl-5 text-sm space-y-1">
+                    <li>Equity or shares in NeuralMarket S.A.P.I. de C.V.</li>
+                    <li>Rights to dividends or profit sharing.</li>
+                    <li>Control over the legal entity.</li>
+                </ul>
             </section>
 
             <section className="space-y-4">

@@ -5,6 +5,7 @@ export default function RiskPage() {
         <div className="space-y-8 text-gray-300">
             <div className="border-b border-red-500/20 pb-6">
                 <h1 className="text-3xl font-bold text-red-500 mb-2">CRITICAL RISK DISCLOSURE</h1>
+                <p className="text-sm text-gray-500">Last Updated: January 23, 2026</p>
                 <p className="text-sm text-gray-500">Mandatory reading before operating.</p>
             </div>
 
@@ -43,12 +44,18 @@ export default function RiskPage() {
             </section>
 
             <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-white">4. AUTONOMOUS AGENTS (AI)</h2>
-                <p>
-                    Artificial Intelligence Agents ("ElizaOS", "Oracle") operate under probabilistic, not deterministic, logic.
-                    An Agent may make erroneous trading decisions ("hallucinate") based on incorrect market data.
-                    Past performance in simulations does not guarantee future results.
-                </p>
+                <h2 className="text-xl font-semibold text-white">4. AUTONOMOUS AGENTS RISKS (AI & HARDWARE)</h2>
+                <ul className="list-disc pl-5 mt-2 text-sm space-y-2">
+                    <li>
+                        <strong>Probabilistic Nature:</strong> Artificial Intelligence models (DeepSeek R1, GPT-4) are probabilistic, not deterministic. An Agent may "hallucinate" confident but incorrect market predictions.
+                    </li>
+                    <li>
+                        <strong>Local Hardware Failure:</strong> When running in <strong>Local Mode</strong>, the Agent's uptime depends entirely on your hardware. Power outages, internet disconnections, or "Sleep Mode" on your PC will stop the Agent from managing positions, potentially leading to liquidation losses.
+                    </li>
+                    <li>
+                        <strong>Execution Latency:</strong> Local models may suffer from inference latency compared to HFT (High-Frequency Trading) bots, resulting in slippage.
+                    </li>
+                </ul>
             </section>
 
             {/* SEPARATOR */}

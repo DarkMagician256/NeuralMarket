@@ -18,13 +18,19 @@ export const useAgentStream = (initialThoughts: AgentThought[] = []) => {
     useEffect(() => {
         // 1. Fetch recent history (Snapshot)
         const fetchHistory = async () => {
-            const { data } = await supabase
+            console.log("⚡ [HOOK] Fetching agent history...");
+            const { data, error } = await supabase
                 .from('agent_thoughts')
                 .select('*')
                 .order('created_at', { ascending: false })
                 .limit(5);
 
+            if (error) {
+                console.error("❌ [HOOK] Error fetching history:", error);
+            }
+
             if (data) {
+                console.log("✅ [HOOK] History loaded:", data.length, "items");
                 setThoughts(data as AgentThought[]);
             }
         };
@@ -32,6 +38,7 @@ export const useAgentStream = (initialThoughts: AgentThought[] = []) => {
         fetchHistory();
 
         // 2. Subscribe to real-time updates
+        console.log("📡 [HOOK] Subscribing to Realtime channel...");
         const channel = supabase
             .channel('agent_thoughts_realtime')
             .on(
@@ -42,11 +49,14 @@ export const useAgentStream = (initialThoughts: AgentThought[] = []) => {
                     table: 'agent_thoughts',
                 },
                 (payload) => {
+                    console.log("🔔 [HOOK] Realtime Event!", payload);
                     const newThought = payload.new as AgentThought;
                     setThoughts((prev) => [newThought, ...prev].slice(0, 7));
                 }
             )
-            .subscribe();
+            .subscribe((status) => {
+                console.log("📶 [HOOK] Subscription Status:", status);
+            });
 
         return () => {
             supabase.removeChannel(channel);

@@ -5,6 +5,7 @@ export default function PrivacyPage() {
         <div className="space-y-8 text-gray-300">
             <div className="border-b border-white/10 pb-6">
                 <h1 className="text-3xl font-bold text-white mb-2">PRIVACY POLICY</h1>
+                <p className="text-sm text-gray-500">Last Updated: January 23, 2026</p>
                 <p className="text-sm text-gray-500">In compliance with the Federal Law on Protection of Personal Data Held by Private Parties (LFPDPPP - Mexico).</p>
                 <p className="text-sm text-gray-500">Fast Controller: NeuralMarket S.A.P.I. de C.V. (In Incorporation)</p>
             </div>
@@ -19,11 +20,14 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-white">2. DATA WE COLLECT (AND PUBLIC DATA)</h2>
+                <h2 className="text-xl font-semibold text-white">2. DATA WE COLLECT (HYBRID MODEL)</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="border border-white/10 p-4 rounded">
                         <h3 className="font-bold text-white mb-2">Off-Chain Data (Private)</h3>
-                        <p className="text-sm">Technical telemetry, UI preferences, and error logs stored on our secure servers (Supabase).</p>
+                        <p className="text-sm">Technical telemetry, UI preferences, and error logs stored on our secure servers.</p>
+                        <div className="mt-2 p-2 bg-green-900/10 border border-green-500/20 rounded text-xs">
+                            <strong>Local AI Mode (DeepSeek):</strong> When enabled, your prompts, reasoning chains ("Thoughts"), and strategy inputs remain 100% on your local device (localhost). They are NEVER transmitted to NeuralMarket servers.
+                        </div>
                     </div>
                     <div className="border border-white/10 p-4 rounded bg-white/5">
                         <h3 className="font-bold text-white mb-2">On-Chain Data (Public)</h3>

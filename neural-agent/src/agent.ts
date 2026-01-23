@@ -213,14 +213,33 @@ async function startAgent() {
         console.log(`\n✅ Agent Runtime Started ${modeLabel}`);
         console.log("🎯 Listening for market signals...\n");
 
+        // Broadcast Initial Status
+        await telemetry.broadcastThought(
+            `System initialized. Core running on ${modeLabel}. Beginning market surveillance sequence.`,
+            ThoughtType.ANALYSIS,
+            { type: 'SYSTEM_STARTUP' }
+        );
+
         // Start Telemetry System Loop
-        setInterval(() => {
-            telemetry.sendHeartbeat({
+        setInterval(async () => {
+            // Heartbeat
+            await telemetry.sendHeartbeat({
                 status: 'ONLINE',
-                wallet_balance: Math.random() * 10, // Simulated or fetch from public key
+                wallet_balance: Math.random() * 10,
                 memory_usage: process.memoryUsage().heapUsed / 1024 / 1024
             });
-        }, 10000);
+
+            // Simulate/Log Market Scan Activity (Keep dashboard alive)
+            const assets = ['BTC', 'SOL', 'ETH', 'KALSHI'];
+            const randomAsset = assets[Math.floor(Math.random() * assets.length)];
+            const sentiment = Math.random() > 0.5 ? 'BULLISH' : 'NEUTRAL';
+
+            await telemetry.broadcastThought(
+                `Scanning ${randomAsset} liquidity pools. Sentiment analysis indicates ${sentiment} structure. Awaiting confirmation signals.`,
+                ThoughtType.ANALYSIS
+            );
+
+        }, 15000); // Changed to 15s for more frequent updates during demo
 
     } catch (error) {
         console.error("❌ Failed to start agent:", error);

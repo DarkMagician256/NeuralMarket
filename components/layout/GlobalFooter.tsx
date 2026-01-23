@@ -24,8 +24,8 @@ export default function GlobalFooter() {
                         </div>
                         <p className="text-gray-500 text-xs md:text-sm max-w-sm leading-relaxed">
                             The Neural Market protocol is a decentralized prediction market interface.
-                            It integrates directly with on-chain liquidity providers and utilizes
-                            AI agents for sentiment analysis.
+                            Features on-chain liquidity via DFlow and privacy-focused AI agents
+                            powered by DeepSeek R1 & OpenAI.
                         </p>
                     </div>
 

@@ -98,17 +98,6 @@ export const executeKalshiTrade: Action = {
                 throw new Error(`Kalshi API Error: ${JSON.stringify(apiError.response?.data || apiError.message)}`);
             }
 
-            // 4. REPORT BACK
-            callback?.({
-                text: `✅ Trade Executed with Protocol Attribution!\n\nMarket: *${ticker}*\nPosition: *${side}*\nAmount: *$${amount}*\nSignature: \`${mockSignature}\`\n\n🛡️ **Monetization Engine**: Builder Code \`${builderCode}\` injected for hackathon eligibility.`,
-                content: {
-                    success: true,
-                    signature: mockSignature,
-                    builderCode: builderCode
-                }
-            });
-
-            return true;
 
         } catch (error) {
             elizaLogger.error("[ORACULO] Trade Execution Failed:", error as any);

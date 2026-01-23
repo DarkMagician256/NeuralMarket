@@ -108,8 +108,8 @@ export default function LiveBotStatus() {
             <div className="relative">
                 <div
                     className={`w-3 h-3 rounded-full ${botStatus.isOnline
-                            ? 'bg-green-500'
-                            : 'bg-yellow-500'
+                        ? 'bg-green-500'
+                        : 'bg-yellow-500'
                         }`}
                 />
                 {botStatus.isOnline && (
@@ -124,7 +124,7 @@ export default function LiveBotStatus() {
             {/* Status text */}
             <div className="flex flex-col">
                 <span className="text-xs font-bold text-white">
-                    🤖 {botStatus.agentName}
+                    🤖 {botStatus.agentName} <span className="ml-1 text-[10px] text-gray-500 font-normal opacity-80">| DeepSeek R1 Native</span>
                 </span>
                 <span className={`text-xs font-mono ${botStatus.isOnline ? 'text-green-400' : 'text-yellow-400'
                     }`}>

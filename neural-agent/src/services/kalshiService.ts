@@ -41,7 +41,7 @@ export class KalshiService {
             const signature = sign.sign(this.privateKey, 'base64');
             return signature;
         } catch (error) {
-            elizaLogger.error("❌ Kalshi Crypto Signing Error:", error);
+            elizaLogger.error("❌ Kalshi Crypto Signing Error:", error as any);
             throw new Error("Failed to sign Kalshi request. Check RSA key format.");
         }
     }
