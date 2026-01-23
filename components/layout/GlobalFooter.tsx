@@ -8,7 +8,7 @@ export default function GlobalFooter() {
         <footer className="border-t border-white/5 bg-black/80 backdrop-blur-xl relative z-40">
             <div className="container mx-auto px-4 py-10 md:py-16">
                 {/* Main Grid - Responsive */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12 mb-8 md:mb-12">
                     {/* Brand Section - Full width on mobile */}
                     <div className="col-span-2">
                         <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
@@ -37,6 +37,16 @@ export default function GlobalFooter() {
                             <li><Link href="/agents" className="hover:text-cyan-400 cursor-pointer transition-colors">Cortex Agents</Link></li>
                             <li><Link href="/leaderboard" className="hover:text-cyan-400 cursor-pointer transition-colors">Leaderboard</Link></li>
                             <li><Link href="/portfolio" className="hover:text-cyan-400 cursor-pointer transition-colors">Portfolio</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Support Links */}
+                    <div>
+                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">SUPPORT</h4>
+                        <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500">
+                            <li><Link href="/help" className="hover:text-cyan-400 cursor-pointer transition-colors">Help Center</Link></li>
+                            <li><Link href="/faq" className="hover:text-cyan-400 cursor-pointer transition-colors">FAQ</Link></li>
+                            <li><a href="mailto:support@neuralmarket.io" className="hover:text-cyan-400 cursor-pointer transition-colors">Contact Us</a></li>
                         </ul>
                     </div>
 
