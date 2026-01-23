@@ -202,11 +202,45 @@ export class SupabaseDatabaseAdapter {
     }
 
     async getParticipantsForAccount(userId: UUID): Promise<any[]> {
-        return [];
+        const { data, error } = await this.supabase
+            .from('agent_participants')
+            .select('*')
+            .eq('user_id', userId);
+
+        if (error) return [];
+        return data || [];
+    }
+
+    async addParticipant(userId: UUID, roomId: UUID): Promise<boolean> {
+        const { error } = await this.supabase
+            .from('agent_participants')
+            .insert({
+                user_id: userId,
+                room_id: roomId,
+                created_at: new Date().toISOString()
+            });
+
+        return !error;
+    }
+
+    async removeParticipant(userId: UUID, roomId: UUID): Promise<boolean> {
+        const { error } = await this.supabase
+            .from('agent_participants')
+            .delete()
+            .eq('user_id', userId)
+            .eq('room_id', roomId);
+
+        return !error;
     }
 
     async getParticipantsForRoom(roomId: UUID): Promise<UUID[]> {
-        return [];
+        const { data, error } = await this.supabase
+            .from('agent_participants')
+            .select('user_id')
+            .eq('room_id', roomId);
+
+        if (error) return [];
+        return (data || []).map(p => p.user_id);
     }
 
     async getParticipantUserState(roomId: UUID, userId: UUID): Promise<"FOLLOWED" | "MUTED" | null> {

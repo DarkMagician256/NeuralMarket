@@ -74,7 +74,100 @@ CREATE TABLE IF NOT EXISTS public.system_telemetry (
 );
 
 -- ============================================
--- 5. TABLA: governance_votes (Sistema de votación)
+-- 5. TABLAS: ElizaOS Agent Runtime Tables
+-- ============================================
+
+-- Agent Accounts
+CREATE TABLE IF NOT EXISTS public.agent_accounts (
+    id UUID PRIMARY KEY,
+    name TEXT,
+    username TEXT,
+    email TEXT,
+    avatar_url TEXT,
+    details JSONB DEFAULT '{}'::JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_agent_accounts_username ON public.agent_accounts(username);
+
+-- Agent Memories
+CREATE TABLE IF NOT EXISTS public.agent_memories (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID,
+    agent_id UUID,
+    room_id UUID,
+    content JSONB DEFAULT '{}'::JSONB,
+    embedding VECTOR(1536),  -- OpenAI embeddings dimension
+    unique_hash TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_agent_memories_room ON public.agent_memories(room_id);
+CREATE INDEX IF NOT EXISTS idx_agent_memories_agent ON public.agent_memories(agent_id);
+CREATE INDEX IF NOT EXISTS idx_agent_memories_created ON public.agent_memories(created_at DESC);
+
+-- Agent Rooms
+CREATE TABLE IF NOT EXISTS public.agent_rooms (
+    id UUID PRIMARY KEY,
+    name TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Agent Participants (Links users to rooms)
+CREATE TABLE IF NOT EXISTS public.agent_participants (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL,
+    room_id UUID NOT NULL,
+    last_message_read UUID,
+    user_state TEXT DEFAULT NULL,  -- 'FOLLOWED', 'MUTED', NULL
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_id, room_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_agent_participants_user ON public.agent_participants(user_id);
+CREATE INDEX IF NOT EXISTS idx_agent_participants_room ON public.agent_participants(room_id);
+
+-- Agent Goals
+CREATE TABLE IF NOT EXISTS public.agent_goals (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    room_id UUID,
+    user_id UUID,
+    name TEXT NOT NULL,
+    status TEXT DEFAULT 'IN_PROGRESS',  -- IN_PROGRESS, DONE, FAILED
+    objectives JSONB DEFAULT '[]'::JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_agent_goals_room ON public.agent_goals(room_id);
+CREATE INDEX IF NOT EXISTS idx_agent_goals_status ON public.agent_goals(status);
+
+-- Agent Logs
+CREATE TABLE IF NOT EXISTS public.agent_logs (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID,
+    room_id UUID,
+    type TEXT NOT NULL,
+    body JSONB DEFAULT '{}'::JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_agent_logs_room ON public.agent_logs(room_id);
+CREATE INDEX IF NOT EXISTS idx_agent_logs_type ON public.agent_logs(type);
+
+-- Agent Relationships
+CREATE TABLE IF NOT EXISTS public.agent_relationships (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_a UUID NOT NULL,
+    user_b UUID NOT NULL,
+    status TEXT DEFAULT 'ACTIVE',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_a, user_b)
+);
+
+CREATE INDEX IF NOT EXISTS idx_agent_relationships_users ON public.agent_relationships(user_a, user_b);
+
+-- ============================================
+-- 6. TABLA: governance_votes (Sistema de votación)
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.governance_votes (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -89,7 +182,7 @@ CREATE TABLE IF NOT EXISTS public.governance_votes (
 CREATE INDEX IF NOT EXISTS idx_votes_proposal ON public.governance_votes(proposal_id);
 
 -- ============================================
--- 6. TABLA: governance_proposals (Propuestas)
+-- 7. TABLA: governance_proposals (Propuestas)
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.governance_proposals (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -106,7 +199,7 @@ CREATE TABLE IF NOT EXISTS public.governance_proposals (
 );
 
 -- ============================================
--- 7. HABILITAR REALTIME
+-- 8. HABILITAR REALTIME
 -- ============================================
 
 -- Habilitar Realtime para tablas clave
@@ -130,7 +223,7 @@ EXCEPTION WHEN OTHERS THEN NULL;
 END $$;
 
 -- ============================================
--- 8. ROW LEVEL SECURITY (RLS)
+-- 9. ROW LEVEL SECURITY (RLS)
 -- ============================================
 
 -- Habilitar RLS en tablas sensibles
@@ -156,13 +249,18 @@ TO authenticated, anon
 USING (true);
 
 -- ============================================
--- 9. VERIFICACIÓN
+-- 10. VERIFICACIÓN
 -- ============================================
 -- Verificar que las tablas existen
 SELECT table_name 
 FROM information_schema.tables 
 WHERE table_schema = 'public' 
-AND table_name IN ('trades', 'agent_thoughts', 'market_predictions', 'system_telemetry', 'governance_votes', 'governance_proposals');
+AND table_name IN (
+    'trades', 'agent_thoughts', 'market_predictions', 'system_telemetry', 
+    'governance_votes', 'governance_proposals',
+    'agent_accounts', 'agent_memories', 'agent_rooms', 'agent_participants',
+    'agent_goals', 'agent_logs', 'agent_relationships'
+);
 
 -- ============================================
 -- ¡LISTO! El schema de NeuralMarket está configurado.
