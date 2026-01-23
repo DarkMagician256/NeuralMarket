@@ -5,7 +5,6 @@
     "main": "dist/agent.js",
     "scripts": {
         "build": "echo 'Build skipped (using tsx)'",
-        "postinstall": "bun scripts/patch-zod.js",
         "start": "bun run src/agent.ts",
         "dev": "bun run src/agent.ts",
         "lint": "eslint src/**/*.ts",

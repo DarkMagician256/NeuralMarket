@@ -12,6 +12,9 @@ RUN bun install
 # Copy source code
 COPY . .
 
+# Explicitly apply Zod patch for Langchain compatibility
+RUN bun scripts/patch-zod.js
+
 # --- STAGE 2: Runtime ---
 FROM oven/bun:1 AS runtime
 
