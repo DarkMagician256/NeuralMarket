@@ -12,8 +12,8 @@ RUN bun install
 # Copy source code
 COPY . .
 
-# Explicitly apply Zod patch for Langchain compatibility
-RUN bun scripts/patch-zod.js
+# BRUTE FORCE ZOD PATCH: Find ALL instances of 'zod' in node_modules and inject v3.js
+RUN find /app/node_modules -type d -name "zod" -exec sh -c 'echo "module.exports = require(\"./index.js\");" > "$1/v3.js" && echo "export * from \"./index\";" > "$1/v3.d.ts" && echo "✅ Patched $1"' _ {} \;;
 
 # --- STAGE 2: Runtime ---
 FROM oven/bun:1 AS runtime
