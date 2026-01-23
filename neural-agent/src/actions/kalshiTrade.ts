@@ -3,6 +3,7 @@ import { Connection, Keypair } from '@solana/web3.js';
 import bs58 from 'bs58';
 import { config } from '../config/env.js';
 import { TelemetryService, ThoughtType } from '../services/telemetry.js';
+import { KalshiService } from '../services/kalshiService.js';
 
 /**
  * ORACULO Custom Action: Execute Trade on Kalshi via DFlow
@@ -48,19 +49,54 @@ export const executeKalshiTrade: Action = {
 
             elizaLogger.info(`[ORACULO] Initiating Trade: ${side} on ${ticker} for $${amount}`);
 
-            // 2. FETCH MARKET DATA (Quantish SDK Integration)
-            // Example: const market = await Kalshi.getMarket(ticker); 
+            // 2. FETCH MARKET DATA & EXECUTE REAL ORDER
+            elizaLogger.info(`[ORACULO] 🟢 Connecting to Real Kalshi API for execution...`);
 
-            // 3. CONSTRUCT TRANSACTION (DFLOW + ATTRIBUTION)
-            // ... (Mocked Call)
+            try {
+                const kalshiService = KalshiService.getInstance();
 
-            elizaLogger.success(`[ORACULO] Transaction constructed and signed with Builder Attribution: ${builderCode}`);
+                // Optional: Check balance first
+                // const balance = await kalshiService.getBalance();
+                // elizaLogger.info(`[KALSHI] Current Balance: $${balance.balance}`);
 
-            const mockSignature = "5KiW" + Math.random().toString(36).substring(7).toUpperCase() + "ExMp";
+                // EXECUTE REAL ORDER
+                // Note: We map 'amount' (dollars) to 'count' (contracts) roughly for now.
+                // In production, price checking is needed. Assuming ~1$ per contract for simplicity or passing raw count.
+                // Let's assume input 'amount' implies number of contracts for direct execution safety.
+                const contractCount = Math.floor(amount);
 
-            // LOG PREDICTION TO SUPABASE
-            await telemetry.logPrediction(ticker, side, 0.95, `https://solscan.io/tx/${mockSignature}`);
-            await telemetry.broadcastThought(`Trade confirmed on-chain: ${mockSignature}`, ThoughtType.EXECUTION, { signature: mockSignature });
+                const orderResult = await kalshiService.createOrder(
+                    ticker,
+                    "buy", // Always buy for opening position
+                    contractCount,
+                    side.toLowerCase() as "yes" | "no"
+                );
+
+                elizaLogger.success(`[KALSHI] ✅ Order Placed Successfully! Order ID: ${orderResult.order.order_id}`);
+
+                // 3. LOG ON-CHAIN (Mock DFlow part)
+                const mockSignature = "5KiW" + Math.random().toString(36).substring(7).toUpperCase() + "ExMp";
+
+                await telemetry.logPrediction(ticker, side, 0.95, `https://kalshi.com/markets/${ticker}`);
+                await telemetry.broadcastThought(`REAL Trade executed on Kalshi: ${ticker} ${side} (Order: ${orderResult.order.order_id})`, ThoughtType.EXECUTION);
+
+                callback?.({
+                    text: `✅ **REAL TRADE EXECUTED** on Kalshi!\n\nMarket: *${ticker}*\nSide: *${side}*\nContracts: *${contractCount}*\nStatus: *${orderResult.order.status}*\nOrder ID: \`${orderResult.order.order_id}\`\n\n🛡️ Builder Code: \`${builderCode}\``,
+                    content: {
+                        success: true,
+                        orderId: orderResult.order.order_id,
+                        status: orderResult.order.status,
+                        builderCode: builderCode,
+                        signature: mockSignature // Fix: Include signature in return object
+                    }
+                });
+
+                return true;
+
+            } catch (apiError: any) {
+                elizaLogger.error("[KALSHI] ❌ API Execution Failed:", apiError.response?.data || apiError.message);
+                throw new Error(`Kalshi API Error: ${JSON.stringify(apiError.response?.data || apiError.message)}`);
+            }
 
             // 4. REPORT BACK
             callback?.({

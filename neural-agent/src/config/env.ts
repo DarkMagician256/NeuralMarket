@@ -24,6 +24,7 @@ const envSchema = z.object({
     KALSHI_API_KEY: z.string().optional().default(""), // RELAXED
     KALSHI_ACCESS_KEY: z.string().optional().default(""), // RELAXED
     KALSHI_BUILDER_CODE: z.string().optional().default("ORACULO_V2"),
+    KALSHI_PRIVATE_KEY: z.string().optional().default(""), // RELAXED
 
     // DFlow
     DFLOW_API_KEY: z.string().optional(),

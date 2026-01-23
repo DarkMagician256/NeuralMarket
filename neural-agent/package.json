@@ -6,7 +6,7 @@
     "scripts": {
         "build": "echo 'Build skipped (using tsx)'",
         "start": "bun run src/agent.ts",
-        "start:local": "cross-env USE_LOCAL_AI=true bun run src/agent.ts",
+        "start:local": "./run_agent.sh",
         "dev": "bun run src/agent.ts",
         "lint": "eslint src/**/*.ts",
         "test": "jest"
