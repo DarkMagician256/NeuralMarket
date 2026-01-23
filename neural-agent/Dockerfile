@@ -3,11 +3,11 @@ FROM oven/bun:1 AS builder
 
 WORKDIR /app
 
-# Copy dependency manifests
-COPY package.json pnpm-lock.yaml ./
+# Copy only package.json (let Bun resolve fresh, ignore pnpm lockfile)
+COPY package.json ./
 
-# Install dependencies (Bun installs npm packages natively and fast)
-RUN bun install
+# Install dependencies fresh (Bun will get latest matching versions)
+RUN bun install --no-save
 
 # Copy source code
 COPY . .
