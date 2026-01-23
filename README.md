@@ -7,6 +7,8 @@
 ![Kalshi](https://img.shields.io/badge/Kalshi-Regulated-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Mainnet_Release_Candidate-success?style=for-the-badge)
 
+<img src="https://i.ibb.co/6Pq7p8K/uploaded_media_1769204937393.png" alt="NeuralMarket Dashboard" width="100%" />
+
 ---
 
 ## 🚀 WHAT IT IS
