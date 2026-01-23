@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import LiveBotStatus from '@/components/ui/LiveBotStatus';
 
 export default function HeroSection() {
     return (
@@ -37,9 +38,14 @@ export default function HeroSection() {
                 </h1>
 
                 {/* Subtitle - Responsive */}
-                <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto font-mono px-2">
+                <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-4 md:mb-6 max-w-2xl mx-auto font-mono px-2">
                     Deploy neural swarms to analyze real-world events and execute trades autonomously.
                 </p>
+
+                {/* Live Bot Status Indicator */}
+                <div className="mb-6 md:mb-8">
+                    <LiveBotStatus />
+                </div>
 
                 {/* LOGOS SECTION - Responsive & Matching Markets Page */}
                 <div className="flex flex-col items-center gap-2 mb-8 md:mb-14 w-full">
