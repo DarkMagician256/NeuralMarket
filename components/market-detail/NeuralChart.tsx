@@ -15,8 +15,10 @@ export default function NeuralChart({ ticker }: { ticker: string }) {
 
     return (
         <div className="glass-panel p-6 h-[500px] w-full relative group">
-            <div className="absolute top-4 left-6 z-10 flex gap-4">
-                <h3 className="text-gray-400 text-xs font-mono tracking-widest">NEURAL_CHART_V2.0 // {ticker}</h3>
+            <div className="absolute top-4 left-6 z-10 flex gap-4 max-w-[80%] overflow-hidden">
+                <h3 className="text-gray-400 text-[10px] md:text-xs font-mono tracking-widest truncate">
+                    NEURAL_CHART_V2.0 // {ticker}
+                </h3>
             </div>
 
             <ResponsiveContainer width="100%" height="100%">

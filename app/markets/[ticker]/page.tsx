@@ -25,7 +25,7 @@ export default async function MarketPage({ params }: { params: Promise<{ ticker:
     };
 
     return (
-        <div className="min-h-screen pb-20 space-y-6">
+        <div className="min-h-screen pb-20 space-y-6 px-4 md:px-0">
             {/* 1. Header Section */}
             {/* @ts-ignore - Category type mismatch is handled visually */}
             <MarketHeader market={market} />
