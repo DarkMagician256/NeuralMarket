@@ -13,9 +13,23 @@ export class KalshiService {
         this.keyId = config.KALSHI_API_KEY || ''; // Usamos API_KEY como KID
         this.privateKey = config.KALSHI_PRIVATE_KEY || ''; // RSA Private Key
 
-        if (this.privateKey.includes('RSA PRIVATE KEY')) {
-            // Asegurar formato correcto de saltos de línea si viene "aplastada"
-            this.privateKey = this.privateKey.replace(/\\n/g, '\n');
+        // Format RSA Key correctly for Railway/Environment variables
+        if (this.privateKey) {
+            // 1. Remove existing headers if present to normalize
+            let cleanKey = this.privateKey
+                .replace(/\\n/g, '') // Remove literal escaped newlines
+                .replace(/\n/g, '')  // Remove actual newlines
+                .replace(/-----BEGIN RSA PRIVATE KEY-----/g, '')
+                .replace(/-----END RSA PRIVATE KEY-----/g, '')
+                .replace(/\s/g, ''); // Remove spaces
+
+            // 2. Add correct chunks (64 chars per line)
+            const chunkedKey = cleanKey.match(/.{1,64}/g)?.join('\n');
+
+            // 3. Reconstruct full PEM
+            this.privateKey = `-----BEGIN RSA PRIVATE KEY-----\n${chunkedKey}\n-----END RSA PRIVATE KEY-----`;
+
+            // elizaLogger.log('[KALSHI] Private key formatted successfully from environment.');
         }
     }
 
