@@ -22,7 +22,7 @@ By integrating **Autonomous AI Agents (ElizaOS)** with **Solana's execution spee
 ## 🔗 LIVE DEMO & PROOF OF WORK
 
 *   **Live App:** [https://neural-market.vercel.app](https://neural-market.vercel.app/)
-*   **GitHub:** [Eras256/NeuralMarket](https://github.com/Eras256/NeuralMarket)
+*   **Registry:** [NeuralVault Program](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
 *   **Smart Contract (NeuralVault):** [`A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F`](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
 
 ### Verified On-Chain Transactions (Devnet)

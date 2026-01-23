@@ -5,7 +5,6 @@ NeuralMarket is a fully functional prediction markets interface deployed on Sola
 
 **LIVE DEMO & PROOF OF WORK:**
 - **Live App:** https://neural-market.vercel.app
-- **GitHub:** https://github.com/Eras256/NeuralMarket
 - **Smart Contract (Devnet):** https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet
 
 **VERIFIED ON-CHAIN TRANSACTIONS:**

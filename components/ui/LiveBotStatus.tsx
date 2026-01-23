@@ -124,7 +124,7 @@ export default function LiveBotStatus() {
             {/* Status text */}
             <div className="flex flex-col">
                 <span className="text-xs font-bold text-white">
-                    🤖 {botStatus.agentName} <span className="ml-1 text-[10px] text-gray-500 font-normal opacity-80">| DeepSeek R1 Native</span>
+                    🤖 {botStatus.agentName} <span className="hidden sm:inline ml-1 text-[10px] text-gray-500 font-normal opacity-80">| DeepSeek R1 Native</span>
                 </span>
                 <span className={`text-xs font-mono ${botStatus.isOnline ? 'text-green-400' : 'text-yellow-400'
                     }`}>

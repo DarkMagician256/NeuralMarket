@@ -23,57 +23,112 @@ export interface Market {
  */
 export async function getLiveMarkets(): Promise<Market[]> {
     try {
-        // console.log('[Kalshi] Fetching live markets...');
+        // Fetch diverse events to ensure a perfect mix of categories
+        const kalshiEvents = await kalshiClient.getEvents(150);
 
-        // Try to fetch real Kalshi markets (increased limit to 100)
-        const kalshiMarkets = await kalshiClient.getMarkets(100, 'open');
+        if (kalshiEvents && kalshiEvents.length > 0) {
+            const buckets: Record<string, any[]> = {
+                CRYPTO: [],
+                ECONOMICS: [],
+                POLITICS: [],
+                SCIENCE: [],
+                CULTURE: [],
+                OTHER: []
+            };
 
-        if (kalshiMarkets && kalshiMarkets.length > 0) {
-            // console.log(`[Kalshi] Fetched ${kalshiMarkets.length} live markets`);
+            kalshiEvents.forEach(event => {
+                if (event.markets && event.markets.length > 0) {
+                    const eventMarkets = event.markets.map(market => {
+                        const priceValue = market.last_price || market.yes_ask || market.yes_bid || 50;
+                        const probability = priceValue;
 
-            return kalshiMarkets.map((market: KalshiMarket) => {
-                // Kalshi returns prices in cents (1-99).
-                // Use last_price first for general "value", then ask (buy price), then bid. 
-                // Using bid (sell price) alone causes "0%" display if no one is buying.
-                const priceValue = market.last_price || market.yes_ask || market.yes_bid || 50;
-                const probability = priceValue;
+                        let cortexSignal: 'BULLISH' | 'BEARISH' | 'NEUTRAL' = 'NEUTRAL';
+                        if (probability > 60) cortexSignal = 'BULLISH';
+                        else if (probability < 40) cortexSignal = 'BEARISH';
 
-                // Determine signal based on recent activity
-                let cortexSignal: 'BULLISH' | 'BEARISH' | 'NEUTRAL' = 'NEUTRAL';
-                if (probability > 60) cortexSignal = 'BULLISH';
-                else if (probability < 40) cortexSignal = 'BEARISH';
+                        const volumeTotal = market.volume || 0;
+                        const volume24h = market.volume_24h || 0;
+                        const bestVolume = Math.max(volumeTotal, volume24h);
 
-                // Format volume
-                const volumeNum = market.volume_24h || market.volume || 0;
-                const volumeStr = volumeNum >= 1000000
-                    ? `$${(volumeNum / 1000000).toFixed(1)}M`
-                    : volumeNum >= 1000
-                        ? `$${(volumeNum / 1000).toFixed(0)}K`
-                        : `$${volumeNum}`;
+                        const volumeStr = bestVolume >= 1000000
+                            ? `$${(bestVolume / 1000000).toFixed(1)}M`
+                            : bestVolume >= 1000
+                                ? `$${(bestVolume / 1000).toFixed(0)}K`
+                                : `$${bestVolume}`;
 
-                return {
-                    id: market.ticker,
-                    ticker: market.ticker,
-                    title: market.title || market.subtitle || market.ticker,
-                    category: mapCategory(market.category),
-                    probability,
-                    volume: volumeStr,
-                    change24h: 0, // Would need historical data
-                    cortexSignal,
-                    // For the "Price" display, show the 'Ask' (Buy) price if available, otherwise Last
-                    yesPrice: (market.yes_ask || market.last_price || market.yes_bid || 50) / 100,
-                    noPrice: (market.no_ask || (100 - (market.last_price || 50)) || market.no_bid || 50) / 100,
-                    expiration: market.expiration_time
-                };
+                        return {
+                            id: market.ticker,
+                            ticker: market.ticker,
+                            title: market.title || event.title || market.ticker,
+                            category: mapCategory(event.category || market.category, market.title, market.ticker),
+                            probability,
+                            volume: volumeStr,
+                            rawVolume: bestVolume,
+                            change24h: 0,
+                            cortexSignal,
+                            yesPrice: (market.yes_ask || market.last_price || market.yes_bid || 50) / 100,
+                            noPrice: (market.no_ask || (100 - (market.last_price || 50)) || market.no_bid || 50) / 100,
+                            expiration: market.expiration_time
+                        };
+                    });
+
+                    // Group primary market from each event into buckets
+                    eventMarkets.sort((a, b) => b.rawVolume - a.rawVolume);
+                    if (eventMarkets.length > 0) {
+                        const m = eventMarkets[0];
+                        const cat = buckets[m.category] ? m.category : 'OTHER';
+                        buckets[cat].push(m);
+
+                        // Add a secondary market if available to fill slots
+                        if (eventMarkets.length > 1) {
+                            buckets[cat].push(eventMarkets[1]);
+                        }
+                    }
+                }
             });
+
+            const selectedSet = new Set<string>();
+            const result: any[] = [];
+            const categoriesToEnsure = ['CRYPTO', 'ECONOMICS', 'POLITICS', 'SCIENCE', 'CULTURE'];
+            const targetTotal = 100;
+            const targetPerCategory = 20;
+
+            // 1. Force equal distribution using buckets
+            categoriesToEnsure.forEach(cat => {
+                buckets[cat].sort((a, b) => b.rawVolume - a.rawVolume);
+                buckets[cat].slice(0, targetPerCategory).forEach(m => {
+                    if (!selectedSet.has(m.id)) {
+                        selectedSet.add(m.id);
+                        result.push(m);
+                    }
+                });
+            });
+
+            // 2. Fill until 100 with the overall best remaining markets
+            const allPossible = Object.values(buckets).flat()
+                .filter(m => !selectedSet.has(m.id))
+                .sort((a, b) => b.rawVolume - a.rawVolume);
+
+            for (const m of allPossible) {
+                if (result.length >= targetTotal) break;
+                selectedSet.add(m.id);
+                result.push(m);
+            }
+
+            // 3. Shuffle (Fisher-Yates) for random categorical mix
+            for (let i = result.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [result[i], result[j]] = [result[j], result[i]];
+            }
+
+            return result;
         }
 
-        throw new Error('No markets returned from API');
-
+        throw new Error('No events returned from API');
     } catch (error) {
         console.error('[Kalshi] API error, using fallback data:', error);
 
-        // Fallback to mock data
+        // Fallback or Mock
         return KALSHI_MARKETS.map(market => ({
             id: market.ticker,
             ticker: market.ticker,
@@ -81,6 +136,7 @@ export async function getLiveMarkets(): Promise<Market[]> {
             category: market.category,
             probability: Math.round(market.yesPrice * 100),
             volume: `$${(market.volume / 1000000).toFixed(1)}M`,
+            rawVolume: market.volume,
             change24h: 0,
             cortexSignal: market.yesPrice > 0.6 ? 'BULLISH' as const :
                 market.yesPrice < 0.4 ? 'BEARISH' as const : 'NEUTRAL' as const,
@@ -104,7 +160,7 @@ export async function getMarketDetails(ticker: string): Promise<Market | null> {
                 id: market.ticker,
                 ticker: market.ticker,
                 title: market.title || market.ticker,
-                category: mapCategory(market.category),
+                category: mapCategory(market.category, market.title, market.ticker),
                 probability: yesPriceCents,
                 volume: `$${((market.volume_24h || 0) / 1000000).toFixed(1)}M`,
                 change24h: 0,
@@ -157,24 +213,53 @@ export async function getRealOrderbook(ticker: string) {
     }
 }
 
-
 /**
  * Map Kalshi categories to our categories
  */
-function mapCategory(category?: string): string {
-    if (!category) return 'POLITICS';
+function mapCategory(category?: string, title?: string, ticker?: string): string {
+    const rawCategory = category || '';
+    const rawTitle = title || '';
+    const rawTicker = ticker || '';
+    const text = (rawCategory + ' ' + rawTitle + ' ' + rawTicker).toLowerCase();
 
-    const categoryMap: Record<string, string> = {
-        'Politics': 'POLITICS',
-        'Economics': 'ECONOMICS',
-        'Crypto': 'CRYPTO',
-        'Finance': 'ECONOMICS',
-        'Tech': 'SCIENCE',
-        'Science': 'SCIENCE',
-        'Sports': 'CULTURE',
-        'Entertainment': 'CULTURE',
-        'Culture': 'CULTURE'
-    };
+    // Word boundary helper to avoid partial matches like "Kenneth" -> "eth"
+    const has = (keywords: string[]) => keywords.some(word => {
+        // Use a more flexible check for fragments like "ai" or "eth" but keep word boundaries for others
+        if (word.length <= 3) {
+            return new RegExp(`\\b${word}\\b`, 'i').test(text);
+        }
+        return text.includes(word.toLowerCase());
+    });
 
-    return categoryMap[category] || category.toUpperCase();
+    // 1. CRYPTO
+    if (has(['crypto', 'btc', 'eth', 'sol', 'bitcoin', 'ethereum', 'solana', 'doge', 'xrp', 'binance', 'coinbase', 'block', 'chain', 'defi', 'nft'])) {
+        return 'CRYPTO';
+    }
+
+    // 2. POLITICS
+    if (has(['politic', 'election', 'trump', 'biden', 'harris', 'president', 'senate', 'congress', 'democrat', 'republican', 'cabinet', 'white house', 'supreme court', 'scotus', 'bill', 'legislation', 'vote', 'governor', 'mayor'])) {
+        return 'POLITICS';
+    }
+
+    // 3. ECONOMICS
+    if (has(['fed', 'rate', 'gdp', 'cpi', 'inflation', 'interest', 'recession', 'unemployment', 'yield', 'econom', 'financ', 'market cap', 'stock', 's&p', 'nasdaq', 'dow', 'index', 'payroll', 'housing', 'retail', 'pce'])) {
+        return 'ECONOMICS';
+    }
+
+    // 4. SCIENCE & TECH
+    if (has(['science', 'tech', 'ai', 'space', 'nasa', 'spacex', 'medical', 'fda', 'health', 'vaccine', 'climate', 'temperature', 'degree', 'storm', 'hurricane', 'weather', 'volcano'])) {
+        return 'SCIENCE';
+    }
+
+    // 5. CULTURE (Sports & Ent)
+    if (has(['nba', 'nfl', 'mlb', 'soccer', 'points', 'win', 'game', 'player', 'team', 'touchdown', 'score', 'basketball', 'football', 'betting', 'grammy', 'oscar', 'movie', 'box office'])) {
+        return 'CULTURE';
+    }
+
+    // Fallback to the raw category from Kalshi if available, otherwise OTHER
+    if (rawCategory && rawCategory.trim().length > 0) {
+        return rawCategory.toUpperCase().replace(/_/g, ' ');
+    }
+
+    return 'OTHER';
 }

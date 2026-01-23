@@ -47,7 +47,7 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Steps Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-4">
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}

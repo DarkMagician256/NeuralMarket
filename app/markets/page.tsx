@@ -12,7 +12,9 @@ export default async function MarketsPage() {
 
     // Calculate stats
     const totalVolume = markets.reduce((acc, m) => {
-        const vol = parseFloat(m.volume.replace(/[$,KM]/g, '')) || 0;
+        let vol = parseFloat(m.volume.replace(/[$,KM]/g, '')) || 0;
+        if (m.volume.includes('M')) vol *= 1000000;
+        else if (m.volume.includes('K')) vol *= 1000;
         return acc + vol;
     }, 0);
 
@@ -83,7 +85,13 @@ export default async function MarketsPage() {
                         <div className="p-1.5 md:p-2 bg-purple-500/20 rounded-lg text-purple-400"><Clock size={18} /></div>
                         <div>
                             <div className="text-[10px] md:text-xs text-gray-500 font-mono uppercase">24h Volume</div>
-                            <div className="text-lg md:text-xl font-bold text-white">${totalVolume.toFixed(1)}M</div>
+                            <div className="text-lg md:text-xl font-bold text-white">
+                                {totalVolume >= 1000000
+                                    ? `$${(totalVolume / 1000000).toFixed(1)}M`
+                                    : totalVolume >= 1000
+                                        ? `$${(totalVolume / 1000).toFixed(0)}K`
+                                        : `$${totalVolume.toFixed(0)}`}
+                            </div>
                         </div>
                     </div>
 

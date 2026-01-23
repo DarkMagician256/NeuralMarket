@@ -93,9 +93,9 @@ export default function HelpCenterPage() {
                             <a href="mailto:support@neuralmarket.io" className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-colors">
                                 <MessageSquare size={18} /> Chat with Support
                             </a>
-                            <a href="https://github.com/Eras256/NeuralMarket" target="_blank" className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-colors">
+                            <Link href="/help" className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-colors">
                                 <FileText size={18} /> View Documentation
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
