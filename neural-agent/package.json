@@ -6,6 +6,7 @@
     "scripts": {
         "build": "echo 'Build skipped (using tsx)'",
         "start": "bun run src/agent.ts",
+        "start:local": "cross-env USE_LOCAL_AI=true bun run src/agent.ts",
         "dev": "bun run src/agent.ts",
         "lint": "eslint src/**/*.ts",
         "test": "jest"
@@ -28,6 +29,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.11.0",
+        "cross-env": "^10.1.0",
         "eslint": "^8.56.0",
         "jest": "^29.7.0",
         "ts-node": "^10.9.2",

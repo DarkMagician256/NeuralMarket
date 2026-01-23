@@ -10,10 +10,15 @@ const envSchema = z.object({
     SOLANA_PRIVATE_KEY: z.string().optional().default(""), // RELAXED FOR DEBUGGING
     RPC_URL: z.string().optional().default("https://api.devnet.solana.com"), // RELAXED
 
-    // AI
-    // Force a valid-looking dummy if missing to prevent crash, user must update later
+    // AI - OpenAI (Cloud)
     OPENAI_API_KEY: z.string().default("sk-dummy-key-for-startup-check"),
     TAVILY_API_KEY: z.string().optional(),
+
+    // AI - Ollama (Local)
+    USE_LOCAL_AI: z.string().optional().default("false"),
+    OLLAMA_SERVER_URL: z.string().optional().default("http://localhost:11434"),
+    OLLAMA_MODEL: z.string().optional().default("deepseek-r1-8b:latest"),
+    OLLAMA_EMBEDDING_MODEL: z.string().optional().default("mxbai-embed-large"),
 
     // Kalshi
     KALSHI_API_KEY: z.string().optional().default(""), // RELAXED
