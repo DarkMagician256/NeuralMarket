@@ -32,6 +32,17 @@ const envSchema = z.object({
 export type EnvConfig = z.infer<typeof envSchema>;
 
 function validateEnv(): EnvConfig {
+    console.log("🔍 [DEBUG] Checking Environment Variables...");
+    const keys = Object.keys(process.env).filter(k => !k.startsWith('npm_') && !k.startsWith('BUN_'));
+    console.log("   Available Keys:", keys.join(', '));
+
+    // Debug specific critical keys presence (without leaking values)
+    const criticalKeys = ['SOLANA_PRIVATE_KEY', 'RPC_URL', 'OPENAI_API_KEY', 'KALSHI_API_KEY', 'SUPABASE_URL'];
+    criticalKeys.forEach(key => {
+        const val = process.env[key];
+        console.log(`   -> ${key}: ${val ? (val.length > 5 ? val.substring(0, 3) + '...' : 'PRESENT (SHORT)') : 'MISSING/UNDEFINED'}`);
+    });
+
     try {
         return envSchema.parse(process.env);
     } catch (error: any) {
