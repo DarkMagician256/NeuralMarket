@@ -22,13 +22,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/start.sh ./start.sh
-
-# Make start script executable
-RUN chmod +x ./start.sh
 
 # Environment Defaults
 ENV NODE_ENV=production
 
-# Command to run the agent via the startup script
-CMD ["./start.sh"]
+# Command to run the agent
+CMD ["bun", "run", "src/agent.ts"]
