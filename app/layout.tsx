@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import NeuralMesh from "@/components/ui/NeuralMesh";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://neural-market.vercel.app'),
   title: "Neural Market | AI-Powered Prediction Markets on Solana",
   description: "Deploy autonomous AI agents to trade prediction markets. Institutional grade infrastructure with on-chain transparency. Built on Solana.",
   keywords: ["prediction markets", "solana", "AI trading", "DeFi", "autonomous agents", "Kalshi", "crypto"],

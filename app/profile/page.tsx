@@ -146,7 +146,7 @@ export default function ProfilePage() {
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 relative">
                                 <img
-                                    src={`https://api.dicebear.com/9.x/bottts/svg?seed=NeuralBot&backgroundColor=1d1d1d`}
+                                    src={`https://api.dicebear.com/9.x/bottts/svg?seed=${publicKey ? publicKey.toBase58() : 'NeuralGuest'}&backgroundColor=1d1d1d`}
                                     alt="User Avatar"
                                     className="object-cover w-full h-full"
                                 />

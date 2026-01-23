@@ -67,8 +67,16 @@ const oraculoCharacter: Character = {
     }
 };
 
+// Import KalshiService
+import { KalshiService } from './services/kalshiService.js';
 // Import Supabase adapter
 import { createSupabaseAdapter } from './adapters/supabaseAdapter.js';
+
+// ... (other imports remain)
+
+// ...
+
+// Start Telemetry System Loop
 
 // Mock Database Adapter (fallback if Supabase not configured)
 const mockDatabaseAdapter = {
@@ -222,24 +230,55 @@ async function startAgent() {
 
         // Start Telemetry System Loop
         setInterval(async () => {
-            // Heartbeat
-            await telemetry.sendHeartbeat({
-                status: 'ONLINE',
-                wallet_balance: Math.random() * 10,
-                memory_usage: process.memoryUsage().heapUsed / 1024 / 1024
-            });
+            try {
+                // Heartbeat
+                await telemetry.sendHeartbeat({
+                    status: 'ONLINE',
+                    wallet_balance: Math.random() * 10, // TODO: Link to real Solana balance
+                    memory_usage: process.memoryUsage().heapUsed / 1024 / 1024
+                });
 
-            // Simulate/Log Market Scan Activity (Keep dashboard alive)
-            const assets = ['BTC', 'SOL', 'ETH', 'KALSHI'];
-            const randomAsset = assets[Math.floor(Math.random() * assets.length)];
-            const sentiment = Math.random() > 0.5 ? 'BULLISH' : 'NEUTRAL';
+                // REAL Market Scan Logic
+                const kalshi = KalshiService.getInstance();
+                const response = await kalshi.getMarkets(10, 'open');
 
-            await telemetry.broadcastThought(
-                `Scanning ${randomAsset} liquidity pools. Sentiment analysis indicates ${sentiment} structure. Awaiting confirmation signals.`,
-                ThoughtType.ANALYSIS
-            );
+                // Handle API response structure (usually { markets: [...] })
+                const markets = response.markets || [];
 
-        }, 15000); // Changed to 15s for more frequent updates during demo
+                if (markets.length > 0) {
+                    // Pick a random market from the top 10 liquid ones
+                    const market = markets[Math.floor(Math.random() * markets.length)];
+
+                    // Determine sentiment from real price
+                    const price = market.last_price || market.yes_bid || 50; // cents
+                    const volume = market.volume || 0;
+
+                    let sentiment = 'NEUTRAL';
+                    if (price > 65) sentiment = 'HIGH_CONVICTION_YES';
+                    else if (price > 55) sentiment = 'BULLISH';
+                    else if (price < 35) sentiment = 'HIGH_CONVICTION_NO';
+                    else if (price < 45) sentiment = 'BEARISH';
+
+                    await telemetry.broadcastThought(
+                        `Analyzing ${market.ticker} [Vol: ${volume}]. Price at ${price}¢ implies ${sentiment} probability. Monitoring order flow for ${sentiment === 'NEUTRAL' ? 'breakout' : 'continuation'}.`,
+                        ThoughtType.ANALYSIS
+                    );
+                } else {
+                    await telemetry.broadcastThought(
+                        `Scanning global markets. No high-volatility events detected in immediate window. Awaiting signal.`,
+                        ThoughtType.ANALYSIS
+                    );
+                }
+
+            } catch (error) {
+                console.error("⚠️ Market heartbeat failed:", error);
+                await telemetry.broadcastThought(
+                    `Market data feed interrupted. Retrying connection to Neural Link...`,
+                    ThoughtType.ANALYSIS
+                );
+            }
+
+        }, 15000); // Keep 15s updates checking real data
 
     } catch (error) {
         console.error("❌ Failed to start agent:", error);

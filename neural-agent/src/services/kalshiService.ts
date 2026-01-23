@@ -95,10 +95,26 @@ export class KalshiService {
     }
 
     /**
+     * Get list of markets
+     */
+    public async getMarkets(limit: number = 100, status: string = 'open') {
+        return this.request('GET', `/markets?limit=${limit}&status=${status}`);
+    }
+
+    /**
      * Ejecuta una orden real
      */
-    public async createOrder(ticker: string, action: 'buy' | 'sell', count: number, side: 'yes' | 'no') {
+    public async createOrder(ticker: string, action: 'buy' | 'sell', count: number, side: 'yes' | 'no', builderCode?: string) {
         elizaLogger.info(`[KALSHI] 🚀 Placing REAL Order: ${action.toUpperCase()} ${count} contracts of ${ticker} (${side})`);
+
+        // Generate Client Order ID with Builder Code attribution if provided
+        // Format: <BUILDER_CODE>_<UUID>
+        const uuid = crypto.randomUUID();
+        const clientOrderId = builderCode ? `${builderCode}_${uuid}` : uuid;
+
+        if (builderCode) {
+            elizaLogger.info(`[KALSHI] 🛡️ Attributing trade to Builder Code: ${builderCode}`);
+        }
 
         const orderData = {
             action: action, // "buy" or "sell"
@@ -106,7 +122,7 @@ export class KalshiService {
             ticker: ticker,
             side: side, // "yes" or "no"
             type: "market", // Market order for immediate execution
-            client_order_id: crypto.randomUUID()
+            client_order_id: clientOrderId
         };
 
         return this.request('POST', '/portfolio/orders', orderData);

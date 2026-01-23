@@ -12,6 +12,7 @@
         "test": "jest"
     },
     "dependencies": {
+        "@coral-xyz/anchor": "^0.32.1",
         "@elizaos/core": "^0.1.0",
         "@elizaos/plugin-solana": "^0.1.0",
         "@quantish/kalshi-sdk": "^1.0.5",

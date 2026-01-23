@@ -13,7 +13,7 @@ vi.mock('@solana/web3.js', () => {
         toBuffer: () => Buffer.alloc(32),
         toBase58: () => key,
         equals: (other: any) => key === other?.toBase58?.(),
-    }));
+    })) as any;
 
     mockPublicKey.findProgramAddressSync = vi.fn().mockReturnValue([
         { toBase58: () => 'mock-pda' },

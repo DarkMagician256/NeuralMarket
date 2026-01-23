@@ -47,7 +47,6 @@
     "node_modules",
     "neural-agent",
     "scripts",
-    "anchor",
-    "tests"
+    "anchor"
   ]
 }
