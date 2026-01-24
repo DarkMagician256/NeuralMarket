@@ -25,21 +25,23 @@ export default async function MarketsPage() {
                 {/* Header Section */}
                 <div className="flex flex-col gap-6 md:gap-8 mb-8 md:mb-12 border-b border-white/10 pb-6 md:pb-8">
                     <div>
-                        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-2 md:mb-3">
-                            <div className="p-2 md:p-3 bg-green-500/10 rounded-xl">
-                                <TrendingUp className="text-green-400" size={24} />
+                        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                            <div className="p-2 md:p-3 bg-green-500/10 rounded-xl flex-shrink-0">
+                                <TrendingUp className="text-green-400" size={20} />
                             </div>
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white">
-                                PREDICTION MARKETS
+                            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter text-white uppercase italic leading-tight">
+                                INSTITUTIONAL LIQUIDITY
                             </h1>
-                            <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/20 rounded-full text-green-400 text-xs font-mono animate-pulse">
-                                <Zap size={12} /> LIVE
+                            <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] md:text-[10px] font-mono tracking-[0.1em] md:tracking-[0.2em] text-gray-400 whitespace-nowrap">
+                                <Globe size={10} className="text-cyan-400 animate-spin-slow" /> DIRECT KALSHI API FEED
+                            </div>
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/20 rounded-full text-green-400 text-[10px] md:text-xs font-mono animate-pulse">
+                                <Zap size={10} /> LIVE
                             </div>
                         </div>
-                        <p className="text-gray-400 font-mono text-xs sm:text-sm max-w-2xl leading-relaxed">
-                            Access live event contracts powered by Kalshi and DFlow.
-                            Deploy your Neural Agents to analyze outcomes and execute trades on
-                            real-world events, from economics to politics.
+                        <p className="text-gray-400 font-mono text-[10px] sm:text-xs md:text-sm max-w-2xl leading-relaxed">
+                            Access real-time institutional event contracts powered by the Kalshi API.
+                            Analyze institutional-grade data and execute orders through decentralized liquidity pools.
                         </p>
                     </div>
 
