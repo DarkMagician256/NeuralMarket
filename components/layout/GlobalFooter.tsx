@@ -23,20 +23,20 @@ export default function GlobalFooter() {
                             <span className="font-bold text-lg md:text-xl tracking-wider">NEURAL</span>
                         </div>
                         <p className="text-gray-500 text-xs md:text-sm max-w-sm leading-relaxed">
-                            The Neural Market protocol is a decentralized prediction market interface.
-                            Features on-chain liquidity via DFlow and privacy-focused AI agents
-                            powered by DeepSeek R1 & OpenAI.
+                            The Neural Market protocol provides institutional-grade event liquidity.
+                            Powered by the <strong>Direct Kalshi API Feed</strong> and secured via distributed
+                            <strong> MPC & CCP</strong> orchestration for autonomous AI agent swarms.
                         </p>
                     </div>
 
                     {/* Platform Links */}
                     <div>
                         <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">PLATFORM</h4>
-                        <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500">
-                            <li><Link href="/markets" className="hover:text-cyan-400 cursor-pointer transition-colors">Markets</Link></li>
-                            <li><Link href="/agents" className="hover:text-cyan-400 cursor-pointer transition-colors">Cortex Agents</Link></li>
-                            <li><Link href="/leaderboard" className="hover:text-cyan-400 cursor-pointer transition-colors">Leaderboard</Link></li>
-                            <li><Link href="/portfolio" className="hover:text-cyan-400 cursor-pointer transition-colors">Portfolio</Link></li>
+                        <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500 font-mono text-[10px] md:text-xs">
+                            <li><Link href="/markets" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Markets</Link></li>
+                            <li><Link href="/agents" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Neural Swarm</Link></li>
+                            <li><Link href="/governance" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Governance</Link></li>
+                            <li><Link href="/portfolio" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Portfolio</Link></li>
                         </ul>
                     </div>
 
@@ -85,22 +85,22 @@ export default function GlobalFooter() {
                             href="https://t.me/Vaiosx"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs font-mono text-gray-500 hover:text-cyan-400 transition-colors"
+                            className="text-[10px] font-mono text-gray-500 hover:text-cyan-400 transition-colors tracking-widest uppercase italic"
                         >
-                            Developed by Vaiosx
+                            ENGINEERED BY @VAIOSX
                         </a>
 
                         {/* Divider (hidden on mobile) */}
                         <div className="hidden sm:block h-4 w-px bg-white/10" />
 
                         {/* Network Status */}
-                        <div className="flex items-center gap-3 text-xs font-mono">
+                        <div className="flex items-center gap-3 text-[10px] font-mono tracking-widest uppercase">
                             <span className="flex items-center gap-2 text-green-400">
                                 <span className="relative flex h-2 w-2">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                                 </span>
-                                <span className="hidden xs:inline sm:inline">SOLANA DEVNET:</span> LIVE
+                                <span className="text-gray-500">SYSTEM STATUS:</span> LIVE
                             </span>
 
                             {/* Contract Links - Hidden on very small screens */}
