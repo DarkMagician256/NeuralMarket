@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Building2, BrainCircuit, Zap, Users, ShieldCheck, LineChart, Repeat } from 'lucide-react';
+import { Building2, BrainCircuit, Zap, Users, ShieldCheck, LineChart, Repeat, Terminal, Layout } from 'lucide-react';
 
 export default function BentoGrid() {
     return (
@@ -185,6 +185,50 @@ export default function BentoGrid() {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </motion.div>
+
+                {/* 7. Full Width Future Row - CLI & CCP */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="md:col-span-3 glass-panel p-6 md:p-10 relative overflow-hidden group min-h-[200px] flex flex-col md:flex-row items-center gap-8 md:gap-16 border-white/5"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 z-0" />
+
+                    {/* CLI Module */}
+                    <div className="relative z-10 flex-1 w-full">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-white/5 rounded-xl border border-white/10 group-hover:border-cyan-500/30 transition-colors">
+                                <Terminal size={24} className="text-gray-400 group-hover:text-cyan-400 transition-colors" />
+                            </div>
+                            <div>
+                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">Neural CLI v1.0</h4>
+                                <span className="text-[9px] font-mono text-cyan-500 animate-pulse tracking-widest uppercase bg-cyan-500/10 px-2 py-0.5 rounded">ROADMAP: COMING SOON</span>
+                            </div>
+                        </div>
+                        <p className="text-gray-500 text-sm font-mono leading-relaxed">
+                            Terminal-native interface for extreme performance. Deploy agents, monitor raw streams, and execute headless trades.
+                        </p>
+                    </div>
+
+                    <div className="hidden md:block w-px h-24 bg-white/10" />
+
+                    {/* CCP Module */}
+                    <div className="relative z-10 flex-1 w-full">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 bg-white/5 rounded-xl border border-white/10 group-hover:border-purple-500/30 transition-colors">
+                                <Layout size={24} className="text-gray-400 group-hover:text-purple-400 transition-colors" />
+                            </div>
+                            <div>
+                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">Neural CCP</h4>
+                                <span className="text-[9px] font-mono text-purple-500 animate-pulse tracking-widest uppercase bg-purple-500/10 px-2 py-0.5 rounded">ROADMAP: COMING SOON</span>
+                            </div>
+                        </div>
+                        <p className="text-gray-500 text-sm font-mono leading-relaxed">
+                            Central Control Portal for heavy-duty orchestration. Visualize swarm intelligence and manage distributed node identity.
+                        </p>
                     </div>
                 </motion.div>
 
