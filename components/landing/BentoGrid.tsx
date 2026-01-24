@@ -219,15 +219,15 @@ export default function BentoGrid() {
                     <div className="relative z-10 flex-1 w-full">
                         <div className="flex items-center gap-4 mb-4">
                             <div className="p-3 bg-white/5 rounded-xl border border-white/10 group-hover:border-purple-500/30 transition-colors">
-                                <Layout size={24} className="text-gray-400 group-hover:text-purple-400 transition-colors" />
+                                <ShieldCheck size={24} className="text-gray-400 group-hover:text-purple-400 transition-colors" />
                             </div>
                             <div>
-                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">Neural CCP</h4>
+                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">Neural MPC & CCP</h4>
                                 <span className="text-[9px] font-mono text-purple-500 animate-pulse tracking-widest uppercase bg-purple-500/10 px-2 py-0.5 rounded">ROADMAP: COMING SOON</span>
                             </div>
                         </div>
                         <p className="text-gray-500 text-sm font-mono leading-relaxed">
-                            Central Control Portal for heavy-duty orchestration. Visualize swarm intelligence and manage distributed node identity.
+                            Central Control Portal with MPC Distributed Key Management. Orchestrate swarm intelligence with institutional-grade privacy and secure custody.
                         </p>
                     </div>
                 </motion.div>
