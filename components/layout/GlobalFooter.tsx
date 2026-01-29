@@ -63,6 +63,12 @@ export default function GlobalFooter() {
                             <li>
                                 <Link href="/legal/risk" className="hover:text-white cursor-pointer transition-colors">Risk Disclosure</Link>
                             </li>
+                            <li>
+                                <Link href="/audit" className="hover:text-green-400 cursor-pointer transition-colors flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                    Security Audit
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
