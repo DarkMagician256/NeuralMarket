@@ -1,3 +1,4 @@
+
 # Dependencies
 node_modules
 .pnpm-store
@@ -7,8 +8,8 @@ node_modules
 coverage
 
 # Next.js
-/.next/
-/out/
+.next/
+out/
 build
 dist
 
@@ -42,9 +43,7 @@ next-env.d.ts
 
 # Anchor / Solana
 .anchor
-anchor/target/release
-anchor/target/deploy
-anchor/target/sbf-solana-solana
+anchor/target
 anchor/.kvs
 test-ledger
 

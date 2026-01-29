@@ -161,6 +161,10 @@
           }
         },
         {
+          "name": "treasury",
+          "writable": true
+        },
+        {
           "name": "user",
           "writable": true,
           "signer": true
@@ -596,6 +600,82 @@
           "type": "i64"
         }
       ]
+    },
+    {
+      "name": "submit_trade_intent",
+      "docs": [
+        "Execute a Trade Intent (DFlow Integration)",
+        "Emits an event that off-chain solvers listen to for execution."
+      ],
+      "discriminator": [
+        245,
+        251,
+        52,
+        204,
+        255,
+        200,
+        170,
+        169
+      ],
+      "accounts": [
+        {
+          "name": "agent",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "arg",
+                "path": "agent_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "agent_id",
+          "type": "u64"
+        },
+        {
+          "name": "market_ticker",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "side",
+          "type": "u8"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "limit_price",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -665,6 +745,26 @@
         115,
         157
       ]
+    },
+    {
+      "name": "TradeIntentSubmitted",
+      "discriminator": [
+        166,
+        178,
+        105,
+        81,
+        170,
+        74,
+        231,
+        223
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AgentInactive",
+      "msg": "Agent is currently inactive."
     }
   ],
   "types": [
@@ -815,6 +915,47 @@
           {
             "name": "pnl",
             "type": "i64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TradeIntentSubmitted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "agent_id",
+            "type": "u64"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "market_ticker",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "side",
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "limit_price",
+            "type": "u64"
           },
           {
             "name": "timestamp",

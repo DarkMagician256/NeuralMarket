@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { Program, AnchorProvider, BN, web3 } from '@coral-xyz/anchor';
 import { Zap, Loader2 } from 'lucide-react';
-import idl from '@/anchor/target/idl/neural_vault.json';
+import idl from '@/lib/idl/neural_vault.json';
 
 const PROGRAM_ID = new web3.PublicKey("A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F");
 

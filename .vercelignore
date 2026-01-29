@@ -1,0 +1,28 @@
+
+# Vercel Ignore File
+# Exclude folders not needed for the frontend build
+
+# Heavy backend/agent folders
+neural-agent
+anchor
+tests
+e2e
+playwright-report
+
+# Node & Build artifacts (CRITICAL TO IGNORE FOR UPLOAD SPEED)
+node_modules
+.next
+dist
+build
+out
+
+# System/Dev files
+.git
+.github
+.vscode
+.idea
+*.md
+LICENSE
+docker-compose.yml
+Dockerfile*
+scripts
