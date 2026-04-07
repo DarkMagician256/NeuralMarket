@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Activity, Trophy, TrendingUp, TrendingDown, Wallet, Clock, ShieldCheck, Zap, Brain } from 'lucide-react';
 import { RegistryAgent } from '@/hooks/useRegistry';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Mock recent trades for the modal demonstration
 const mockRecentTrades = [
@@ -21,6 +22,7 @@ interface AgentDetailModalProps {
 
 // Standard export to avoid potential build/refresh issues
 export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailModalProps) {
+    const { t } = useLanguage();
     // Determine if we should render content
     const shouldRender = isOpen && !!agent;
 
@@ -115,11 +117,11 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                                     <div className="flex gap-2">
                                         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold">
                                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                            ACTIVE
+                                            {t('active')}
                                         </div>
                                         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-bold">
                                             <ShieldCheck size={12} />
-                                            VERIFIED
+                                            {t('verified')}
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +135,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                     <div className="text-gray-500 text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1">
-                                        <Trophy size={12} /> Win Rate
+                                        <Trophy size={12} /> {t('win_rate')}
                                     </div>
                                     <div className="text-xl sm:text-2xl font-mono font-bold text-white">
                                         {agent.winRate.toFixed(1)}%
@@ -143,55 +145,54 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
 
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                     <div className="text-gray-500 text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1">
-                                        <TrendingUp size={12} /> Total PnL
+                                        <TrendingUp size={12} /> {t('total_pnl')}
                                     </div>
                                     <div className={`text-xl sm:text-2xl font-mono font-bold ${isWin ? 'text-green-400' : 'text-red-400'}`}>
                                         {isWin ? '+' : ''}{agent.totalPnl.toFixed(4)} SOL
                                     </div>
-                                    <div className="text-[10px] text-gray-500 mt-1">Lifetime Earnings</div>
+                                    <div className="text-[10px] text-gray-500 mt-1">{t('lifetime_earnings')}</div>
                                 </div>
 
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                     <div className="text-gray-500 text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1">
-                                        <Wallet size={12} /> Capital (TVL)
+                                        <Wallet size={12} /> TVL ({t('capital')})
                                     </div>
                                     <div className="text-xl sm:text-2xl font-mono font-bold text-cyan-400">
                                         ◎{agent.capital.toFixed(2)}
                                     </div>
-                                    <div className="text-[10px] text-gray-500 mt-1">Managed Assets</div>
+                                    <div className="text-[10px] text-gray-500 mt-1">{t('managed_assets')}</div>
                                 </div>
 
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                     <div className="text-gray-500 text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1">
-                                        <Activity size={12} /> Trades
+                                        <Activity size={12} /> {t('trades')}
                                     </div>
                                     <div className="text-xl sm:text-2xl font-mono font-bold text-white">
                                         {agent.totalTrades}
                                     </div>
-                                    <div className="text-[10px] text-gray-500 mt-1">Total Executions</div>
+                                    <div className="text-[10px] text-gray-500 mt-1">{t('total_executions')}</div>
                                 </div>
                             </div>
 
                             {/* Strategy Description (Mock) */}
                             <div>
                                 <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                                    <Brain size={16} className="text-purple-400" /> NEURAL STRATEGY
+                                    <Brain size={16} className="text-purple-400" /> {t('neural_strategy')}
                                 </h3>
                                 <div className={`p-4 rounded-xl border text-sm leading-relaxed ${agent.archetypeName === 'SNIPER' ? 'bg-red-500/5 border-red-500/20 text-red-200' :
                                     agent.archetypeName === 'WHALE' ? 'bg-cyan-500/5 border-cyan-500/20 text-cyan-200' :
                                         'bg-gray-500/5 border-white/10 text-gray-300'
                                     }`}>
-                                    This agent utilizes a <strong>{agent.archetypeName}</strong> strategy, focusing on
-                                    {agent.archetypeName === 'SNIPER' ? ' high-frequency entries and rapid exits based on DFlow order flow imbalances.' :
-                                        agent.archetypeName === 'WHALE' ? ' long-term accumulation and large-scale trend following using on-chain volume analysis.' :
-                                            ' balanced risk management and probability-weighted entries across major prediction markets.'}
+                                    This agent {agent.archetypeName === 'SNIPER' ? t('strategy_desc_sniper') :
+                                        agent.archetypeName === 'WHALE' ? t('strategy_desc_whale') :
+                                            t('strategy_desc_default')}
                                 </div>
                             </div>
 
                             {/* Recent Activity List */}
                             <div>
                                 <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                                    <Clock size={16} className="text-gray-400" /> RECENT ACTIVITY
+                                    <Clock size={16} className="text-gray-400" /> {t('recent_activity')}
                                 </h3>
                                 <div className="space-y-2">
                                     {mockRecentTrades.map((trade) => (
@@ -223,7 +224,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                         {/* Footer Actions */}
                         <div className="p-6 border-t border-white/10 bg-black/40 backdrop-blur flex gap-4">
                             <button disabled className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-500 font-bold text-sm cursor-not-allowed flex items-center justify-center gap-2">
-                                COPY TRADE (SOON)
+                                {t('copy_trade')}
                             </button>
                             <a
                                 href={`https://explorer.solana.com/address/${agent.pubkey}?cluster=devnet`}
@@ -231,7 +232,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                                 rel="noopener noreferrer"
                                 className="flex-1 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
                             >
-                                <ExternalLink size={16} /> VIEW ON SOLANA
+                                <ExternalLink size={16} /> {t('view_solana')}
                             </a>
                         </div>
                     </motion.div>

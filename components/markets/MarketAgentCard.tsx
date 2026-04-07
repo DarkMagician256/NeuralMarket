@@ -3,6 +3,7 @@
 import { RegistryAgent } from '@/hooks/useRegistry';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Brain, Zap, Scale, Waves, Shield, Bot, Trophy, Wallet, Activity } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const archetypeStyles: Record<string, { color: string; border: string; icon: any; bg: string }> = {
     'SNIPER': { color: 'text-red-400', border: 'border-red-500', icon: Zap, bg: 'bg-red-500/10' },
@@ -14,9 +15,11 @@ const archetypeStyles: Record<string, { color: string; border: string; icon: any
 };
 
 export default function MarketAgentCard({ agent, rank, onClick }: { agent: RegistryAgent; rank: number; onClick?: () => void }) {
+    const { t } = useLanguage();
     const style = archetypeStyles[agent.archetypeName] || archetypeStyles['UNKNOWN'];
     const Icon = style.icon;
     const isProfitable = agent.totalPnl >= 0;
+
 
     return (
         <motion.div
@@ -61,7 +64,7 @@ export default function MarketAgentCard({ agent, rank, onClick }: { agent: Regis
 
             {/* Main Metric: Win Rate */}
             <div className="mb-4 p-3 bg-black/40 rounded-lg border border-white/5 flex justify-between items-center">
-                <div className="text-xs text-gray-400 font-mono uppercase">Win Rate</div>
+                <div className="text-xs text-gray-400 font-mono uppercase">{t('win_rate')}</div>
                 <div className={`text-xl font-mono font-bold ${agent.winRate >= 50 ? 'text-green-400' : 'text-red-400'
                     }`}>
                     {agent.winRate.toFixed(1)}%
@@ -75,7 +78,7 @@ export default function MarketAgentCard({ agent, rank, onClick }: { agent: Regis
             <div className="grid grid-cols-2 gap-3 mb-4">
                 <div>
                     <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-mono mb-1">
-                        <Wallet size={10} /> TVL (Capital)
+                        <Wallet size={10} /> TVL ({t('capital')})
                     </div>
                     <div className="text-sm font-mono font-bold text-white">
                         ◎{agent.capital.toFixed(2)}
@@ -83,7 +86,7 @@ export default function MarketAgentCard({ agent, rank, onClick }: { agent: Regis
                 </div>
                 <div>
                     <div className="flex items-center gap-1.5 text-[10px] text-gray-500 font-mono mb-1">
-                        <Activity size={10} /> Total PnL
+                        <Activity size={10} /> {t('total_pnl')}
                     </div>
                     <div className={`text-sm font-mono font-bold ${isProfitable ? 'text-green-400' : 'text-red-400'}`}>
                         {isProfitable ? '+' : ''}{agent.totalPnl.toFixed(4)}
@@ -100,7 +103,7 @@ export default function MarketAgentCard({ agent, rank, onClick }: { agent: Regis
                     }}
                     className="flex-1 py-2 rounded bg-white/5 hover:bg-white/10 text-xs font-mono font-bold transition-colors"
                 >
-                    VIEW DETAILS
+                    {t('view_details')}
                 </button>
             </div>
         </motion.div>

@@ -7,13 +7,16 @@ import LeaderboardList from '@/components/cortex/Leaderboard';
 import MarketAgentCard from '@/components/markets/MarketAgentCard';
 import { AgentDetailModal } from '@/components/cortex/AgentDetailModal';
 import { Loader2, Search, Trophy } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function LeaderboardPage() {
+    const { t } = useLanguage();
     const { agents, loading } = useRegistry();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterArchetype, setFilterArchetype] = useState<string>('ALL');
     const [selectedAgent, setSelectedAgent] = useState<RegistryAgent | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     // Filter Logic
     const filteredAgents = agents.filter(agent => {
@@ -41,24 +44,23 @@ export default function LeaderboardPage() {
                                 className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2"
                             >
                                 <Trophy className="text-yellow-400" size={24} />
-                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white">
-                                    AI AGENTS
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white uppercase">
+                                    {t('leaderboard_title')}
                                 </h1>
                             </motion.div>
                             <p className="text-gray-400 font-mono text-xs sm:text-sm max-w-xl">
-                                Top-performing autonomous agents on the neural network. 
-                                Ranked by <strong className="text-yellow-400">ELO Rating</strong> and validated via <strong className="text-cyan-400">3-Tier Cognitive Consensus</strong> (DeepSeek → Claude → OpenAI).
+                                {t('leaderboard_subtitle')}
                             </p>
                         </div>
 
                         {/* Stats Summary */}
                         <div className="flex gap-4 sm:gap-6">
                             <div className="text-left sm:text-right">
-                                <div className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase">Total Agents</div>
+                                <div className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase">{t('total_agents')}</div>
                                 <div className="text-xl sm:text-2xl font-bold font-mono text-white">{agents.length}</div>
                             </div>
                             <div className="text-left sm:text-right">
-                                <div className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase">Total Volume (TVL)</div>
+                                <div className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase">{t('total_tvl')}</div>
                                 <div className="text-xl sm:text-2xl font-bold font-mono text-cyan-400">
                                     ◎{agents.reduce((acc, a) => acc + a.capital, 0).toFixed(2)}
                                 </div>
@@ -74,7 +76,7 @@ export default function LeaderboardPage() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
                         <input
                             type="text"
-                            placeholder="Search agents by name or ID..."
+                            placeholder={t('search_agents')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 md:py-2.5 text-xs sm:text-sm font-mono focus:outline-none focus:border-cyan-500/50 transition-colors text-white"
@@ -108,8 +110,8 @@ export default function LeaderboardPage() {
                     {loading ? (
                         <div className="flex flex-col items-center justify-center py-20 md:py-32 space-y-3 md:space-y-4">
                             <Loader2 className="w-8 h-8 md:w-10 md:h-10 text-cyan-400 animate-spin" />
-                            <div className="text-xs sm:text-sm font-mono text-gray-500 animate-pulse">
-                                SYNCING WITH SOLANA BLOCKCHAIN...
+                            <div className="text-xs sm:text-sm font-mono text-gray-500 animate-pulse uppercase">
+                                {t('syncing')}
                             </div>
                         </div>
                     ) : (
@@ -139,8 +141,8 @@ export default function LeaderboardPage() {
                                         <div className="inline-block p-3 md:p-4 rounded-full bg-white/5 mb-3 md:mb-4">
                                             <Search size={28} className="text-gray-600" />
                                         </div>
-                                        <h3 className="text-gray-400 font-mono text-base md:text-lg">NO AGENTS FOUND</h3>
-                                        <p className="text-gray-600 text-xs sm:text-sm mt-1">Try adjusting your filters</p>
+                                        <h3 className="text-gray-400 font-mono text-base md:text-lg uppercase">{t('no_agents')}</h3>
+                                        <p className="text-gray-600 text-xs sm:text-sm mt-1">{t('adjust_filters')}</p>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
