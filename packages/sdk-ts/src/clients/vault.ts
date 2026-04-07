@@ -16,7 +16,6 @@ import {
   Transaction,
   SystemProgram,
   Keypair,
-  sendAndConfirmTransaction,
   TransactionInstruction,
 } from '@solana/web3.js';
 import {
@@ -50,7 +49,8 @@ import type {
  */
 export class VaultClient {
   private connection: Connection;
-  private keypair: Keypair;
+  private keypair?: Keypair;
+  private signTransaction?: (transaction: any) => Promise<any>;
   private programId: PublicKey;
   private userPublicKey: PublicKey;
 
@@ -60,15 +60,31 @@ export class VaultClient {
   );
 
   /**
-   * Initialize VaultClient with Solana connection and keypair
+   * Initialize VaultClient
    *
-   * @param config - SDK configuration with RPC URL, keypair, and program ID
+   * Supports two modes:
+   * 1. Backend mode: Pass keypair for server-side signing
+   * 2. Frontend mode: Pass signTransaction + publicKey for wallet adapter (non-custodial)
+   *
+   * @param config - SDK configuration
    */
   constructor(config: NeuralMarketConfig) {
     this.connection = new Connection(config.rpcUrl, config.commitment || 'confirmed');
 
-    this.keypair = Keypair.fromSecretKey(config.keypair.secretKey);
-    this.userPublicKey = this.keypair.publicKey;
+    // Determine signing mode
+    if (config.keypair) {
+      // Backend mode: keypair-based signing
+      this.keypair = Keypair.fromSecretKey(config.keypair.secretKey);
+      this.userPublicKey = this.keypair.publicKey;
+    } else if (config.signTransaction && config.publicKey) {
+      // Frontend mode: wallet adapter signing (non-custodial)
+      this.signTransaction = config.signTransaction;
+      this.userPublicKey = new PublicKey(config.publicKey);
+    } else {
+      throw new Error(
+        'VaultClient requires either (keypair) or (signTransaction + publicKey)'
+      );
+    }
 
     this.programId = new PublicKey(
       config.programId || 'A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F'
@@ -153,12 +169,7 @@ export class VaultClient {
 
       // Step 5: Sign and send transaction
       this.log('Sending initialize_vault transaction...');
-      const txHash = await sendAndConfirmTransaction(
-        this.connection,
-        transaction,
-        [this.keypair],
-        { commitment: 'confirmed', maxRetries: 5 }
-      );
+      const txHash = await this.sendAndConfirmTx(transaction);
 
       this.log(`Vault initialized: ${txHash}`);
 
@@ -247,12 +258,7 @@ export class VaultClient {
 
       // Step 6: Sign and send
       this.log('Sending deposit_usdc transaction...');
-      const txHash = await sendAndConfirmTransaction(
-        this.connection,
-        transaction,
-        [this.keypair],
-        { commitment: 'confirmed', maxRetries: 5 }
-      );
+      const txHash = await this.sendAndConfirmTx(transaction);
 
       this.log(`Deposit confirmed: ${txHash}`);
 
@@ -342,12 +348,7 @@ export class VaultClient {
 
       // Step 5: Sign and send
       this.log('Sending update_risk_params transaction...');
-      const txHash = await sendAndConfirmTransaction(
-        this.connection,
-        transaction,
-        [this.keypair],
-        { commitment: 'confirmed', maxRetries: 5 }
-      );
+      const txHash = await this.sendAndConfirmTx(transaction);
 
       this.log(`Risk limits updated: ${txHash}`);
 
@@ -540,12 +541,7 @@ export class VaultClient {
 
       // Step 4: Sign and send
       this.log('Sending withdraw_usdc transaction...');
-      const txHash = await sendAndConfirmTransaction(
-        this.connection,
-        transaction,
-        [this.keypair],
-        { commitment: 'confirmed', maxRetries: 5 }
-      );
+      const txHash = await this.sendAndConfirmTx(transaction);
 
       this.log(`Withdrawal confirmed: ${txHash}`);
 
@@ -560,6 +556,45 @@ export class VaultClient {
       };
     } catch (error) {
       throw this.formatError('WITHDRAW_FAILED', error);
+    }
+  }
+
+  /**
+   * Send and confirm transaction (supports both keypair and wallet adapter)
+   *
+   * @private
+   */
+  private async sendAndConfirmTx(transaction: Transaction): Promise<string> {
+    if (this.keypair) {
+      // Backend mode: Use keypair signing
+      const txHash = await this.sendAndConfirmTx(transaction);
+      return txHash;
+    } else if (this.signTransaction) {
+      // Frontend mode: Use wallet adapter signing (non-custodial)
+      try {
+        // Sign transaction with wallet adapter
+        const signedTx = await this.signTransaction(transaction);
+
+        // Serialize and send
+        const serialized = signedTx.serialize();
+        const txHash = await this.connection.sendRawTransaction(serialized, {
+          skipPreflight: false,
+          maxRetries: 5,
+        });
+
+        // Wait for confirmation
+        await this.connection.confirmTransaction(txHash, 'confirmed');
+
+        return txHash;
+      } catch (error) {
+        throw new Error(
+          `Transaction signing failed: ${
+            error instanceof Error ? error.message : String(error)
+          }`
+        );
+      }
+    } else {
+      throw new Error('No signer available');
     }
   }
 
