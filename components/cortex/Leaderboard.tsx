@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLeaderboard, LeaderboardAgent } from '@/hooks/useLeaderboard';
+import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { Trophy, TrendingUp, TrendingDown, Zap, Brain, Scale, Waves, Crown, Medal, Award, RefreshCw, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -33,7 +33,7 @@ function RankBadge({ rank }: { rank: number }) {
                 : 'bg-white/5 border-white/10';
 
     return (
-        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg ${bgColor} border flex items-center justify-center flex-shrink-0`}>
+        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg ${bgColor} border flex items-center justify-center shrink-0`}>
             {getRankIcon(rank)}
         </div>
     );
@@ -84,7 +84,7 @@ export default function Leaderboard() {
                 </div>
             )}
 
-            {/* Leaderboard List - Scrollable on mobile */}
+            {/* Leaderboard List - Responsive */}
             <div className="space-y-2 md:space-y-3 overflow-x-auto">
                 {agents.slice(0, 10).map((agent, index) => {
                     const rank = index + 1;
@@ -101,19 +101,19 @@ export default function Leaderboard() {
                             className={`flex items-center gap-2 md:gap-4 p-3 md:p-4 rounded-lg border transition-all hover:bg-white/5 min-w-[500px] md:min-w-0 ${rank === 1 ? 'bg-yellow-500/5 border-yellow-500/30'
                                 : rank === 2 ? 'bg-gray-500/5 border-gray-500/30'
                                     : rank === 3 ? 'bg-amber-500/5 border-amber-600/30'
-                                        : 'bg-white/[0.02] border-white/5'
+                                        : 'bg-white/2 border-white/5'
                                 }`}
                         >
                             <RankBadge rank={rank} />
 
-                            <div className={`p-1.5 md:p-2 rounded-lg bg-black/30 ${color} flex-shrink-0`}>
+                            <div className={`p-1.5 md:p-2 rounded-lg bg-black/30 ${color} shrink-0`}>
                                 <Icon size={16} />
                             </div>
 
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2">
                                     <span className="font-mono font-bold text-white text-sm truncate">{agent.name}</span>
-                                    <span className={`text-[9px] md:text-[10px] font-mono ${color} bg-black/30 px-1.5 py-0.5 rounded flex-shrink-0`}>
+                                    <span className={`text-[9px] md:text-[10px] font-mono ${color} bg-black/30 px-1.5 py-0.5 rounded shrink-0`}>
                                         {agent.archetypeName}
                                     </span>
                                 </div>
@@ -122,19 +122,19 @@ export default function Leaderboard() {
                                 </div>
                             </div>
 
-                            <div className="text-center px-2 md:px-3 flex-shrink-0">
+                            <div className="text-center px-2 md:px-3 shrink-0">
                                 <div className="text-[9px] md:text-[10px] font-mono text-gray-600 uppercase">{t('trades')}</div>
                                 <div className="font-mono font-bold text-white text-sm">{agent.totalTrades}</div>
                             </div>
 
-                            <div className="text-center px-2 md:px-3 flex-shrink-0">
+                            <div className="text-center px-2 md:px-3 shrink-0">
                                 <div className="text-[9px] md:text-[10px] font-mono text-gray-600 uppercase">{t('win_rate')}</div>
                                 <div className={`font-mono font-bold text-sm ${agent.winRate >= 50 ? 'text-green-400' : 'text-red-400'}`}>
                                     {agent.winRate.toFixed(1)}%
                                 </div>
                             </div>
 
-                            <div className="text-right min-w-[80px] md:min-w-[100px] flex-shrink-0">
+                            <div className="text-right min-w-[80px] md:min-w-[100px] shrink-0">
                                 <div className="text-[9px] md:text-[10px] font-mono text-gray-600 uppercase">{t('total_pnl')}</div>
                                 <div className={`font-mono font-bold flex items-center justify-end gap-1 text-sm ${isProfitable ? 'text-green-400' : 'text-red-400'}`}>
                                     {isProfitable ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
@@ -146,7 +146,7 @@ export default function Leaderboard() {
                                 href={`https://explorer.solana.com/address/${agent.pubkey}?cluster=devnet`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-1.5 md:p-2 text-gray-500 hover:text-cyan-400 transition-colors flex-shrink-0"
+                                className="p-1.5 md:p-2 text-gray-500 hover:text-cyan-400 transition-colors shrink-0"
                             >
                                 <ExternalLink size={14} />
                             </a>

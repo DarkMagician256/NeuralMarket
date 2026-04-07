@@ -24,8 +24,8 @@ export default function StrategyConfig({ risk, setRisk, capital, setCapital, lev
                     <label className="flex items-center gap-2 font-mono text-sm text-gray-300 uppercase">
                         <ShieldAlert size={16} className="text-rose-400" /> {t('risk_tolerance')}
                     </label>
-                    <span className={`font-bold font-mono ${risk > 70 ? 'text-red-500' : risk > 40 ? 'text-yellow-400' : 'text-green-400'}`}>
-                        {risk > 70 ? 'DEGEN' : risk > 40 ? 'AGGRESSIVE' : 'CONSERVATIVE'}
+                    <span className={`font-bold font-mono uppercase ${risk > 70 ? 'text-red-500' : risk > 40 ? 'text-yellow-400' : 'text-green-400'}`}>
+                        {risk > 70 ? t('degen') : risk > 40 ? t('aggressive') : t('conservative')}
                     </span>
                 </div>
                 <input
@@ -37,8 +37,8 @@ export default function StrategyConfig({ risk, setRisk, capital, setCapital, lev
                     className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500 hover:accent-cyan-400 transition-all"
                 />
                 <div className="flex justify-between text-[10px] text-gray-500 font-mono mt-2">
-                    <span className="uppercase">{t('safe') || 'SAFE'}</span>
-                    <span className="uppercase">{t('yolo') || 'YOLO'}</span>
+                    <span className="uppercase">{t('safe')}</span>
+                    <span className="uppercase">{t('yolo')}</span>
                 </div>
             </div>
 

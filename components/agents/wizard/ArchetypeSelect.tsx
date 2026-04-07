@@ -57,7 +57,7 @@ export default function ArchetypeSelect({ selected, onSelect }: { selected: stri
                     className={`glass-panel p-6 cursor-pointer relative overflow-hidden transition-all duration-300 ${selected === type.id ? `bg-white/10 ${type.border} border shadow-[0_0_30px_rgba(0,0,0,0.5)]` : 'opacity-60 hover:opacity-100 border-white/5'
                         }`}
                 >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${type.gradient} opacity-0 ${selected === type.id ? 'opacity-100' : 'group-hover:opacity-50'} transition-opacity`} />
+                    <div className={`absolute inset-0 bg-linear-to-br ${type.gradient} opacity-0 ${selected === type.id ? 'opacity-100' : 'group-hover:opacity-50'} transition-opacity`} />
 
                     <div className="relative z-10 flex flex-col items-center text-center gap-4">
                         <div className={`p-4 rounded-full bg-black/50 ${type.color}`}>

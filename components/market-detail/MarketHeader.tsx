@@ -32,7 +32,7 @@ export default function MarketHeader({ market }: { market: Market }) {
                 <div className="text-left md:text-right">
                     <div className="text-[10px] md:text-xs text-gray-500 font-mono tracking-widest uppercase mb-1">Current Price</div>
                     <div className="text-xl md:text-3xl font-mono font-bold text-white tabular-nums leading-none">
-                        {(market.probability / 100).toFixed(2)} SOL
+                        ${(market.probability / 100).toFixed(2)} USDC
                     </div>
                 </div>
 

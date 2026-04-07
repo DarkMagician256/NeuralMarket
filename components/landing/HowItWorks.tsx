@@ -42,7 +42,7 @@ export default function HowItWorks() {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-black tracking-tighter mb-4"
                     >
-                        {t('workflow_title').split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">{t('workflow_title').split(' ')[1]}</span>
+                        {t('workflow_title').split(' ')[0]} <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-600">{t('workflow_title').split(' ')[1]}</span>
                     </motion.h2>
                     <p className="text-gray-400 font-mono text-sm md:text-base max-w-2xl mx-auto">
                         {t('workflow_subtitle')}
@@ -62,16 +62,16 @@ export default function HowItWorks() {
                         >
                             {/* Connector Line (Desktop Horizontal) */}
                             {index < steps.length - 1 && (
-                                <div className="hidden lg:block absolute top-8 left-1/2 w-full h-[2px] bg-gradient-to-r from-cyan-500/20 to-transparent z-0" />
+                                <div className="hidden lg:block absolute top-8 left-1/2 w-full h-[2px] bg-linear-to-r from-cyan-500/20 to-transparent z-0" />
                             )}
 
                             {/* Connector Line (Mobile Vertical) */}
                             {index < steps.length - 1 && (
-                                <div className="lg:hidden absolute left-[32px] top-16 h-full w-[2px] bg-gradient-to-b from-cyan-500/20 to-transparent z-0" />
+                                <div className="lg:hidden absolute left-[32px] top-16 h-full w-[2px] bg-linear-to-b from-cyan-500/20 to-transparent z-0" />
                             )}
 
                             {/* Icon Wrapper */}
-                            <div className="relative z-10 flex-shrink-0">
+                            <div className="relative z-10 shrink-0">
                                 <div className="w-16 h-16 flex items-center justify-center relative">
                                     <div className="absolute inset-0 bg-[#0a0a0f] border border-white/10 lg:rotate-45 rounded-xl group-hover:border-cyan-500/50 group-hover:rotate-90 transition-all duration-500 shadow-[0_0_30px_rgba(0,0,0,0.5)]" />
                                     <div className="absolute inset-0 bg-cyan-500/5 lg:rotate-45 rounded-xl animate-pulse" />

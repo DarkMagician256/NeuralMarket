@@ -3,9 +3,11 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useAgentStream } from '@/hooks/useAgentStream';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Create a visual network of nodes
 export default function NeuralReasoningVis({ armed }: { armed: boolean }) {
+    const { t } = useLanguage();
     const [activeLinks, setActiveLinks] = useState<{ from: number, to: number }[]>([]);
     const [nodes, setNodes] = useState<{ id: number, x: number, y: number }[]>([]);
 
@@ -79,10 +81,10 @@ export default function NeuralReasoningVis({ armed }: { armed: boolean }) {
                     transition={{ repeat: Infinity, duration: 2 }}
                     className="text-center"
                 >
-                    <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 tracking-tighter">
-                        NEURAL<br />CORE
+                    <div className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-b from-white to-gray-500 tracking-tighter uppercase whitespace-pre-line">
+                        {t('neural_core').replace(' ', '\n')}
                     </div>
-                    {armed && <div className="text-xs font-mono text-cyan-400 mt-2 bg-black/50 px-2 py-1 rounded">PROCESSING 14GB/s</div>}
+                    {armed && <div className="text-xs font-mono text-cyan-400 mt-2 bg-black/50 px-2 py-1 rounded uppercase">{t('processing')} 14GB/s</div>}
                 </motion.div>
             </div>
         </div>

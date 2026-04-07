@@ -8,9 +8,9 @@ import { useLanguage } from '@/context/LanguageContext';
 
 // Mock recent trades for the modal demonstration
 const mockRecentTrades = [
-    { id: 1, pair: 'BTC-250K', type: 'BUY', result: 'WIN', pnl: '+0.45 SOL', time: '2h ago' },
-    { id: 2, pair: 'SOL-ETF', type: 'SELL', result: 'LOSS', pnl: '-0.12 SOL', time: '5h ago' },
-    { id: 3, pair: 'FED-RATES', type: 'BUY', result: 'WIN', pnl: '+0.88 SOL', time: '1d ago' },
+    { id: 1, pair: 'BTC-250K', type: 'BUY', result: 'WIN', pnl: '+$0.45', time: '2h ago' },
+    { id: 2, pair: 'SOL-ETF', type: 'SELL', result: 'LOSS', pnl: '-$0.12', time: '5h ago' },
+    { id: 3, pair: 'FED-RATES', type: 'BUY', result: 'WIN', pnl: '+$0.88', time: '1d ago' },
 ];
 
 interface AgentDetailModalProps {
@@ -46,7 +46,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -65,7 +65,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="relative p-6 sm:p-8 bg-gradient-to-br from-white/5 to-transparent border-b border-white/5">
+                        <div className="relative p-6 sm:p-8 bg-linear-to-br from-white/5 to-transparent border-b border-white/5">
                             <button
                                 onClick={onClose}
                                 className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white bg-black/20 hover:bg-white/10 rounded-full transition-colors"
@@ -148,7 +148,7 @@ export function AgentDetailModal({ agent, rank, isOpen, onClose }: AgentDetailMo
                                         <TrendingUp size={12} /> {t('total_pnl')}
                                     </div>
                                     <div className={`text-xl sm:text-2xl font-mono font-bold ${isWin ? 'text-green-400' : 'text-red-400'}`}>
-                                        {isWin ? '+' : ''}{agent.totalPnl.toFixed(4)} SOL
+                                        {isWin ? '+' : ''}${agent.totalPnl.toFixed(4)} USDC
                                     </div>
                                     <div className="text-[10px] text-gray-500 mt-1">{t('lifetime_earnings')}</div>
                                 </div>

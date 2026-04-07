@@ -15,8 +15,6 @@ import { PublicKey, SystemProgram } from '@solana/web3.js';
 // @ts-ignore
 import { Toaster, toast } from 'sonner';
 
-const steps = ["SELECT ARCHETYPE", "CALIBRATION", "SIMULATION"];
-
 // Full IDL with multi-agent support (standalone mode)
 const IDL: any = {
     "address": "A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F",
@@ -79,12 +77,12 @@ export default function AgentWizardPage() {
 
     const handleDeploy = async () => {
         if (!wallet.connected || !wallet.publicKey) {
-            toast.error("PLEASE CONNECT WALLET TO DEPLOY AGENT");
+            toast.error(t('connect_wallet_deploy'));
             return;
         }
 
         setIsDeploying(true);
-        setDeployStatus(["INITIALIZING NEURAL LINK..."]);
+        setDeployStatus([t('initializing_neural_link')]);
 
         try {
             const provider = new AnchorProvider(connection, wallet as any, { commitment: 'confirmed' });
@@ -106,9 +104,9 @@ export default function AgentWizardPage() {
             const encodedName = encoder.encode(agentName);
             nameBytes.set(encodedName.slice(0, 32));
 
-            setDeployStatus(prev => [...prev, `DEPLOYING AGENT: ${agentName}...`]);
-            setDeployStatus(prev => [...prev, "REQUIRED: 0.05 SOL PROTOCOL FEE"]);
-            setDeployStatus(prev => [...prev, "REQUESTING WALLET SIGNATURE..."]);
+            setDeployStatus(prev => [...prev, `${t('deploying_agent_status')} ${agentName}...`]);
+            setDeployStatus(prev => [...prev, t('required_fee_status')]);
+            setDeployStatus(prev => [...prev, t('requesting_signature_status')]);
 
             // Create agent using standalone method (no UserStats dependency)
             const tx = await program.methods
@@ -129,11 +127,11 @@ export default function AgentWizardPage() {
                 .rpc();
 
             setTxHash(tx);
-            setDeployStatus(prev => [...prev, `TX: ${tx.slice(0, 8)}...`, "WAITING FOR CONFIRMATION..."]);
+            setDeployStatus(prev => [...prev, `TX: ${tx.slice(0, 8)}...`, t('waiting_confirmation_status')]);
 
             await connection.confirmTransaction(tx, 'confirmed');
-            setDeployStatus(prev => [...prev, "AGENT DEPLOYED SUCCESSFULLY ✓", `AGENT ID: ${agentId.toString()}`]);
-            toast.success(`Agent ${agentName} deployed!`);
+            setDeployStatus(prev => [...prev, t('deployed_successfully_status'), `ID: ${agentId.toString()}`]);
+            toast.success(`${t('ai_agents')} ${agentName} ${t('active')} ✓`);
 
 
             setTimeout(() => {
@@ -143,12 +141,12 @@ export default function AgentWizardPage() {
         } catch (error: any) {
             console.error("Deploy failed:", error);
             if (error.message?.includes("User rejected")) {
-                setDeployStatus(prev => [...prev, "TRANSACTION CANCELLED BY USER"]);
-                toast.error("Transaction cancelled");
+                setDeployStatus(prev => [...prev, t('transaction_cancelled')]);
+                toast.error(t('transaction_cancelled'));
                 setTimeout(() => setIsDeploying(false), 2000);
             } else {
-                setDeployStatus(prev => [...prev, "DEPLOYMENT FAILED: " + (error.message || "Unknown error")]);
-                toast.error("Deployment failed");
+                setDeployStatus(prev => [...prev, `${t('deployment_failed')}: ` + (error.message || t('error'))]);
+                toast.error(t('deployment_failed'));
                 setTimeout(() => setIsDeploying(false), 3000);
             }
         }
@@ -163,19 +161,19 @@ export default function AgentWizardPage() {
                     animate={{ scale: [0, 1.5, 1] }}
                     className="relative z-10 w-48 h-48 rounded-full bg-cyan-500 blur-3xl animate-pulse mb-8"
                 />
-                <h2 className="text-5xl font-black tracking-tighter animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white relative z-10">INITIATING GENESIS</h2>
+                <h2 className="text-5xl font-black tracking-tighter animate-pulse text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-white relative z-10 uppercase">{t('initiating_genesis')}</h2>
                 <div className="mt-8 space-y-2 text-center relative z-10">
                     {deployStatus.map((status, i) => (
-                        <p key={i} className="text-cyan-400 text-sm font-mono">{">>"} {status}</p>
+                        <p key={i} className="text-cyan-400 text-sm font-mono uppercase">{">>"} {status}</p>
                     ))}
                     {txHash && (
                         <a
                             href={`https://explorer.solana.com/tx/${txHash}?cluster=devnet`}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-white underline text-xs mt-4 block hover:text-cyan-300"
+                            className="text-white underline text-xs mt-4 block hover:text-cyan-300 uppercase"
                         >
-                            VIEW ON EXPLORER
+                            {t('view_explorer')}
                         </a>
                     )}
                 </div>
@@ -188,7 +186,7 @@ export default function AgentWizardPage() {
             {/* Ambient Background */}
             <div className="absolute inset-0 z-0 opacity-50">
                 <NeuralMeshWrapper />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#05050A] via-[#05050A]/90 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#05050A] via-[#05050A]/90 to-transparent" />
             </div>
 
             <div className="container mx-auto px-4 max-w-5xl relative z-10 h-full flex flex-col justify-center min-h-[80vh]">
@@ -198,7 +196,7 @@ export default function AgentWizardPage() {
                     {/* Wizard Header */}
                     <div className="p-8 border-b border-white/5 flex justify-between items-center bg-black/40">
                         <div>
-                            <h1 className="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500 uppercase">
+                            <h1 className="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-linear-to-r from-gray-100 to-gray-500 uppercase">
                                 {t('agent_genesis')}
                             </h1>
                             <p className="text-xs text-gray-500 font-mono mt-1">v4.2.0 // BUILD 9182</p>
@@ -244,8 +242,8 @@ export default function AgentWizardPage() {
 
                                 {currentStep === 2 && (
                                     <div className="text-center">
-                                        <h2 className="text-4xl font-black mb-2 text-white">SIMULATION & DEPLOY</h2>
-                                        <p className="text-gray-400 mb-8 max-w-lg mx-auto">Review historical performance based on selected parameters. Results may vary in live markets.</p>
+                                        <h2 className="text-4xl font-black mb-2 text-white uppercase">{t('simulation_deploy')}</h2>
+                                        <p className="text-gray-400 mb-8 max-w-lg mx-auto">{t('simulation_desc')}</p>
                                         <BacktestPreview risk={risk} capital={capital} leverage={leverage} />
 
                                         {/* PRICING TRANSPARENCY CARD */}
@@ -255,21 +253,21 @@ export default function AgentWizardPage() {
                                                     <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
-                                                    Protocol License Fee
+                                                    {t('protocol_license_fee')}
                                                 </span>
                                                 <span className="text-xl font-bold text-white font-mono">0.05 SOL</span>
                                             </div>
                                             <div className="text-[10px] text-gray-500 text-left leading-tight border-t border-white/5 pt-2 mt-2">
-                                                By clicking Deploy, you confirm this is a non-refundable software license fee for utilizing the NeuralVault infrastructure. Gas fees (~0.000005 SOL) are separate.
+                                                {t('deploy_legal_notice')}
                                             </div>
                                         </div>
 
                                         <div className="mt-6 flex justify-center">
                                             <button
                                                 onClick={handleDeploy}
-                                                className="px-12 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black text-xl rounded-lg hover:shadow-[0_0_50px_rgba(6,182,212,0.6)] hover:scale-105 transition-all flex items-center gap-3 border border-cyan-400/50"
+                                                className="px-12 py-5 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-black text-xl rounded-lg hover:shadow-[0_0_50px_rgba(6,182,212,0.6)] hover:scale-105 transition-all flex items-center gap-3 border border-cyan-400/50 uppercase"
                                             >
-                                                <Rocket size={24} /> PAY 0.05 SOL & DEPLOY
+                                                <Rocket size={24} /> {t('pay_and_deploy')}
                                             </button>
                                         </div>
                                     </div>

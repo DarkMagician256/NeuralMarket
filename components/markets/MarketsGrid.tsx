@@ -85,7 +85,7 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
                             placeholder={t('search_placeholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm font-mono focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.08] transition-all placeholder:text-gray-600 uppercase tracking-wider"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm font-mono focus:outline-none focus:border-cyan-500/50 focus:bg-white/8 transition-all placeholder:text-gray-600 uppercase tracking-wider"
                         />
                     </div>
 
@@ -108,7 +108,7 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
 
                 {/* Category Pills */}
                 <div className="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar border-b border-white/5">
-                    <Filter size={14} className="text-gray-500 mr-2 flex-shrink-0" />
+                    <Filter size={14} className="text-gray-500 mr-2 shrink-0" />
                     {CATEGORIES.map(cat => (
                         <button
                             key={cat.id}
@@ -116,7 +116,7 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
                                 setActiveCategory(cat.id);
                                 setDisplayCount(ITEMS_PER_PAGE);
                             }}
-                            className={`px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest transition-all flex-shrink-0 whitespace-nowrap border ${activeCategory === cat.id
+                            className={`px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest transition-all shrink-0 whitespace-nowrap border ${activeCategory === cat.id
                                     ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]'
                                     : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:border-white/20'
                                 }`}

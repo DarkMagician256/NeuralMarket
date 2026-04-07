@@ -151,7 +151,7 @@ export default function TradePanel({ ticker }: { ticker: string }) {
 
             {/* Input */}
             <div className="mb-6 md:mb-8 space-y-2">
-                <label className="text-[10px] md:text-xs text-gray-400 font-mono ml-1 uppercase">Amount (SOL)</label>
+                <label className="text-[10px] md:text-xs text-gray-400 font-mono ml-1 uppercase">Amount (USDC)</label>
                 <div className="relative">
                     <input
                         type="number"
@@ -168,7 +168,7 @@ export default function TradePanel({ ticker }: { ticker: string }) {
                 </div>
                 <div className="flex justify-between text-[10px] md:text-xs text-gray-500 px-1 font-mono">
                     <span>Bal: {balance !== null ? balance.toFixed(4) : '---'} SOL</span>
-                    <span>Fee: ~0.00005 SOL</span>
+                    <span>Fee: ~0.00005 USDC</span>
                 </div>
             </div>
 

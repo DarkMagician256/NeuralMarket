@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import PerformanceChart from './PerformanceChart';
 import TradeExecutionModal from '@/components/cortex/TradeExecutionModal';
 import StakingModal from '@/components/cortex/StakingModal';
+import { useLanguage } from '@/context/LanguageContext';
 
 const archetypeStyles: Record<string, { color: string; border: string; icon: any; bg: string }> = {
     'SNIPER': { color: 'text-red-400', border: 'border-red-500', icon: Zap, bg: 'bg-red-500/10' },
@@ -23,10 +24,11 @@ const archetypeStyles: Record<string, { color: string; border: string; icon: any
 };
 
 function AgentHistoryList({ pda }: { pda: string }) {
+    const { t } = useLanguage();
     const { history, loading } = useAgentHistory(pda);
 
-    if (loading) return <div className="text-[10px] text-gray-500 animate-pulse py-2 font-mono">FETCHING ON-CHAIN LOGS...</div>;
-    if (history.length === 0) return <div className="text-[10px] text-gray-600 py-2 font-mono">NO RECENT ACTIVITY FOUND</div>;
+    if (loading) return <div className="text-[10px] text-gray-500 animate-pulse py-2 font-mono uppercase">{t('fetching_logs')}</div>;
+    if (history.length === 0) return <div className="text-[10px] text-gray-600 py-2 font-mono uppercase">{t('no_recent_activity')}</div>;
 
     return (
         <div className="space-y-1 mt-2 max-h-32 overflow-y-auto pr-1 flex flex-col gap-1">
@@ -34,7 +36,7 @@ function AgentHistoryList({ pda }: { pda: string }) {
                 <div key={sig.signature} className="flex justify-between items-center text-[9px] font-mono bg-black/40 p-1.5 rounded border border-white/5 hover:border-white/10 transition-colors">
                     <div className="flex flex-col">
                         <span className="text-gray-400">TX: {sig.signature.slice(0, 8)}...</span>
-                        <span className="text-[8px] opacity-30">{sig.blockTime ? new Date(sig.blockTime * 1000).toLocaleTimeString() : 'Confirming...'}</span>
+                        <span className="text-[8px] opacity-30">{sig.blockTime ? new Date(sig.blockTime * 1000).toLocaleTimeString() : t('connecting') + '...'}</span>
                     </div>
                     <a
                         href={`https://explorer.solana.com/tx/${sig.signature}?cluster=devnet`}
@@ -51,6 +53,7 @@ function AgentHistoryList({ pda }: { pda: string }) {
 }
 
 export default function MyAgentsPanel() {
+    const { t } = useLanguage();
     const { agents, loading, error, refresh } = useMyAgents();
     const { deactivateAgent, reactivateAgent, recordTrade, isConnected } = useAgentActions();
     const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -70,11 +73,11 @@ export default function MyAgentsPanel() {
     const handleDeactivate = async (agent: OnChainAgent) => {
         if (actionLoading) return;
 
-        const confirmed = window.confirm(`Are you sure you want to deactivate ${agent.name}?`);
+        const confirmed = window.confirm(t('confirm_deactivate').replace('{name}', agent.name));
         if (!confirmed) return;
 
         setActionLoading(agent.agentId);
-        const toastId = toast.loading("Deactivating agent...");
+        const toastId = toast.loading(t('deactivating'));
 
         try {
             const result = await deactivateAgent(agent.agentId);
@@ -83,24 +86,24 @@ export default function MyAgentsPanel() {
             if (result.success) {
                 toast.success(
                     <div>
-                        <div>Agent {agent.name} deactivated! ⏸️</div>
+                        <div>{t('agent_deactivated')} ⏸️</div>
                         <a
                             href={`https://explorer.solana.com/tx/${result.txHash}?cluster=devnet`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-cyan-400 underline text-xs"
                         >
-                            View Transaction →
+                            {t('view_tx')} →
                         </a>
                     </div>
                 );
                 refresh();
             } else {
-                toast.error(`Failed: ${result.error}`);
+                toast.error(`${t('error')}: ${result.error}`);
             }
         } catch (error: any) {
             toast.dismiss(toastId);
-            toast.error(`Error: ${error.message}`);
+            toast.error(`${t('error')}: ${error.message}`);
         }
 
         setActionLoading(null);
@@ -108,7 +111,7 @@ export default function MyAgentsPanel() {
 
     const openStakingModal = (agent: OnChainAgent) => {
         if (!isConnected) {
-            toast.error("Connect wallet first!");
+            toast.error(t('connect_wallet_action'));
             return;
         }
         setSelectedAgentForStaking(agent);
@@ -117,7 +120,7 @@ export default function MyAgentsPanel() {
     // Modified to open Modal instead of immediate simulation
     const openTradeModal = (agent: OnChainAgent) => {
         if (!isConnected) {
-            toast.error("Connect wallet first!");
+            toast.error(t('connect_wallet_action'));
             return;
         }
         setSelectedAgentForTrade(agent);
@@ -126,25 +129,25 @@ export default function MyAgentsPanel() {
     if (loading) return (
         <div className="flex items-center justify-center h-32">
             <Loader2 className="w-6 h-6 text-cyan-400 animate-spin" />
-            <span className="ml-2 text-gray-400 text-sm font-mono">SCANNING BLOCKCHAIN...</span>
+            <span className="ml-2 text-gray-400 text-sm font-mono uppercase">{t('syncing')}</span>
         </div>
     );
 
     if (error) return (
-        <div className="text-center text-red-400 text-sm font-mono p-4">
-            ERROR: {error}
+        <div className="text-center text-red-400 text-sm font-mono p-4 uppercase">
+            {t('error')}: {error}
         </div>
     );
 
     if (agents.length === 0) return (
         <div className="text-center py-10">
             <Bot size={40} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-gray-500 text-sm font-mono mb-4">NO AGENTS DEPLOYED YET</p>
+            <p className="text-gray-500 text-sm font-mono mb-4 uppercase">{t('no_agents_deployed')}</p>
             <Link
                 href="/agents/create"
-                className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-4 py-2 rounded transition-all"
+                className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-4 py-2 rounded transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] uppercase"
             >
-                <Zap size={16} /> CREATE YOUR FIRST AGENT
+                <Zap size={16} /> {t('create_first')}
             </Link>
         </div>
     );
@@ -175,17 +178,17 @@ export default function MyAgentsPanel() {
 
             <div className="flex justify-between items-end mb-6">
                 <div>
-                    <h2 className="text-xl font-bold tracking-tighter flex items-center gap-2">
+                    <h2 className="text-xl font-bold tracking-tighter flex items-center gap-2 uppercase">
                         <Brain className="text-cyan-400" />
-                        MY DEPLOYED AGENTS
+                        {t('my_agents')}
                     </h2>
-                    <p className="text-gray-500 font-mono text-xs mt-1">
-                        Manage your active autonomous swarms on Solana Devnet
+                    <p className="text-gray-500 font-mono text-xs mt-1 uppercase">
+                        {t('manage_swarms')}
                     </p>
                 </div>
                 <Link href="/agents/create">
-                    <button className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-mono transition-all flex items-center gap-2">
-                        + DEPLOY NEW AGENT
+                    <button className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-mono transition-all flex items-center gap-2 uppercase">
+                        + {t('deploy_agent')}
                     </button>
                 </Link>
             </div>
@@ -227,19 +230,19 @@ export default function MyAgentsPanel() {
                                     <button
                                         onClick={() => toggleView(agent.agentId, 'chart')}
                                         className={`p-1.5 rounded transition-all ${currentView === 'chart' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
-                                        title="View Performance Chart"
+                                        title={t('performance')}
                                     >
                                         <ChartIcon size={12} />
                                     </button>
                                     <button
                                         onClick={() => toggleView(agent.agentId, 'history')}
                                         className={`p-1.5 rounded transition-all ${currentView === 'history' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'}`}
-                                        title="View On-Chain History"
+                                        title={t('recent_onchain')}
                                     >
                                         <History size={12} />
                                     </button>
-                                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${agent.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}`}>
-                                        {agent.status.toUpperCase()}
+                                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded uppercase ${agent.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}`}>
+                                        {agent.status === 'Active' ? t('active') : t('offline')}
                                     </span>
                                     <a
                                         href={`https://explorer.solana.com/address/${agent.pubkey}?cluster=devnet`}
@@ -259,21 +262,21 @@ export default function MyAgentsPanel() {
                                         {/* Stats Grid */}
                                         <div className="grid grid-cols-4 gap-2 text-[10px] text-gray-500 font-mono mb-4">
                                             <div className="flex flex-col">
-                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px]">CAPITAL</span>
+                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px] uppercase">{t('capital')}</span>
                                                 <span className="text-cyan-400 font-bold">◎{agent.capital.toFixed(2)}</span>
                                             </div>
                                             <div className="flex flex-col items-center">
-                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px]">TRADES</span>
+                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px] uppercase">{t('trades')}</span>
                                                 <span className="text-gray-300 font-bold">{agent.totalTrades}</span>
                                             </div>
                                             <div className="flex flex-col items-center">
-                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px]">WIN RATE</span>
+                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px] uppercase">{t('win_rate')}</span>
                                                 <span className={`font-bold ${Number(winRate) >= 50 ? 'text-green-400' : Number(winRate) > 0 ? 'text-red-400' : 'text-gray-400'}`}>
                                                     {winRate}%
                                                 </span>
                                             </div>
                                             <div className="flex flex-col items-end">
-                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px]">PNL</span>
+                                                <span className="opacity-40 mb-1 tracking-tighter text-[8px] uppercase">{t('total_pnl')}</span>
                                                 <span className={`font-bold ${agent.totalPnl >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                                     {agent.totalPnl >= 0 ? '+' : ''}{agent.totalPnl.toFixed(4)}
                                                 </span>
@@ -281,17 +284,17 @@ export default function MyAgentsPanel() {
                                         </div>
 
                                         {/* Meta Stats */}
-                                        <div className="flex justify-between items-center text-[8px] font-mono text-gray-600 mb-3 border-t border-white/5 pt-1">
+                                        <div className="flex justify-between items-center text-[8px] font-mono text-gray-600 mb-3 border-t border-white/5 pt-1 uppercase">
                                             <span>ID: {agent.agentId.slice(-8)}</span>
-                                            <span>RISK: {agent.riskLevel}% | LEV: {agent.leverage}x</span>
+                                            <span>{t('risk')}: {agent.riskLevel}% | {t('leverage_short')}: {agent.leverage}x</span>
                                         </div>
                                     </>
                                 )}
 
                                 {currentView === 'history' && (
-                                    <div className="animate-in fade-in slide-in-from-top-1 duration-300 border-t border-white/5 pt-2 mb-3">
-                                        <div className="flex items-center gap-1 text-[9px] font-mono text-gray-400 mb-1">
-                                            <Clock size={10} /> RECENT ON-CHAIN ACTIVITY
+                                    <div className="animate-in fade-in slide-in-from-top-1 duration-300 border-t border-white/5 pt-2 mb-3 px-2">
+                                        <div className="flex items-center gap-1 text-[9px] font-mono text-gray-400 mb-1 uppercase">
+                                            <Clock size={10} /> {t('recent_onchain')}
                                         </div>
                                         <AgentHistoryList pda={agent.pubkey} />
                                     </div>
@@ -311,26 +314,26 @@ export default function MyAgentsPanel() {
                                         <button
                                             onClick={() => openTradeModal(agent)}
                                             disabled={isLoading || !isConnected}
-                                            className="flex-1 flex items-center justify-center gap-1 text-[9px] font-mono bg-green-500/20 hover:bg-green-500/30 text-green-400 px-2 py-1.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed group border border-green-500/20"
-                                            title="Execute Trade"
+                                            className="flex-1 flex items-center justify-center gap-1 text-[9px] font-mono bg-green-500/20 hover:bg-green-500/30 text-green-400 px-2 py-1.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed group border border-green-500/20 uppercase"
+                                            title={t('execute_trade')}
                                         >
                                             <Activity size={10} className="group-hover:animate-pulse" />
-                                            TRADE
+                                            {t('trade_action')}
                                         </button>
                                         <button
                                             onClick={() => openStakingModal(agent)}
                                             disabled={isLoading || !isConnected}
-                                            className="flex-1 flex items-center justify-center gap-1 text-[9px] font-mono bg-amber-500/20 hover:bg-amber-500/30 text-amber-500 px-2 py-1.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-amber-500/20"
-                                            title="Manage Liquidity"
+                                            className="flex-1 flex items-center justify-center gap-1 text-[9px] font-mono bg-amber-500/20 hover:bg-amber-500/30 text-amber-500 px-2 py-1.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-amber-500/20 uppercase"
+                                            title={t('manage_liquidity')}
                                         >
                                             <TrendingUp size={10} />
-                                            DEPOSIT
+                                            {t('deposit')}
                                         </button>
                                         <button
                                             onClick={() => handleDeactivate(agent)}
                                             disabled={isLoading || !isConnected}
-                                            className="w-8 flex items-center justify-center text-[9px] font-mono bg-red-500/10 hover:bg-red-500/30 text-red-400 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-red-500/20"
-                                            title="Stop Agent"
+                                            className="w-8 flex items-center justify-center text-[9px] font-mono bg-red-500/10 hover:bg-red-500/30 text-red-400 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-red-500/20 uppercase"
+                                            title={t('stop_agent')}
                                         >
                                             {isLoading ? <Loader2 size={10} className="animate-spin" /> : <Power size={10} />}
                                         </button>
@@ -341,39 +344,39 @@ export default function MyAgentsPanel() {
                                         onClick={async () => {
                                             if (actionLoading) return;
                                             setActionLoading(agent.agentId);
-                                            const toastId = toast.loading("Reactivating agent...");
+                                            const toastId = toast.loading(t('reactivating'));
                                             try {
                                                 const result = await reactivateAgent(agent.agentId);
                                                 toast.dismiss(toastId);
                                                 if (result.success) {
                                                     toast.success(
                                                         <div>
-                                                            <div>Agent {agent.name} reactivated! ▶️</div>
+                                                            <div>{t('agent_reactivated')} ▶️</div>
                                                             <a
                                                                 href={`https://explorer.solana.com/tx/${result.txHash}?cluster=devnet`}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                                 className="text-cyan-400 underline text-xs"
                                                             >
-                                                                View Transaction →
+                                                                {t('view_tx')} →
                                                             </a>
                                                         </div>
                                                     );
                                                     refresh();
                                                 } else {
-                                                    toast.error(`Failed: ${result.error}`);
+                                                    toast.error(`${t('error')}: ${result.error}`);
                                                 }
                                             } catch (error: any) {
                                                 toast.dismiss(toastId);
-                                                toast.error(`Error: ${error.message}`);
+                                                toast.error(`${t('error')}: ${error.message}`);
                                             }
                                             setActionLoading(null);
                                         }}
                                         disabled={isLoading || !isConnected}
-                                        className="flex-1 flex items-center justify-center gap-1 text-[10px] font-mono bg-green-500/20 hover:bg-green-500/40 text-green-400 px-2 py-1.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="flex-1 flex items-center justify-center gap-1 text-[10px] font-mono bg-green-500/20 hover:bg-green-500/40 text-green-400 px-2 py-1.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase"
                                     >
                                         {isLoading ? <Loader2 size={12} className="animate-spin" /> : <Play size={12} />}
-                                        REACTIVATE AGENT
+                                        {t('reactivate')}
                                     </button>
                                 )}
                             </div>

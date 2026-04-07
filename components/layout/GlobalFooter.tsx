@@ -32,7 +32,7 @@ export default function GlobalFooter() {
                     {/* Platform Links */}
                     <div>
                         <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">{t('footer_platform')}</h4>
-                        <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500 font-mono text-[10px] md:text-xs">
+                        <ul className="space-y-2 md:space-y-4 text-gray-500 font-mono text-[10px] md:text-xs">
                             <li><Link href="/markets" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('markets')}</Link></li>
                             <li><Link href="/agents" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('swarm_ai')}</Link></li>
                             <li><Link href="/governance" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('governance')}</Link></li>

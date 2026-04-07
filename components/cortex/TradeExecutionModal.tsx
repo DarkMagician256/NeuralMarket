@@ -92,12 +92,12 @@ export default function TradeExecutionModal({ isOpen, onClose, agent, onSuccess 
                             <div className="grid grid-cols-2 gap-2 mb-2">
                                 <div>
                                     <div className="text-[9px] text-gray-500 uppercase">Input</div>
-                                    <div className="font-bold text-white">{amount} SOL</div>
+                                    <div className="font-bold text-white">${amount} USDC</div>
                                 </div>
                                 <div className="text-right">
                                     <div className="text-[9px] text-gray-500 uppercase">PnL Result</div>
                                     <div className={`font-bold ${isProfitable ? 'text-green-400' : 'text-red-400'}`}>
-                                        {pnl > 0 ? '+' : ''}{pnl.toFixed(4)} SOL
+                                        {pnl > 0 ? '+' : ''}${pnl.toFixed(4)} USDC
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +195,7 @@ export default function TradeExecutionModal({ isOpen, onClose, agent, onSuccess 
                     <div className="p-4 md:p-6 space-y-4 md:space-y-6 overflow-y-auto custom-scrollbar">
                         {/* Agent Info */}
                         <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                            <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center border border-white/10">
+                            <div className="w-10 h-10 shrink-0 rounded-full bg-linear-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center border border-white/10">
                                 <span className="text-lg">🤖</span>
                             </div>
                             <div className="min-w-0">
@@ -230,7 +230,7 @@ export default function TradeExecutionModal({ isOpen, onClose, agent, onSuccess 
 
                         {/* Input Area */}
                         <div>
-                            <label className="text-[10px] font-mono text-gray-500 uppercase mb-1 block">Trade Amount (SOL)</label>
+                            <label className="text-[10px] font-mono text-gray-500 uppercase mb-1 block">Trade Amount (USDC)</label>
                             <div className="relative">
                                 <input
                                     type="number"
@@ -241,7 +241,7 @@ export default function TradeExecutionModal({ isOpen, onClose, agent, onSuccess 
                                     min="0.001"
                                     inputMode="decimal"
                                 />
-                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-gray-500">SOL</span>
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-gray-500">USDC</span>
                             </div>
                         </div>
 
@@ -291,8 +291,8 @@ export default function TradeExecutionModal({ isOpen, onClose, agent, onSuccess 
                             onClick={handleExecute}
                             disabled={isExecuting || (mode === 'REAL' && !quote)}
                             className={`w-full py-3 md:py-4 rounded-lg font-bold font-mono text-xs md:text-sm transition-all flex items-center justify-center gap-2 ${mode === 'REAL'
-                                ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:scale-[1.02] shadow-lg shadow-green-500/20'
-                                : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-[1.02] shadow-lg shadow-purple-500/20'
+                                ? 'bg-linear-to-r from-green-500 to-emerald-600 hover:scale-[1.02] shadow-lg shadow-green-500/20'
+                                : 'bg-linear-to-r from-purple-500 to-indigo-600 hover:scale-[1.02] shadow-lg shadow-purple-500/20'
                                 } disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none active:scale-95`}
                         >
                             {isExecuting ? (
@@ -303,7 +303,7 @@ export default function TradeExecutionModal({ isOpen, onClose, agent, onSuccess 
                             ) : (
                                 <>
                                     {mode === 'REAL' ? <Wallet size={18} /> : <Activity size={18} />}
-                                    {mode === 'REAL' ? `SWAP ${amount} SOL` : 'LOG SIGNAL'}
+                                    {mode === 'REAL' ? `SWAP $${amount} USDC` : 'LOG SIGNAL'}
                                 </>
                             )}
                         </button>

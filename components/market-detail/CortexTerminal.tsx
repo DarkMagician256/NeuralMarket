@@ -9,7 +9,7 @@ const mockStream = [
     "Analysis: BULLISH divergence detected on 4h timeframe.",
     "Whale Alert: Wallet 8x...F2 bought 50k YES shares.",
     "Processing new DFlow order batch...",
-    "Recommendation: STRONG BUY > 0.45 SOL entry."
+    "Recommendation: STRONG BUY > $0.45 USDC entry."
 ];
 
 export default function CortexTerminal({ ticker }: { ticker: string }) {

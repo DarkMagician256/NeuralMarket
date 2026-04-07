@@ -1,33 +1,37 @@
+'use client';
+
 import { Activity, Zap, ShieldCheck, Database, Coins, BarChart3 } from 'lucide-react';
 import { useTelemetry } from '@/hooks/useTelemetry';
 import { useNeuralVault } from '@/hooks/useNeuralVault';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function TelemetryPanel({ armed }: { armed: boolean }) {
+    const { t } = useLanguage();
     const { telemetry } = useTelemetry();
     const { balance, stats } = useNeuralVault();
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 h-full">
             <MetricCard
-                label="NETWORK STATUS"
-                value={telemetry?.status === 'ONLINE' ? "DEVNET LIVE" : (armed ? "CONNECTING" : "OFFLINE")}
+                label={t('network_status')}
+                value={telemetry?.status === 'ONLINE' ? t('devnet_live') : (armed ? t('connecting') : t('offline'))}
                 icon={<Zap size={16} className={telemetry?.status === 'ONLINE' ? "text-green-400" : "text-yellow-400"} />}
                 color={telemetry?.status === 'ONLINE' ? "text-green-400" : "text-yellow-400"}
             />
             <MetricCard
-                label="AGENT BALANCE (SOL)"
-                value={balance !== null ? `${balance.toFixed(4)} SOL` : (telemetry?.wallet_balance ? `${telemetry.wallet_balance.toFixed(4)} SOL` : "SCANNING...")}
+                label={t('agent_balance_sol')}
+                value={balance !== null ? `$${balance.toFixed(4)} USDC` : (telemetry?.wallet_balance ? `$${telemetry.wallet_balance.toFixed(4)} USDC` : t('scanning'))}
                 icon={<ShieldCheck size={16} className="text-indigo-400" />}
                 color="text-indigo-400"
             />
             <MetricCard
-                label="VAULT VOLUME"
-                value={stats ? `${(stats.totalVolume.toNumber() / 1e9).toFixed(2)} SOL` : "0.00 SOL"}
+                label={t('vault_volume')}
+                value={stats ? `$${(stats.totalVolume.toNumber() / 1e9).toFixed(2)} USDC` : "$0.00 USDC"}
                 icon={<Coins size={16} className="text-yellow-400" />}
                 color="text-yellow-400"
             />
             <MetricCard
-                label="PREDICTIONS"
+                label={t('predictions')}
                 value={stats ? stats.predictionsCount.toString() : (telemetry ? "42" : "0")}
                 icon={<BarChart3 size={16} className="text-purple-400" />}
                 color="text-purple-400"

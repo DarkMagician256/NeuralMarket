@@ -5,10 +5,12 @@ import { PublicKey, ConfirmedSignatureInfo } from '@solana/web3.js';
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Clock, RefreshCw, Activity } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const PROGRAM_ID = new PublicKey("A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F");
 
 export default function GlobalActivity() {
+    const { t } = useLanguage();
     const { connection } = useConnection();
     const [history, setHistory] = useState<ConfirmedSignatureInfo[]>([]);
     const [loading, setLoading] = useState(false);
@@ -40,8 +42,8 @@ export default function GlobalActivity() {
                         <Activity className="text-cyan-400" size={20} />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold tracking-tighter uppercase italic">Global Sync Feed</h2>
-                        <p className="text-[10px] font-mono text-gray-500 uppercase">Real-time On-Chain Transaction Logs (Devnet)</p>
+                        <h2 className="text-xl font-bold tracking-tighter uppercase italic">{t('global_feed')}</h2>
+                        <p className="text-[10px] font-mono text-gray-500 uppercase">{t('realtime_logs')}</p>
                     </div>
                 </div>
                 <button
@@ -57,11 +59,11 @@ export default function GlobalActivity() {
                 <table className="w-full text-left font-mono text-xs">
                     <thead>
                         <tr className="text-gray-600 border-b border-white/5 pb-2">
-                            <th className="pb-3 font-medium uppercase text-[10px]">Signature</th>
-                            <th className="pb-3 font-medium uppercase text-[10px]">Slot</th>
-                            <th className="pb-3 font-medium uppercase text-[10px]">Time</th>
-                            <th className="pb-3 font-medium uppercase text-[10px]">Status</th>
-                            <th className="pb-3 font-medium uppercase text-[10px] text-right">View</th>
+                            <th className="pb-3 font-medium uppercase text-[10px]">{t('signature')}</th>
+                            <th className="pb-3 font-medium uppercase text-[10px]">{t('slot')}</th>
+                            <th className="pb-3 font-medium uppercase text-[10px]">{t('time')}</th>
+                            <th className="pb-3 font-medium uppercase text-[10px]">{t('status')}</th>
+                            <th className="pb-3 font-medium uppercase text-[10px] text-right">{t('view')}</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
@@ -72,7 +74,7 @@ export default function GlobalActivity() {
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.05 }}
-                                    className="group hover:bg-white/[0.02]"
+                                    className="group hover:bg-white/2"
                                 >
                                     <td className="py-4 text-cyan-400/80 group-hover:text-cyan-400">
                                         {sig.signature.slice(0, 16)}...
@@ -83,14 +85,14 @@ export default function GlobalActivity() {
                                     <td className="py-4 text-gray-400">
                                         <div className="flex items-center gap-2">
                                             <Clock size={12} className="opacity-40" />
-                                            {sig.blockTime ? new Date(sig.blockTime * 1000).toLocaleTimeString() : 'Confirming...'}
+                                            {sig.blockTime ? new Date(sig.blockTime * 1000).toLocaleTimeString() : t('connecting') + '...'}
                                         </div>
                                     </td>
                                     <td className="py-4">
                                         {sig.err ? (
-                                            <span className="bg-red-500/10 text-red-500 px-2 py-0.5 rounded text-[10px]">FAILED</span>
+                                            <span className="bg-red-500/10 text-red-500 px-2 py-0.5 rounded text-[10px] uppercase">{t('failed')}</span>
                                         ) : (
-                                            <span className="bg-green-500/10 text-green-500 px-2 py-0.5 rounded text-[10px]">CONFIRMED</span>
+                                            <span className="bg-green-500/10 text-green-500 px-2 py-0.5 rounded text-[10px] uppercase">{t('confirmed')}</span>
                                         )}
                                     </td>
                                     <td className="py-4 text-right">
@@ -109,7 +111,7 @@ export default function GlobalActivity() {
                         {!loading && history.length === 0 && (
                             <tr>
                                 <td colSpan={5} className="py-12 text-center text-gray-600 uppercase tracking-widest text-xs">
-                                    No on-chain activity detected yet
+                                    {t('no_activity')}
                                 </td>
                             </tr>
                         )}

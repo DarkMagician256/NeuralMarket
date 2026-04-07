@@ -36,7 +36,7 @@ export default function MarketPredictionCard({ market }: Props) {
                 className="bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all group h-full flex flex-col"
             >
                 {/* Header */}
-                <div className="p-4 border-b border-white/5 bg-white/[0.02]">
+                <div className="p-4 border-b border-white/5 bg-white/2">
                     <div className="flex justify-between items-start mb-2">
                         <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${market.category === 'CRYPTO' ? 'text-orange-400 border-orange-500/30 bg-orange-500/10' :
                             market.category === 'POLITICS' ? 'text-blue-400 border-blue-500/30 bg-blue-500/10' :
@@ -52,7 +52,7 @@ export default function MarketPredictionCard({ market }: Props) {
                             </span>
                         )}
                     </div>
-                    <h3 className="font-bold text-white text-base leading-snug line-clamp-2 min-h-[2.5rem]">
+                    <h3 className="font-bold text-white text-base leading-snug line-clamp-2 min-h-10">
                         {market.title}
                     </h3>
                 </div>
@@ -68,7 +68,7 @@ export default function MarketPredictionCard({ market }: Props) {
                             </div>
                             <div className="flex items-baseline gap-1.5">
                                 <span className="text-xl font-bold text-white tracking-tight">{(yesPrice * 100).toFixed(0)}%</span>
-                                <span className="text-[10px] font-mono text-gray-400">{yesPrice.toFixed(2)} SOL</span>
+                                <span className="text-[10px] font-mono text-gray-400">${yesPrice.toFixed(2)} USDC</span>
                             </div>
                             {/* Fill bar */}
                             <div className="absolute bottom-0 left-0 h-1 bg-green-500" style={{ width: `${yesPrice * 100}%` }} />
@@ -80,7 +80,7 @@ export default function MarketPredictionCard({ market }: Props) {
                             </div>
                             <div className="flex items-baseline gap-1.5">
                                 <span className="text-xl font-bold text-white tracking-tight">{(noPrice * 100).toFixed(0)}%</span>
-                                <span className="text-[10px] font-mono text-gray-400">{noPrice.toFixed(2)} SOL</span>
+                                <span className="text-[10px] font-mono text-gray-400">${noPrice.toFixed(2)} USDC</span>
                             </div>
                             {/* Fill bar */}
                             <div className="absolute bottom-0 left-0 h-1 bg-red-500" style={{ width: `${noPrice * 100}%` }} />

@@ -106,7 +106,7 @@ export default function PerformanceChart() {
                 <div>
                     <h3 className="text-gray-400 text-[10px] md:text-xs font-mono uppercase">Cumulative PnL</h3>
                     <span className={`text-lg md:text-xl font-bold ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
-                        {isPositive ? '+' : ''}{totalPnL.toFixed(2)} SOL
+                        {isPositive ? '+' : ''}${totalPnL.toFixed(2)} USDC
                     </span>
                 </div>
             </div>
@@ -153,7 +153,7 @@ export default function PerformanceChart() {
                             }}
                             labelStyle={{ color: '#fff', fontFamily: 'monospace', fontSize: '11px' }}
                             itemStyle={{ color: isPositive ? '#22c55e' : '#ef4444' }}
-                            formatter={(value) => [`${Number(value ?? 0).toFixed(2)} SOL`, 'PnL']}
+                            formatter={(value) => [`$${Number(value ?? 0).toFixed(2)} USDC`, 'PnL']}
                         />
                         <Area
                             type="monotone"

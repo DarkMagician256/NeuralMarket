@@ -38,7 +38,7 @@ export default function StakingModal({ isOpen, onClose, agent, onSuccess }: Stak
                     <div className="font-mono">
                         <div className="font-bold text-green-400">Vault Deposit Successful! 🏦</div>
                         <div className="text-[10px] text-gray-400 mt-1">
-                            Staked {amount} SOL into Agent Vault.
+                            Staked ${amount} USDC into Agent Vault.
                             <br />TVL Updated.
                         </div>
                         <a
@@ -99,7 +99,7 @@ export default function StakingModal({ isOpen, onClose, agent, onSuccess }: Stak
                     <div className="p-6 space-y-6">
                         {/* Agent Info */}
                         <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                            <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center border border-white/10">
+                            <div className="w-10 h-10 shrink-0 rounded-full bg-linear-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center border border-white/10">
                                 <span className="text-lg">🏦</span>
                             </div>
                             <div className="min-w-0">
@@ -112,7 +112,7 @@ export default function StakingModal({ isOpen, onClose, agent, onSuccess }: Stak
                         <div>
                             <div className="flex justify-between text-[10px] font-mono text-gray-500 uppercase mb-1">
                                 <span>Deposit Amount</span>
-                                <span>Balance: -- SOL</span>
+                                <span>Balance: -- USDC</span>
                             </div>
                             <div className="relative">
                                 <input
@@ -123,7 +123,7 @@ export default function StakingModal({ isOpen, onClose, agent, onSuccess }: Stak
                                     step="0.1"
                                     min="0.01"
                                 />
-                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-gray-500">SOL</span>
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-gray-500">USDC</span>
                             </div>
                         </div>
 
@@ -141,7 +141,7 @@ export default function StakingModal({ isOpen, onClose, agent, onSuccess }: Stak
                         <button
                             onClick={handleStake}
                             disabled={isStaking}
-                            className="w-full py-4 rounded-lg font-bold font-mono text-sm transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:scale-[1.02] shadow-lg shadow-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none active:scale-95 text-black"
+                            className="w-full py-4 rounded-lg font-bold font-mono text-sm transition-all flex items-center justify-center gap-2 bg-linear-to-r from-amber-500 to-orange-600 hover:scale-[1.02] shadow-lg shadow-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none active:scale-95 text-black"
                         >
                             {isStaking ? (
                                 <>
@@ -151,7 +151,7 @@ export default function StakingModal({ isOpen, onClose, agent, onSuccess }: Stak
                             ) : (
                                 <>
                                     <TrendingUp size={18} />
-                                    DEPOSIT {amount} SOL
+                                    DEPOSIT ${amount} USDC
                                 </>
                             )}
                         </button>

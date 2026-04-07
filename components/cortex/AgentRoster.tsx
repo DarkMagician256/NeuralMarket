@@ -2,9 +2,11 @@
 
 import { useAgentRoster } from '@/hooks/useAgentRoster';
 import { motion } from 'framer-motion';
-import { Bot, Zap, Clock, Activity } from 'lucide-react';
+import { Bot } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function AgentRoster() {
+    const { t } = useLanguage();
     const { agents } = useAgentRoster();
 
     // Sort agents to keep order stable
@@ -12,8 +14,8 @@ export default function AgentRoster() {
 
     return (
         <div className="glass-panel p-5 h-full overflow-hidden flex flex-col">
-            <h3 className="text-gray-400 font-mono text-xs tracking-widest mb-4 flex items-center gap-2">
-                <Bot size={14} /> ACTIVE NODES (SWARM)
+            <h3 className="text-gray-400 font-mono text-xs tracking-widest mb-4 flex items-center gap-2 uppercase">
+                <Bot size={14} /> {t('active_nodes')}
             </h3>
 
             <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar lg:max-h-full">
@@ -38,17 +40,19 @@ export default function AgentRoster() {
 
                         <div className="grid grid-cols-3 gap-3 text-[10px] text-gray-500 font-mono">
                             <div className="flex flex-col">
-                                <span className="opacity-40 mb-1">STATUS</span>
-                                <span className={agent.status === 'EXECUTING' ? 'text-green-400 font-bold' : 'text-gray-300'}>{agent.status}</span>
+                                <span className="opacity-40 mb-1 uppercase">{t('status')}</span>
+                                <span className={agent.status === 'EXECUTING' ? 'text-green-400 font-bold' : 'text-gray-300'}>
+                                    {agent.status === 'EXECUTING' ? t('executing') : agent.status === 'SCANNING' ? t('scanning') : agent.status}
+                                </span>
                             </div>
                             <div className="flex flex-col items-center">
-                                <span className="opacity-40 mb-1">CONF</span>
+                                <span className="opacity-40 mb-1 uppercase">{t('conf')}</span>
                                 <span className="text-gray-300 font-bold">
                                     {agent.status === 'EXECUTING' ? (90 + Math.floor((agent.wallet_balance % 1) * 9)) : (60 + Math.floor((agent.wallet_balance % 1) * 30))}%
                                 </span>
                             </div>
                             <div className="flex flex-col items-end">
-                                <span className="opacity-40 mb-1">7D PNL</span>
+                                <span className="opacity-40 mb-1 uppercase">{t('total_pnl')}</span>
                                 <span className={`font-bold ${(agent.wallet_balance - 100) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                     {(agent.wallet_balance - 100) > 0 ? '+' : ''}{(agent.wallet_balance - 100).toFixed(1)}%
                                 </span>
@@ -58,7 +62,7 @@ export default function AgentRoster() {
                 ))}
 
                 {sortedAgents.length === 0 && (
-                    <div className="text-center text-gray-500 mt-10 animate-pulse">CONNECTING TO HIVE...</div>
+                    <div className="text-center text-gray-500 mt-10 animate-pulse uppercase">{t('connecting_hive')}</div>
                 )}
             </div>
         </div>
