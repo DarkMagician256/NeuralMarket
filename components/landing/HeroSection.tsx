@@ -5,8 +5,14 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import LiveBotStatus from '@/components/ui/LiveBotStatus';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function HeroSection() {
+    const { t, locale } = useLanguage();
+
+    // Chinese headline needs special handling for the break
+    const isZH = locale === 'zh';
+
     return (
         <div className="relative min-h-screen flex flex-col justify-center pb-20 md:pb-40 items-center text-center overflow-hidden z-20 pt-20 md:pt-0">
 
@@ -31,16 +37,16 @@ export default function HeroSection() {
 
                 {/* Main Headline - Responsive font sizes */}
                 <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter mb-3 md:mb-4 leading-[1.1]">
-                    INSTITUTIONAL AI
+                    {isZH ? "机构级 AI" : t('hero_headline').split('.')[0]}
                     <br />
-                    <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-600 animate-pulse">
-                        PREDICTIONS. ON-CHAIN.
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-600 animate-pulse uppercase">
+                        {isZH ? "预测 · 链上执行" : t('hero_headline').split('.')[1]}
                     </span>
                 </h1>
 
                 {/* Subtitle - Responsive */}
                 <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-4 md:mb-6 max-w-2xl mx-auto font-mono px-2">
-                    Multi-LLM Swarm (DeepSeek R1 → Claude 3.5 → OpenAI o1) + Non-Custodial NeuralVaults + Machine Payments Protocol (x402). Zero hallucinations. Full on-chain audit trail.
+                    {t('hero_subtitle')}
                 </p>
 
                 {/* Live Bot Status Indicator */}
@@ -80,12 +86,12 @@ export default function HeroSection() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 w-full px-4 sm:px-0">
                     <Link href="/markets" className="w-full sm:w-auto">
                         <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-cyan-500 text-black font-bold text-sm sm:text-base md:text-lg rounded-full hover:scale-105 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] transition-all flex items-center justify-center gap-2">
-                            INITIALIZE TERMINAL <ArrowRight size={18} className="sm:w-5 sm:h-5" />
+                            {t('hero_cta1')} <ArrowRight size={18} className="sm:w-5 sm:h-5" />
                         </button>
                     </Link>
                     <Link href="/agents" className="w-full sm:w-auto">
                         <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold text-sm sm:text-base md:text-lg rounded-full hover:scale-105 hover:bg-purple-500/30 transition-all flex items-center justify-center gap-2">
-                            🧠 SWARM COMMAND CENTER
+                            🧠 {t('hero_cta2')}
                         </button>
                     </Link>
                 </div>

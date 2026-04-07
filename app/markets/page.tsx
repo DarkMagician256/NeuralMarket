@@ -26,13 +26,13 @@ export default async function MarketsPage() {
                 <div className="flex flex-col gap-6 md:gap-8 mb-8 md:mb-12 border-b border-white/10 pb-6 md:pb-8">
                     <div>
                         <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4">
-                            <div className="p-2 md:p-3 bg-green-500/10 rounded-xl flex-shrink-0">
+                            <div className="p-2 md:p-3 bg-green-500/10 rounded-xl shrink-0">
                                 <TrendingUp className="text-green-400" size={20} />
                             </div>
                             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter text-white uppercase italic leading-tight">
                                 INSTITUTIONAL LIQUIDITY
                             </h1>
-                            <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] md:text-[10px] font-mono tracking-[0.1em] md:tracking-[0.2em] text-gray-400 whitespace-nowrap">
+                            <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest md:tracking-[0.2em] text-gray-400 whitespace-nowrap">
                                 <Globe size={10} className="text-cyan-400 animate-spin-slow" /> DIRECT KALSHI API FEED
                             </div>
                             <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/20 rounded-full text-green-400 text-[10px] md:text-xs font-mono animate-pulse">
@@ -40,8 +40,8 @@ export default async function MarketsPage() {
                             </div>
                         </div>
                         <p className="text-gray-400 font-mono text-[10px] sm:text-xs md:text-sm max-w-2xl leading-relaxed">
-                            Access real-time institutional event contracts powered by the Kalshi API.
-                            Analyze institutional-grade data and execute orders through decentralized liquidity pools.
+                            Access real-time institutional event contracts powered by the Kalshi API. 
+                            Validated by a <strong className="text-cyan-400">3-Tier Multi-LLM Swarm</strong> (DeepSeek R1 → Claude 3.5 → OpenAI o1) with full on-chain execution via <strong className="text-purple-400">NeuralVaults</strong>.
                         </p>
                     </div>
 
@@ -110,9 +110,12 @@ export default async function MarketsPage() {
                 {/* Client-side Grid with Pagination */}
                 <MarketsGrid initialMarkets={markets} />
 
-                <div className="mt-8 md:mt-12 text-center">
+                <div className="mt-8 md:mt-12 text-center space-y-2">
                     <p className="text-[10px] md:text-xs text-gray-600 font-mono">
-                        Data provided by Kalshi API v2. Execution via DFlow/Jupiter.
+                        Data provided by Kalshi API v2. Execution via DFlow/Jupiter. 
+                    </p>
+                    <p className="text-[9px] md:text-[10px] text-gray-700 font-mono italic">
+                        NeuralMarket is a Software-Only Provider. All trades are non-custodial and require user-signed transactions on Solana.
                     </p>
                 </div>
             </div>

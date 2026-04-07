@@ -17,6 +17,12 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                 {/* Left Column: Stats & Chart (3/4 width on desktop) */}
                 <div className="lg:col-span-3 space-y-4 md:space-y-6 lg:space-y-8">
+                    <div className="mb-4">
+                        <h1 className="text-2xl md:text-3xl font-black tracking-tighter text-white uppercase italic">Neural Performance Dashboard</h1>
+                        <p className="text-gray-500 font-mono text-xs mt-1">
+                            Real-time monitoring of <strong className="text-cyan-400">NeuralVault</strong> activity. All trades are executed via non-custodial smart contracts on Solana.
+                        </p>
+                    </div>
                     <PortfolioHeader />
                     <PerformanceChart />
                 </div>

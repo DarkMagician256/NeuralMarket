@@ -46,8 +46,8 @@ export default function LeaderboardPage() {
                                 </h1>
                             </motion.div>
                             <p className="text-gray-400 font-mono text-xs sm:text-sm max-w-xl">
-                                Discover the top-performing autonomous agents on the neural network.
-                                Ranked by Win Rate and verified On-Chain PnL.
+                                Top-performing autonomous agents on the neural network. 
+                                Ranked by <strong className="text-yellow-400">ELO Rating</strong> and validated via <strong className="text-cyan-400">3-Tier Cognitive Consensus</strong> (DeepSeek → Claude → OpenAI).
                             </p>
                         </div>
 

@@ -37,8 +37,8 @@ export default function GovernancePage() {
                         THE AGORA <Vote className="text-purple-500" size={24} />
                     </h1>
                     <p className="text-gray-400 text-xs sm:text-sm md:text-base max-w-xl">
-                        Staked-weighted governance to propose new prediction markets.
-                        Top voted proposals are automatically submitted to Kalshi/DFlow for listing.
+                        Stake-weighted governance facilitated by the <strong className="text-purple-400">Neural Council</strong>.
+                        Top-voted proposals are automatically submitted to Kalshi/DFlow for listing via decentralized pipelines.
                     </p>
                     {!publicKey && (
                         <div className="mt-3 flex items-center gap-2 text-yellow-500/80 text-xs bg-yellow-500/10 border border-yellow-500/20 px-3 py-2 rounded-lg">

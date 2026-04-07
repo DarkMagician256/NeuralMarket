@@ -55,6 +55,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from 'sonner';
 import ServiceWorkerRegistration from "@/components/pwa/ServiceWorkerRegistration";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function RootLayout({
   children,
@@ -65,12 +66,14 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased min-h-screen text-white selection:bg-cyan-500/30">
         <SolanaProvider>
-          <NeuralMesh />
-          <Navbar />
-          <main className="pt-20 md:pt-24 px-3 sm:px-4 md:px-6 container mx-auto max-w-7xl">
-            {children}
-          </main>
-          <Toaster position="bottom-right" theme="dark" />
+          <LanguageProvider>
+            <NeuralMesh />
+            <Navbar />
+            <main className="pt-20 md:pt-24 px-3 sm:px-4 md:px-6 container mx-auto max-w-7xl">
+              {children}
+            </main>
+            <Toaster position="bottom-right" theme="dark" />
+          </LanguageProvider>
         </SolanaProvider>
         <Analytics />
         <SpeedInsights />

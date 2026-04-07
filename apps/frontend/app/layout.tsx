@@ -19,15 +19,15 @@ import Navbar from '@/components/navigation/Navbar';
 import Sidebar from '@/components/navigation/Sidebar';
 
 export const metadata: Metadata = {
-  title: 'NeuralMarket V2 | Institutional Dashboard',
+  title: 'NeuralMarket | Institutional AI Swarm Oracle',
   description:
-    'AI-powered prediction market oracle. Non-custodial USDC vaults. Kalshi DFlow integration.',
+    'Multi-LLM Swarm Intelligence (DeepSeek R1/Claude 3.5/o1). Non-custodial NeuralVaults & MPP x402 Protocol. Software-Only B2B Provider.',
   icons: {
     icon: '/logo.svg',
   },
   openGraph: {
-    title: 'NeuralMarket V2 | Institutional Dashboard',
-    description: 'Multi-LLM oracle + institutional risk management',
+    title: 'NeuralMarket | Institutional AI Swarm Protocol',
+    description: 'Multi-LLM cognitive pipeline + institutional risk management on Solana',
     images: [
       {
         url: '/og-image.jpg',

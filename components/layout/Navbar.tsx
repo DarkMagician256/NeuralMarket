@@ -7,8 +7,10 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import NotificationCenter from '@/components/ui/NotificationCenter';
-import { User } from 'lucide-react';
+import LanguageSelector from '@/components/layout/LanguageSelector';
+import { User, Globe } from 'lucide-react';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
 
 const WalletMultiButton = dynamic(
     () => import('@solana/wallet-adapter-react-ui').then((mod) => mod.WalletMultiButton),
@@ -17,16 +19,19 @@ const WalletMultiButton = dynamic(
 
 import { useWallet } from '@solana/wallet-adapter-react';
 
-const navLinks = [
-    { href: '/markets', label: 'MARKETS', hoverColor: 'hover:text-cyan-400' },
-    { href: '/leaderboard', label: 'AI AGENTS', hoverColor: 'hover:text-yellow-400' },
-    { href: '/agents', label: 'SWARM AI', hoverColor: 'hover:text-cyan-400' },
-    { href: '/portfolio', label: 'PORTFOLIO', hoverColor: 'hover:text-cyan-400' },
-    { href: '/governance', label: 'GOVERNANCE', hoverColor: 'hover:text-purple-400' },
-];
-
 export default function Navbar() {
+    const { t } = useLanguage();
     const pathname = usePathname();
+
+    const navLinks = [
+        { href: '/', label: t('home'), hoverColor: 'hover:text-cyan-400' },
+        { href: '/markets', label: t('markets'), hoverColor: 'hover:text-cyan-400' },
+        { href: '/leaderboard', label: t('ai_agents'), hoverColor: 'hover:text-yellow-400' },
+        { href: '/agents', label: t('swarm_ai'), hoverColor: 'hover:text-cyan-400' },
+        { href: '/portfolio', label: t('portfolio'), hoverColor: 'hover:text-cyan-400' },
+        { href: '/governance', label: t('governance'), hoverColor: 'hover:text-purple-400' },
+    ];
+
     const [scrolled, setScrolled] = React.useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -84,15 +89,18 @@ export default function Navbar() {
                         {/* Launch Swarm - Hidden on mobile */}
                         <Link href="/markets" className="hidden md:block">
                             <button className="px-4 md:px-5 py-2 text-xs font-bold bg-white text-black rounded-full hover:bg-cyan-400 hover:scale-105 transition-all">
-                                LAUNCH TERMINAL
+                                {t('launch_terminal')}
                             </button>
                         </Link>
+
+                        {/* Language Selector */}
+                        <LanguageSelector />
 
                         {/* System Utils - Simplified on mobile */}
                         <div className="hidden sm:flex items-center gap-2 border-l border-white/10 pl-2 md:pl-4">
                             <NotificationCenter />
                             <Link href="/profile" className="relative group" title="Profile">
-                                <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 p-[1px] group-hover:shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-all">
+                                <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-linear-to-br from-cyan-500 to-purple-600 p-px group-hover:shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-all">
                                     <div className="w-full h-full rounded-full bg-black overflow-hidden relative">
                                         <Image
                                             src={`https://api.dicebear.com/9.x/bottts/svg?seed=${avatarSeed}&backgroundColor=1d1d1d`}
@@ -177,7 +185,7 @@ export default function Navbar() {
 
                                     {/* Mobile Profile Link */}
                                     <Link href="/profile" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
-                                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 p-[1px]">
+                                        <div className="w-10 h-10 rounded-full bg-linear-to-br from-cyan-500 to-purple-600 p-px">
                                             <div className="w-full h-full rounded-full bg-black overflow-hidden relative">
                                                 <Image
                                                     src={`https://api.dicebear.com/9.x/bottts/svg?seed=NeuralBot&backgroundColor=1d1d1d`}
