@@ -8,6 +8,7 @@ import StrategyConfig from '@/components/agents/wizard/StrategyConfig';
 import BacktestPreview from '@/components/agents/wizard/BacktestPreview';
 import NeuralMeshWrapper from '@/components/ui/NeuralMeshWrapper';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { Program, AnchorProvider, Idl, web3, BN } from '@coral-xyz/anchor';
 import { PublicKey, SystemProgram } from '@solana/web3.js';
@@ -55,11 +56,14 @@ const TREASURY_PUBKEY = new PublicKey(
 );
 
 export default function AgentWizardPage() {
+    const { t } = useLanguage();
     const router = useRouter();
     const { connection } = useConnection();
     const wallet = useWallet();
 
     const [currentStep, setCurrentStep] = useState(0);
+    const steps = [t('select_archetype'), t('system_calibration'), "SIMULATION"];
+
     const [isDeploying, setIsDeploying] = useState(false);
     const [deployStatus, setDeployStatus] = useState<string[]>([]);
     const [txHash, setTxHash] = useState("");
@@ -194,8 +198,8 @@ export default function AgentWizardPage() {
                     {/* Wizard Header */}
                     <div className="p-8 border-b border-white/5 flex justify-between items-center bg-black/40">
                         <div>
-                            <h1 className="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500">
-                                AGENT GENESIS PROTOCOL
+                            <h1 className="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500 uppercase">
+                                {t('agent_genesis')}
                             </h1>
                             <p className="text-xs text-gray-500 font-mono mt-1">v4.2.0 // BUILD 9182</p>
                         </div>
@@ -220,16 +224,16 @@ export default function AgentWizardPage() {
                             >
                                 {currentStep === 0 && (
                                     <div className="text-center">
-                                        <h2 className="text-4xl font-black mb-2 text-white">SELECT ARCHETYPE</h2>
-                                        <p className="text-gray-400 mb-12 max-w-lg mx-auto">Choose the neural personality core. This defines the agent's fundamental trading philosophy and reaction speed.</p>
+                                        <h2 className="text-4xl font-black mb-2 text-white uppercase">{t('select_archetype')}</h2>
+                                        <p className="text-gray-400 mb-12 max-w-lg mx-auto">{t('archetype_desc')}</p>
                                         <ArchetypeSelect selected={archetype} onSelect={setArchetype} />
                                     </div>
                                 )}
 
                                 {currentStep === 1 && (
                                     <div className="text-center">
-                                        <h2 className="text-4xl font-black mb-2 text-white">SYSTEM CALIBRATION</h2>
-                                        <p className="text-gray-400 mb-12 max-w-lg mx-auto">Configure risk parameters and capital allocation. Higher leverage increases volatility exposure.</p>
+                                        <h2 className="text-4xl font-black mb-2 text-white uppercase">{t('system_calibration')}</h2>
+                                        <p className="text-gray-400 mb-12 max-w-lg mx-auto">{t('calibration_desc')}</p>
                                         <StrategyConfig
                                             risk={risk} setRisk={setRisk}
                                             capital={capital} setCapital={setCapital}
@@ -280,16 +284,16 @@ export default function AgentWizardPage() {
                             <button
                                 onClick={prevStep}
                                 disabled={currentStep === 0}
-                                className="px-6 py-3 text-gray-400 hover:text-white disabled:opacity-0 transition-all flex items-center gap-2 font-mono text-sm"
+                                className="px-6 py-3 text-gray-400 hover:text-white disabled:opacity-0 transition-all flex items-center gap-2 font-mono text-sm uppercase"
                             >
-                                <ChevronLeft size={16} /> BACK
+                                <ChevronLeft size={16} /> {t('back')}
                             </button>
 
                             <button
                                 onClick={nextStep}
-                                className="px-8 py-3 bg-white text-black font-bold rounded hover:bg-cyan-400 transition-all flex items-center gap-2"
+                                className="px-8 py-3 bg-white text-black font-bold rounded hover:bg-cyan-400 transition-all flex items-center gap-2 uppercase"
                             >
-                                NEXT PHASE <ChevronRight size={18} />
+                                {t('next_phase')} <ChevronRight size={18} />
                             </button>
                         </div>
                     )}

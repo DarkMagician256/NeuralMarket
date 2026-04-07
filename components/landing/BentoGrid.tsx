@@ -2,13 +2,16 @@
 
 import { motion } from 'framer-motion';
 import { Building2, BrainCircuit, Zap, Users, ShieldCheck, LineChart, Repeat, Terminal, Layout } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function BentoGrid() {
+    const { t } = useLanguage();
+
     return (
         <section className="container mx-auto px-4 py-16 md:py-32">
             <div className="text-center mb-12 md:mb-24">
                 <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4">
-                    SYSTEM <span className="text-cyan-400">ARCHITECTURE</span>
+                    {t('arch_title').split(' ')[0]} <span className="text-cyan-400">{t('arch_title').split(' ')[1]}</span>
                 </h2>
                 <div className="h-1 w-24 mx-auto bg-linear-to-r from-cyan-500 to-purple-600 rounded-full" />
             </div>
@@ -33,9 +36,9 @@ export default function BentoGrid() {
                             </div>
                             <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] md:text-xs font-mono text-purple-300">ELIZA OS • HYBRID CORE</span>
                         </div>
-                        <h3 className="text-2xl md:text-4xl font-bold mb-3 text-white group-hover:text-purple-300 transition-colors">Neural Swarm Intelligence</h3>
+                        <h3 className="text-2xl md:text-4xl font-bold mb-3 text-white group-hover:text-purple-300 transition-colors">{t('bento1_title')}</h3>
                         <p className="text-gray-400 max-w-lg text-sm md:text-base leading-relaxed">
-                            A decentralized network of specialized AI agents running on <strong>ElizaOS</strong>. Powered by <strong className="text-cyan-400">DeepSeek R1</strong> & <strong>mxbai-embed</strong> for local privacy, or <strong>OpenAI</strong> for cloud scalability.
+                            {t('bento1_desc')}
                         </p>
                     </div>
                 </motion.div>
@@ -54,9 +57,9 @@ export default function BentoGrid() {
                         <div className="p-2 md:p-3 bg-green-500/20 rounded-xl w-fit mb-6 border border-green-500/30">
                             <Zap className="text-green-400" size={24} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-4">Instant Execution</h3>
+                        <h3 className="text-2xl font-bold mb-4">{t('bento2_title')}</h3>
                         <p className="text-gray-400 text-sm mb-8 grow">
-                            Powered by Solana's high-throughput blockchain.
+                            {t('bento2_desc')}
                         </p>
 
                         <div className="space-y-4 font-mono text-xs md:text-sm">
@@ -99,9 +102,9 @@ export default function BentoGrid() {
                             </div>
                             <div className="px-2 py-1 bg-white/10 rounded text-[10px] uppercase font-mono tracking-wider">Oracle Data</div>
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold mb-2">Kalshi Integration</h3>
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">{t('bento3_title')}</h3>
                         <p className="text-gray-400 text-sm">
-                            Direct feed from Kalshi, the first CFTC-regulated exchange for event contracts.
+                            {t('bento3_desc')}
                         </p>
                     </div>
                 </motion.div>
@@ -122,9 +125,9 @@ export default function BentoGrid() {
                             </div>
                             <div className="px-2 py-1 bg-blue-500/10 rounded text-[10px] uppercase font-mono tracking-wider text-blue-400 border border-blue-500/20">DFlow Partner</div>
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold mb-2">DFlow Liquidity</h3>
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">{t('bento4_title')}</h3>
                         <p className="text-gray-400 text-sm">
-                            Aggregated liquidity via DFlow ensures minimal slippage using advanced order routing.
+                            {t('bento4_desc')}
                         </p>
                     </div>
                 </motion.div>
@@ -145,9 +148,9 @@ export default function BentoGrid() {
                             </div>
                             <div className="px-2 py-1 bg-yellow-500/10 rounded text-[10px] uppercase font-mono tracking-wider text-yellow-400 border border-yellow-500/20">Non-Custodial</div>
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold mb-2">NeuralVault</h3>
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">{t('bento5_title')}</h3>
                         <p className="text-gray-400 text-sm">
-                            Anchor-based USDC vault on Solana. Set BPS risk limits on-chain. 0.5% license fee auto-collected per trade.
+                            {t('bento1_desc_v2')}
                         </p>
                     </div>
                 </motion.div>
@@ -173,9 +176,9 @@ export default function BentoGrid() {
                             </div>
                             <span className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[10px] md:text-xs font-mono text-orange-300">NATIVE SWAPS</span>
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">Jupiter Integrated</h3>
+                        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">{t('bento6_title')}</h3>
                         <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-6">
-                            Seamlessly swap SOL, USDC, or BONK directly within the execution interface. Powered by Jupiter V6 API for best price routing.
+                            {t('bento6_desc')}
                         </p>
 
                         <div className="flex gap-2">
@@ -204,12 +207,12 @@ export default function BentoGrid() {
                                 <Zap size={24} className="text-teal-400" />
                             </div>
                             <div>
-                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">MPP x402 Gateway</h4>
+                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">{t('mpp_title')}</h4>
                                 <span className="text-[9px] font-mono text-teal-500 tracking-widest uppercase bg-teal-500/10 px-2 py-0.5 rounded">LIVE · B2B M2M</span>
                             </div>
                         </div>
                         <p className="text-gray-500 text-sm font-mono leading-relaxed">
-                            Machine-to-Machine API monetization. Each prediction call costs <strong className="text-teal-400">0.05 USDC</strong> enforced via HTTP 402 + HMAC-SHA256 Solana signature verification.
+                            {t('mpp_desc')}
                         </p>
                     </div>
 
@@ -222,12 +225,12 @@ export default function BentoGrid() {
                                 <BrainCircuit size={24} className="text-purple-400" />
                             </div>
                             <div>
-                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">Multi-LLM Orchestrator</h4>
+                                <h4 className="text-xl font-bold text-white tracking-widest uppercase italic border-b border-white/10 pb-1 mb-1">{t('multi_llm_title')}</h4>
                                 <span className="text-[9px] font-mono text-purple-500 tracking-widest uppercase bg-purple-500/10 px-2 py-0.5 rounded">3-TIER · ZERO HALLUCINATIONS</span>
                             </div>
                         </div>
                         <p className="text-gray-500 text-sm font-mono leading-relaxed">
-                            DeepSeek R1 (local) → Claude 3.5 Sonnet (structure) → OpenAI o1 (risk validation). Hard BPS limits enforced on-chain before any capital is deployed.
+                            {t('multi_llm_desc')}
                         </p>
                     </div>
                 </motion.div>

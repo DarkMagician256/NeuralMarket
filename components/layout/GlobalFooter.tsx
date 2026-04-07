@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function GlobalFooter() {
+    const { t } = useLanguage();
     return (
         <footer className="border-t border-white/5 bg-black/80 backdrop-blur-xl relative z-40">
             <div className="container mx-auto px-4 py-10 md:py-16">
@@ -23,50 +25,48 @@ export default function GlobalFooter() {
                             <span className="font-bold text-lg md:text-xl tracking-wider">NEURAL</span>
                         </div>
                         <p className="text-gray-500 text-xs md:text-sm max-w-sm leading-relaxed">
-                            The Neural Market protocol provides institutional-grade event liquidity.
-                            Powered by the <strong>Direct Kalshi API Feed</strong> and secured via distributed
-                            <strong> MPC & CCP</strong> orchestration for autonomous AI agent swarms.
+                            {t('footer_desc')}
                         </p>
                     </div>
 
                     {/* Platform Links */}
                     <div>
-                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">PLATFORM</h4>
+                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">{t('footer_platform')}</h4>
                         <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500 font-mono text-[10px] md:text-xs">
-                            <li><Link href="/markets" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Markets</Link></li>
-                            <li><Link href="/agents" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Neural Swarm</Link></li>
-                            <li><Link href="/governance" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Governance</Link></li>
-                            <li><Link href="/portfolio" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">Portfolio</Link></li>
+                            <li><Link href="/markets" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('markets')}</Link></li>
+                            <li><Link href="/agents" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('swarm_ai')}</Link></li>
+                            <li><Link href="/governance" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('governance')}</Link></li>
+                            <li><Link href="/portfolio" className="hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest">{t('portfolio')}</Link></li>
                         </ul>
                     </div>
 
                     {/* Support Links */}
                     <div>
-                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">SUPPORT</h4>
+                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">{t('footer_support')}</h4>
                         <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500">
-                            <li><Link href="/help" className="hover:text-cyan-400 cursor-pointer transition-colors">Help Center</Link></li>
-                            <li><Link href="/faq" className="hover:text-cyan-400 cursor-pointer transition-colors">FAQ</Link></li>
-                            <li><a href="mailto:support@neuralmarket.io" className="hover:text-cyan-400 cursor-pointer transition-colors">Contact Us</a></li>
+                            <li><Link href="/help" className="hover:text-cyan-400 cursor-pointer transition-colors">{t('footer_help')}</Link></li>
+                            <li><Link href="/faq" className="hover:text-cyan-400 cursor-pointer transition-colors">{t('footer_faq')}</Link></li>
+                            <li><a href="mailto:support@neuralmarket.io" className="hover:text-cyan-400 cursor-pointer transition-colors">{t('footer_contact')}</a></li>
                         </ul>
                     </div>
 
                     {/* Legal Links */}
                     <div>
-                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">LEGAL</h4>
+                        <h4 className="font-bold text-white text-sm md:text-base mb-4 md:mb-6">{t('footer_legal')}</h4>
                         <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-gray-500">
                             <li>
-                                <Link href="/legal/terms" className="hover:text-white cursor-pointer transition-colors">Terms of Service</Link>
+                                <Link href="/legal/terms" className="hover:text-white cursor-pointer transition-colors">{t('footer_terms')}</Link>
                             </li>
                             <li>
-                                <Link href="/legal/privacy" className="hover:text-white cursor-pointer transition-colors">Privacy Policy</Link>
+                                <Link href="/legal/privacy" className="hover:text-white cursor-pointer transition-colors">{t('footer_privacy')}</Link>
                             </li>
                             <li>
-                                <Link href="/legal/risk" className="hover:text-white cursor-pointer transition-colors">Risk Disclosure</Link>
+                                <Link href="/legal/risk" className="hover:text-white cursor-pointer transition-colors">{t('footer_risk')}</Link>
                             </li>
                             <li>
                                 <Link href="/audit" className="hover:text-green-400 cursor-pointer transition-colors flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                                    Security Audit
+                                    {t('footer_audit')}
                                 </Link>
                             </li>
                         </ul>
@@ -106,7 +106,7 @@ export default function GlobalFooter() {
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                                 </span>
-                                <span className="text-gray-500">SYSTEM STATUS:</span> LIVE
+                                <span className="text-gray-500">{t('footer_status')}:</span> LIVE
                             </span>
 
                             {/* Contract Links - Hidden on very small screens */}
@@ -117,7 +117,7 @@ export default function GlobalFooter() {
                                     rel="noopener noreferrer"
                                     className="text-gray-500 hover:text-cyan-400 transition-colors border-b border-white/10 hover:border-cyan-400"
                                 >
-                                    CONTRACT
+                                    {t('footer_contract')}
                                 </a>
 
                                 <a
@@ -126,7 +126,7 @@ export default function GlobalFooter() {
                                     rel="noopener noreferrer"
                                     className="text-gray-500 hover:text-purple-400 transition-colors border-b border-white/10 hover:border-purple-400"
                                 >
-                                    LATEST TX
+                                    {t('footer_tx')}
                                 </a>
                             </div>
                         </div>

@@ -2,31 +2,34 @@
 
 import { motion } from 'framer-motion';
 import { Wallet, Cpu, TrendingUp, ShieldCheck } from 'lucide-react';
-
-const steps = [
-    {
-        icon: <Wallet size={24} className="text-cyan-400" />,
-        title: "CONNECT IDENTITY",
-        desc: "Link your Solana wallet to establish your verifiable on-chain identity within the Neural Network."
-    },
-    {
-        icon: <Cpu size={24} className="text-purple-400" />,
-        title: "ACTIVATE SWARM",
-        desc: "Deploy autonomous AI agents (Whale Watcher, Sniper, Sentiment) to analyze Kalshi markets 24/7."
-    },
-    {
-        icon: <TrendingUp size={24} className="text-green-400" />,
-        title: "EXECUTE & EARN",
-        desc: "Agents execute trades instantly via DFlow. Track PnL on your dashboard and climb the global leaderboard."
-    },
-    {
-        icon: <ShieldCheck size={24} className="text-yellow-400" />,
-        title: "GOVERNANCE",
-        desc: "Stake earnings to gain voting power in the Neural Council and propose new prediction markets."
-    }
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function HowItWorks() {
+    const { t } = useLanguage();
+
+    const steps = [
+        {
+            icon: <Wallet size={24} className="text-cyan-400" />,
+            title: t('step1_title'),
+            desc: t('step1_desc')
+        },
+        {
+            icon: <Cpu size={24} className="text-purple-400" />,
+            title: t('step2_title'),
+            desc: t('step2_desc')
+        },
+        {
+            icon: <TrendingUp size={24} className="text-green-400" />,
+            title: t('step3_title'),
+            desc: t('step3_desc')
+        },
+        {
+            icon: <ShieldCheck size={24} className="text-yellow-400" />,
+            title: t('step4_title'),
+            desc: t('step4_desc')
+        }
+    ];
+
     return (
         <section className="py-20 md:py-32 relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
@@ -39,10 +42,10 @@ export default function HowItWorks() {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-black tracking-tighter mb-4"
                     >
-                        PROTOCOL <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">WORKFLOW</span>
+                        {t('workflow_title').split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">{t('workflow_title').split(' ')[1]}</span>
                     </motion.h2>
                     <p className="text-gray-400 font-mono text-sm md:text-base max-w-2xl mx-auto">
-                        From connection to execution, the Neural Market operates on a trustless, automated infrastructure.
+                        {t('workflow_subtitle')}
                     </p>
                 </div>
 

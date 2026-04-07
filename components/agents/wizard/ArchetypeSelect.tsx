@@ -2,47 +2,50 @@
 
 import { motion } from 'framer-motion';
 import { Target, Brain, Scale, Waves } from 'lucide-react';
-
-export const archetypes = [
-    {
-        id: 'sniper',
-        name: 'THE SNIPER',
-        desc: 'High frequency. Executes on micro-divergences.',
-        icon: Target,
-        color: 'text-red-400',
-        border: 'border-red-500/50',
-        gradient: 'from-red-500/20 to-transparent'
-    },
-    {
-        id: 'oracle',
-        name: 'THE ORACLE',
-        desc: 'Sentiment analysis. Scrapes X & News API.',
-        icon: Brain,
-        color: 'text-purple-400',
-        border: 'border-purple-500/50',
-        gradient: 'from-purple-500/20 to-transparent'
-    },
-    {
-        id: 'hedger',
-        name: 'THE HEDGER',
-        desc: 'Delta-neutral. Farms executor rewards.',
-        icon: Scale,
-        color: 'text-green-400',
-        border: 'border-green-500/50',
-        gradient: 'from-green-500/20 to-transparent'
-    },
-    {
-        id: 'whale',
-        name: 'WHALE TRACKER',
-        desc: 'Follows large wallet movements. Copy-trades smart money.',
-        icon: Waves,
-        color: 'text-cyan-400',
-        border: 'border-cyan-500/50',
-        gradient: 'from-cyan-500/20 to-transparent'
-    }
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ArchetypeSelect({ selected, onSelect }: { selected: string, onSelect: (id: string) => void }) {
+    const { t } = useLanguage();
+
+    const archetypes = [
+        {
+            id: 'sniper',
+            name: t('sniper_title'),
+            desc: t('sniper_desc'),
+            icon: Target,
+            color: 'text-red-400',
+            border: 'border-red-500/50',
+            gradient: 'from-red-500/20 to-transparent'
+        },
+        {
+            id: 'oracle',
+            name: t('oracle_title'),
+            desc: t('oracle_desc'),
+            icon: Brain,
+            color: 'text-purple-400',
+            border: 'border-purple-500/50',
+            gradient: 'from-purple-500/20 to-transparent'
+        },
+        {
+            id: 'hedger',
+            name: t('hedger_title'),
+            desc: t('hedger_desc'),
+            icon: Scale,
+            color: 'text-green-400',
+            border: 'border-green-500/50',
+            gradient: 'from-green-500/20 to-transparent'
+        },
+        {
+            id: 'whale',
+            name: t('whale_title'),
+            desc: t('whale_desc'),
+            icon: Waves,
+            color: 'text-cyan-400',
+            border: 'border-cyan-500/50',
+            gradient: 'from-cyan-500/20 to-transparent'
+        }
+    ];
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {archetypes.map((type) => (
