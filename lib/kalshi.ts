@@ -14,7 +14,16 @@
 
 import crypto from 'crypto';
 
+// Public market data — always production (real prices for display)
 const KALSHI_API_BASE = 'https://api.elections.kalshi.com/trade-api/v2';
+
+// Trading API — use demo for development/testing, production for live
+// Demo: https://demo.kalshi.co (free account, paper money)
+// Production: https://api.elections.kalshi.com (real money, requires funded account)
+const KALSHI_DEMO_BASE = 'https://demo-api.kalshi.co/trade-api/v2';
+const KALSHI_TRADING_BASE = process.env.KALSHI_TRADING_ENV === 'production'
+    ? KALSHI_API_BASE
+    : KALSHI_DEMO_BASE;
 
 // Retry configuration
 const MAX_RETRIES = 3;
@@ -165,9 +174,22 @@ class KalshiClient {
     private builderCode: string;
 
     constructor() {
-        this.apiKeyId = process.env.KALSHI_API_KEY_ID || '';
-        this.privateKey = process.env.KALSHI_PRIVATE_KEY || '';
+        const isDemo = (process.env.KALSHI_TRADING_ENV || 'demo') !== 'production';
+
+        // Use demo credentials for trading when in demo mode
+        this.apiKeyId = isDemo
+            ? (process.env.KALSHI_DEMO_API_KEY_ID || process.env.KALSHI_API_KEY_ID || '')
+            : (process.env.KALSHI_API_KEY_ID || '');
+
+        this.privateKey = isDemo
+            ? (process.env.KALSHI_DEMO_PRIVATE_KEY || process.env.KALSHI_PRIVATE_KEY || '')
+            : (process.env.KALSHI_PRIVATE_KEY || '');
+
         this.builderCode = process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2';
+
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`[Kalshi] Trading mode: ${isDemo ? 'DEMO (demo-api.kalshi.co)' : 'PRODUCTION'}`);
+        }
     }
 
     /**
@@ -229,7 +251,7 @@ class KalshiClient {
             headers['KALSHI-ACCESS-TIMESTAMP'] = timestamp;
         }
 
-        const response = await fetchWithRetry(`${KALSHI_API_BASE}${path}`, {
+        const response = await fetchWithRetry(`${KALSHI_TRADING_BASE}${path}`, {
             method,
             headers,
             body: body ? JSON.stringify(body) : undefined,
