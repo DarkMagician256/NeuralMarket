@@ -1,109 +1,91 @@
-# NeuralMarket
+# NeuralMarket V2: Institutional
 
-**La Primera Interfaz Híbrida de Mercados de Predicción con IA en Solana.**
+**La Primera Interfaz Híbrida de Mercados de Predicción con Inteligencia de Enjambre (Swarm AI) y Pagos por Máquina en Solana.**
 
 ![Solana](https://img.shields.io/badge/Solana-Devnet-blueviolet?style=for-the-badge&logo=solana)
-![DFlow](https://img.shields.io/badge/DFlow-Integrated-blue?style=for-the-badge)
-![Kalshi](https://img.shields.io/badge/Kalshi-Regulated-green?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-ElizaOS%20|%20Ollama-orange?style=for-the-badge)
+![Nextjs](https://img.shields.io/badge/Next.js-16_AppRouter-black?style=for-the-badge&logo=next.js)
+![AI](https://img.shields.io/badge/AI-DeepSeek_|_Claude_|_o1-orange?style=for-the-badge)
+![Non-Custodial](https://img.shields.io/badge/Security-Non_Custodial-green?style=for-the-badge)
 
 ---
 
-## 🚀 ¿QUÉ ES NEURALMARKET?
+## 🚀 ¿QUÉ ES NEURALMARKET V2?
 
-**NeuralMarket** es una interfaz completa de mercados de predicción desplegada sobre Solana, diseñada para servir de puente entre el vasto ecosistema de liquidez en cripto (Solana) y el mercado de predicciones regulado de Kalshi.
+**NeuralMarket** ha evolucionado hacia una **Arquitectura Institucional (V2)**, diseñada estrictamente como un proveedor de software (**Software-Only Provider**). Nuestro ecosistema sirve como puente analítico y de transacción on-chain entre el vasto ecosistema de liquidez de Solana y los mercados de predicción regulados tradicionales (como Kalshi) empoderado por Inteligencia Artificial y protocolos de pago por inferencia (MPP).
 
-Al integrar **Agentes Autónomos de Inteligencia Artificial (basados en ElizaOS)** con la **velocidad de ejecución y bajo costo de Solana**, ofrecemos un terminal institucional, de grado bancario, para comerciantes soberanos que buscan automatizar estrategias de arbitraje y predicción.
+Al combinar **Agentes de Múltiples Redes Neuronales (Multi-LLM)** orquestados por ElizaOS, la velocidad de **Solana**, y la liquidación off-chain de DFlow, entregamos un "Dashboard B2B tipo Bloomberg" de grado bancario para operadores comerciales y desarrolladores que buscan automatizar estrategias de toma de decisión.
 
----
-
-## ✨ CARACTERÍSTICAS PRINCIPALES
-
-- ✅ **Monetización On-Chain Integrada:** Cada agente desplegado paga una tarifa de protocolo automatizada y programática del **0.05 SOL** procesada directamente por un smart contract.
-- ✅ **Arquitectura de Agentes de IA Híbrida:** Soporta IA en la Nube (OpenAI) para el máximo rendimiento cognitivo, o **IA Soberana Local (DeepSeek R1 vía Ollama)** para usuarios institucionales que previenen la fuga de datos confidenciales.
-- ✅ **Telemetría Inteligente (Sentient Logs):** El sistema proyecta la cadena de pensamientos lógicos del agente en tiempo real (Synapse Logs) directo al dashboard, brindando 100% de transparencia en por qué se toma cada decisión.
-- ✅ **Integración de Billeteras Web3:** Compatibilidad nativa con Phantom, Solflare, y WalletConnect a través de los estandarizados Web3 Wallet Adapters de Solana.
-- ✅ **Liquidación de Órdenes Híbrida:** API v2 en tiempo real de Kalshi, conectada mediante DFlow y Jupiter para el flujo de pagos inter-cadena.
-- ✅ **Contratos Inteligentes "Neural Vault":** Gestión completa en cadena del ciclo de vida del agente: creación, ejecución de intenciones de mercado, telemetría de PNL (Ganancias y Pérdidas), inactivación / reactivación segura.
+> [!WARNING]
+> **Descargo de Responsabilidad Regulatoria:** NeuralMarket opera estrictamente como un Proveedor de Software B2B. Ni custodiamos fondos ni brindamos asesoramiento de inversión. Las bóvedas (Vaults) son gobernadas directamente por los usuarios vía sus llaves privadas de Web3.
 
 ---
 
-## 🛠️ STACK TECNOLÓGICO
+## ✨ CARACTERÍSTICAS DE LA ARQUITECTURA V2
 
-### Frontend
-- **Framework:** Next.js 16 (App Router), React 19.
-- **Estilos e UI:** Tailwind CSS 4, Three.js / React Three Fiber (Visualizaciones 3D dinámicas).
-- **Control de Estado y Datos:** SWR, Supabase (Persistencia Off-chain).
-
-### Backend de la IA (Agente "Oraculo Sentient")
-- **Motor Cognitivo:** ElizaOS (@elizaos/core).
-- **Procesadores LLM:** OpenAI o servidor Ollama autohospedado con DeepSeek R1.
-- **Acceso a Mercados:** SDK de Kalshi, Adaptadores custom de DFlow.
-- **Runtime:** Bun / TSX para inicialización rápida del Agente.
-
-### Blockchain y Nodos
-- **Contratos:** Rust puro mediante el framework Anchor (versión 0.32.1).
-- **Conectividad:** `@solana/web3.js` (@1.98.4), Anchor Bankrun.
+- ✅ **Bóvedas Neurales No Custodiales (NeuralVaults):** Contratos inteligentes escritos en Anchor sobre Devnet que retienen de forma segura USDC. Los retiros y cambios en límites de riesgo de operaciones son custodiados 100% por la firma del cripto-monedero de los inversores.
+- ✅ **Monetización Machine-to-Machine (Protocolo x402):** Contamos con un portal API de Gateway que cobra un peaje automatizado de `0.05 USDC` por cada predicción generada, utilizando HTTP 402 y firmas transaccionales HMAC en Solana.
+- ✅ **Orquestador Cognitivo "Multi-LLM":** Reducimos las alucinaciones a cero usando validación escalonada:
+  - **Tier 3 (Local):** Extracción de contexto asíncrono vía *DeepSeek R1* a coste cero.
+  - **Tier 2 (Estructuración):** Formateo con *Claude 3.5 Sonnet*.
+  - **Tier 1 (Validación de Riesgo):** Aprobación final determinista vía *OpenAI o1*.
+- ✅ **Panel de Control Institucional B2B:** Aplicación de alto rendimiento construida sobre Next.js 16 (App Router), embebida con componentes oscuros de visualización financiera, líderazgo AI y un deslizador preciso para medir "Límites por Riesgo" de capital. 
+- ✅ **Auditoria Inmutable en Caja Negra (Blackbox Audit):** Todos los "pensamientos" cuantificados de IA y transacciones originadas son emparejados a una firma asimétrica y subidos a Irys (Shadow Drive), logrando un feed de registro inmodificable y un track récord garantizado.
 
 ---
 
-## ⚙️ CÓMO EMPEZAR RÁPIDAMENTE (INSTRUCCIONES DE DESARROLLO)
+## 🛠️ ESTRUCTURA DEL MONOREPO Y STACK TÉCNICO
 
-Asegúrate de contar con `pnpm`, `bun`, `rust`, `solana-cli` y `anchor` instalados.
+| Directorio | Componente | Descripción y Stack |
+|---|---|---|
+| `apps/frontend` | Dashboard Next.js | Aplicación web en Next.js 16 App Router. Usa TailwindCSS v4, SWR, y componentes `@solana/wallet-adapter` para un look "Glassmorphism oscurecido". |
+| `anchor/` | Programas Inteligentes | Smart Contracts escritos en `Rust` (Anchor 0.32.1) encargados de gestionar las PDAs del `NeuralVault`. |
+| `neural-agent/` | Orquestador Multi-LLM | Motor NodeJS (`bun`) ejecutando el orquestador ElizaOS con capacidad de comunicarse de manera local vía Ollama. |
+| `packages/api/` | Gateway MPP | Servidor que intercepta llamadas API B2B, exigiendo un pago On-chain verificando el header HTTP 402. |
 
-### 1. Clonación e Instalación
+---
 
+## ⚙️ INICIO RÁPIDO (DESARROLLO MULTINODO)
+
+Asegúrate de contar con `pnpm` (10.x+), `bun`, `rust`, `solana-cli` y `anchor` instalados.
+
+### 1. Clonación Completa
 ```bash
-git clone https://github.com/tu-repo/NeuralMarket.git
+git clone https://github.com/DarkMagician256/NeuralMarket.git
 cd NeuralMarket
 pnpm install
 ```
 
-### 2. Configuración de Entorno
+### 2. Configuración de Entornos (.env)
+Asegúrate de estructurar el entorno B2B correctamente:
+- `apps/frontend/.env.local`: Incluye tu RPC de Helius o Solana Devnet.
+- `neural-agent/.env`: Requiere los tokens `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` y si requieres soberanía local, `USE_LOCAL_AI=true` con el endpoint de Ollama.
+- `packages/api/.env`: Semillas de validación HMAC para firmar el Gateway de Auditoría.
 
-Hay multiples archivos `.env` a configurar:
-- En la raíz (.env.local): Supabase, Variables RPC de Solana.
-- En `neural-agent/.env`: Claves OPenAI, URL de Ollama, y Credenciales temporales Kalshi.
-
-### 3. Ejecutar los Smart Contracts Localmente (Anchor)
-
+### 3. Correr el Frontend (Dashboard Institucional)
 ```bash
-cd anchor
-anchor test
-```
-*Esto asegurará y validará que la lógica de cobro de 0.05 SOL funciona correctamente en tu nodo local validator.*
-
-### 4. Lanzamiento de la Aplicación de React / Next.js
-
-En una nueva terminal, levanta el frontend:
-
-```bash
+# Navega localmente al dashboard de riesgo
+cd apps/frontend
 pnpm run dev
+# Disponible en: http://localhost:3000
 ```
-(El sitio estará corriendo sobre `http://localhost:3000`)
 
-### 5. Lanzamiento del Agente Autónomo (Oraculo Sentient)
+### 4. Lanzar el API Gateway (Monetización MPP)
+```bash
+# Inicia la validación x402
+cd packages/api
+npm start
+# Este correrá el validador de pagos machine-to-machine.
+```
 
-Abre otra sesión de terminal y navega al Agente:
-
+### 5. Iniciar la Inteligencia Local (DeepSeek + Orquestador)
+Para probar la suite completa libre de censura, asegúrate de tener Ollama corriendo localmente con el modelo *deepseek-r1:8b*, y luego actívalo:
 ```bash
 cd neural-agent
-bun run src/agent.ts  # Inicia las rutinas de telemetría y conexión a ElizaOS
+bun run src/agent.ts
 ```
 
-Una vez en línea, el bot emitirá logs con "[TELEMETRY]" y analizará en tiempo real eventos de alta volatilidad y predecirá tendencias globales, transmitiendolas inmediatamente al frontend para su ejecución mediante el **Neural Vault**.
-
 ---
 
-## 🧪 TESTING
+## 📜 LICENCIA Y EXENCIÓN LEGAL
 
-El proyecto contiene un robusto set de pruebas:
-- **Unitarias y UI:** Vitest `pnpm run test:ui`
-- **End-to-End (E2E):** Playwright `pnpm run test:e2e`
-- **Contratos Inteligentes:** Anchor y Chai `pnpm run test:anchor`
-
----
-
-## 📜 LICENCIA Y MARCO LEGAL
-
-Este proyecto utiliza licencias y frameworks de uso de datos limitados. Además incluye exclusiones de responsabilidad y regulaciones para Inteligencias Artificiales aplicadas como servicios financieros según parámetros definidos en la exención "Digital Utility" implementado para la robustez Fintech.
+Este proyecto utiliza licencias y frameworks de código abierto, diseñado para operar bajo un perímetro de **Software Puro**. NeuralMarket no toma depósitos bajo sus cuentas principales (todas las transferencias son gobernadas por contratos Web3 bajo la autonomía de cada usuario final). Consulte `SECURITY.md` para conocer más sobre nuestro flujo de seguridad integral y regulaciones exentas.

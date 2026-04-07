@@ -1,73 +1,64 @@
 # NeuralMarket - Technical Paper Oficial
-**Versión de Documento:** 1.0 (Release Candidate / Institutional M1)
-**Ecosistema:** Solana, ElizaOS, Kalshi, Next.js
+**Versión del Documento:** 2.0 (Release Candidate / Institutional Architecture)
+**Ecosistema:** Solana, ElizaOS, Kalshi, Next.js, DeepSeek R1, OpenAI o1
 **Idioma:** Español
 
 ---
 
 ## 1. Resumen Ejecutivo (Abstract)
 
-**NeuralMarket** es una aplicación descentralizada (dApp) y un ecosistema de infraestructura IA que funciona como puente transaccional y oráculo predictivo entre el mercado criptográfico sobre Solana y los mercados de predicción regulados tradicionales (Kalshi). 
+**NeuralMarket V2** se ha rediseñado desde sus cimientos para convertirse en la primera infraestructura híbrida a prueba de censuras y fallas cognitivas en el mercado criptográfico. Actuando puramente como un **Proveedor de Software Estricto (Software-Only Provider)**, NeuralMarket consolida un ecosistema "No-Custodial" interconectado, orquestando Agentes Avanzados (Multi-LLM) con Smart Contracts operando en Solana. 
 
-Este proyecto resuelve tres grandes problemas del ecosistema DeFi y los AI-Agents actuales:
-1. **Privacidad Institucional:** Mediante el enrutamiento de agentes de IA locales con LLMs soberanos (como DeepSeek R1 trabajando offline mediante Ollama), previniendo fugas de datos estratégicos.
-2. **Fricción de Liquidez:** Usando los bajos costos de la red de Solana y el enrutador intencional DFlow para convertir stablecoins/solana en posiciones legales de predicción.
-3. **Falta de Transparencia del "Cerebro IA":** Mediante un puente de telemetría constante (Neural Link Protocol) que emite "pensamientos" cuantificados para que las instituciones y usuarios evalúen la cadena de decisiones de la IA en vivo.
-
----
-
-## 2. Arquitectura Global del Sistema
-
-El ecosistema NeuralMarket está conceptualmente segmentado en 3 capas de ejecución verticalmente integradas para proveer concurrencia sin obstrucciones.
-
-### 2.1 Capa de Contrato Inteligente (Anchor/Solana) - "Neural Vault"
-Escrita rigurosamente en Rust usando **Anchor 0.32.1**. Es la capa que garantiza inmutabilidad, reglas financieras, y la estructura de pagos.
-Se despliega bajo el ID de programa: `A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F`.
-
-Contiene dos modelos principales de datos como *PDAs (Program Derived Addresses)*:
-- `UserStats`: Gestiona conteos globales del billetera de un usuario, enlazado criptográficamente a la llave pública. Almacena victorias, conteos de agentes desplegados, y volumen total tranzado.
-- `Agent`: Cada entidad IA ostenta un registro individual con: ID, arquetipo (Sniper, Sentinel, Oracle), riesgo, capital y el margen de apalancamiento, con rastreo en vivo de `total_pnl` (Ganancias / Pérdidas en lamports).
-
-**Instrucciones Críticas (Transacciones Funcionales):**
-*   `create_agent_standalone`: Despliega de inmediato un Agente y cobra automáticamente el **Protocol Fee exacto de 0.05 SOL** (`50_000_000` lamports) directamente a la tesorería de NeuralMarket utilizando `system_instruction::transfer`.
-*   `submit_trade_intent`: Es el pegamento esencial de DFlow. En lugar de hacer arbitraje en la cadena on-chain, emite el evento bloqueado `TradeIntentSubmitted`. Los Solvers (recolectores de órdenes off-chain en un entorno asíncrono) se suscriben a estos eventos e infieren en milisegundos las operaciones contra mercados como USDC -> Kalshi.
-*   `record_agent_prediction`: Es la resolución del oráculo que confirma si la IA profetizó ganancia o pérdida, modificando el PDA `Agent.total_pnl` garantizando auditorias en tiempo real en los retornos sobre capital institucional de la IA.
-
-### 2.2 Capa Cognitiva Autónoma (Neural Agent - TypeScript / ElizaOS)
-Se encuentra en `/neural-agent/` y representa el cerebro del marco de trabajo.
-*   **Oráculo Sentient (ElizaOS Runtime):** Utiliza los protocolos de `@elizaos/core` y el plugin de `@elizaos/plugin-solana` para crear una identidad criptográfica conectada al mercado.
-*   **Decisión LLM Híbrida**: Una lógica de inyección de infraestructura en `agent.ts` detecta la variable `USE_LOCAL_AI`. 
-    *   Si está activa, el agente ignora OpenAI, apaga los servicios de red de API de inferencia externa y consume tokens locales de Ollama (`ModelProviderName.OLLAMA`).
-    *   Si no, rutea normalmente solicitudes a OpenAI Cloud para velocidad máxima.
-*   **Pipeline Analítico Base**: Ejecuta un "Cron Heartbeat" de 15 segundos que consulta en vivo los **top 10 mercados con mayor liquidez de Kalshi** obteniendo APIs v2, extrae volumen base, inyecta su conocimiento y emite determinaciones de peso probabilístico (`HIGH_CONVICTION_YES`, `BEARISH`, etc.).
-*   **Interceptor de Registros (Telemetría)**: Este subsistema sobreescribe el `elizaLogger` nativo de la IA. Inyecta escuchas a todos los logs informativos e invocaciones de éxito mental del bot y las propaga de regreso usando colas MQ / HTTP para la capa del frontend.
-
-### 2.3 Capa Front-End Cliente (Next.js App Router)
-Se ejecuta en `Next.js 16.1.3` + `React 19`.
-*   **Integración UI / UX Dinámica**: Utiliza `TailwindCSS v4` consolidado con `Framer Motion` y `React Three Fiber`. Se enfoca en el "Glassmorphism oscurecido" y micro-animaciones premium, proveyendo al inversionista la sensación de interactuar con un terminal tecnológico y moderno.
-*   **Conectividad Solana End-to-End**: A través de las bibliotecas `@solana/wallet-adapter-react` el usuario firma transacciones para el cobro del fee de programa On-chain y de la inserción o desactivación de sus bots.
-*   **Visualización en Tiempo Real**: SWR acoplado a Supabase proveen *Hot Subscriptions* atadas al canal del interceptor de telemetría. Recharts proyecta gráficos de los "Pensamientos" de la IA en tiempo real sobre la gráfica de Kalshi / DFlow.
+Este proyecto combate tres dogmas fundamentales operativos:
+1. **El Problema del Arbitraje Lento en Fiat:** Facilitamos *NeuralVaults* apegadas en Solana (USDC) donde la ejecución del capital es instantánea y los cobros de licencias del protocolo son inmutables e incrustables en la cadena.
+2. **Las Alucinaciones y Costo de Inteligencias Artificiales:** Se provee una orquestación en *Pipeline Multi-LLM* capaz de inferir métricas sentimentales locales sin coste asíncrono (DeepSeek), formatear la información transaccionalmente (Claude) y aprobar rigurosamente el riesgo sin posibilidad matemática de error humano (o1).
+3. **El Costo B2B M2M:** Implementando el *Machine Payments Protocol (Gateway HTTP 402)* que obliga y verifica el pago automático entre servidores API antes de expeler las analíticas financieras.
 
 ---
 
-## 3. Pruebas y Aseguramiento de Calidad (QA / Testing)
+## 2. Arquitectura de los 4 Pilares (Integración V2)
 
-Buscando una certificación productiva M1 Institucional, NeuralMarket opera las siguientes capas de testing:
-- **Anchor Tests (.anchor/tests)**: Usa `mocha`/`chai` con `anchor-bankrun` embebido para validaciones locales hiper-rápidas donde simula la transferencia de tesorería y validación del chequeo de autoridad (Agent owner validation constraint `constraint = agent.owner == user.key()`).
-- **Vitest (Unit Coverage)**: Utiliza `@vitest/coverage-v8` para escanear dependencias del front-end.
-- **Micro-E2E con Playwright**: Implementado bajo `playwright.config.ts`, ejecuta simulaciones de User Stories end-to-end dentro del app renderizada evaluando interacciones reactivas de botones Web3 y tablas de renderizamiento en múltiples navegadores.
+NeuralMarket opera verticalmente con 4 macro-estructuras sistémicas completamente autónomas y modulares.
+
+### Pilar 1: Capa Cognitiva Inmutable (API Gateway Multi-LLM)
+Refactorizada para evadir riesgos operacionales algorítmicos. La capa cognitiva no depende de una sola red neuronal. Consta de un orquestador híbrido (`neural-agent/src/services/multiLLMOrchestrator.ts`).
+
+- **Tier 3 (Sentiment local - $0 Costo):** Utiliza *Ollama* de forma asíncrona procesando grandes volúmenes de contexto en redes privadas empoderado por `deepseek-r1:8b`.
+- **Tier 2 (Structuring - Claude 3.5 Sonnet):** Pule el texto y genera el vector estructurado de decisión intent (`side, amount, confidence`).
+- **Tier 1 (Risk Validator - OpenAI o1):** La capa final no se usa para generar ideas; funciona como el auditor que impone las restricciones duras. Compara matemáticamente la orden Tier 2 con la balanza disponible de la bóveda (risk_bounds) para asegurar que nunca se dispare sobre los márgenes operativos del usuario. 
+
+### Pilar 2: Infraestructura No Custodial (Contratos Anchor)
+El **NeuralVault** es la garantía de confianza criptográfica del ecosistema institucional, codificada puramente en `Rust`. Los usuarios nunca depositan fondos en carteras controladas por NeuralMarket.
+
+- **Diseño de PDAs:** Cada fondo es una *Program Derived Address* vinculada 1:1 a la llave pública del usuario en cuestión.
+- **Micro-Lógica de Pago:** Todas las transacciones comerciales aprobadas por la IA y firmadas por la wallet son canalizadas por `execute_trade_with_fee()`. El cual liquida en milisegundos un *Software License Fee* automático del `0.5%` directo a la tesorería del desarrollador. 
+- **Verificación Constraint:** Se manejan variables estrictas en-cadena (`max_position_size_bps`) previniendo riesgos catastróficos por vulnerabilidades API o de validadores RPC.
+
+### Pilar 3: Machine Payments Protocol (MPP Gateway) 
+Resolviendo la "Monetización P2P Automatizada", la plataforma expone el portal B2B en `/packages/api/`, actuando como el cobrador de peajes para aplicaciones Web3 de terceros que quieren extraer inteligencia de Kalshi/Solana de nuestra IA. 
+
+- **Interceptación de Estatus 402:** Frente a llamados REST sin headers de validación, el gateway cancela y responde un código de Estado HTTP `402 Payment Required`, indicando el contrato Web3 a firmar. 
+- **Validación sin Base de Datos:** Usando los protocolos `x-\*` HTTP headers (ej. `x-solana-payment-tx`), la firma se contrasta contra el Devnet empleando `crypto.createHmac`. 
+- **El resultado es un oráculo API Software as a Service** (SaaS) monetizado criptográficamente donde la máquina que paga extrae el JSON enriquecido de la predicción en tiempo real. 
+
+### Pilar 4: Frente Institucional y Blackbox (Next.js 16)
+Reemplazando los MVP previos, NeuralMarket ahora alberga un *Swarm Intelligence Command Center* enfocado a Hedge Funds desarrollado en Next.js.
+
+- **Riesgos Deslizables (Risk-Slider):** Interface visual amigable que invoca `deposit_usdc` interactuando y alterando los Base Points (BPS) que la IA tiene permitido operar a discreción.
+- **Auditoría Transaccional y Criptográfica (Irys):** Toda intención completada genera un Payload HMAC-SHA256, incluyendo el *Sentiment Core, Intent format y el Risk Level*. Éste hash es escrito permanentemente sobre el shadow drive descentralizado Irys (`gateway.irys.xyz/[Hash]`) proveyendo *Certeza del 100% de que la IA y no un humano hizo el movimiento*, a través  del Modal Exploratorio *Blackbox Data Table*.
 
 ---
 
-## 4. Patrones de Diseño Aplicados y Seguridad
+## 3. Pruebas y Certificaciones de Riesgo
 
-- **Program Derived Addresses (PDAs):** Prevención completa contra la contaminación de estados, ya que todos los agentes basan su Address en un Seed (`user.key`, `agent_id`). Si el usuario trata de manipular o invocar datos de un agente adverso, la restricción de validación Anchor previene la instrucción de base.
-- **Fail-open Logging:** El Agente utiliza `Try-Catch` perimetrales en los Heartbeats. Si Kalshi colapsa u Ollama falla, el agente emite un "Thought" informando degradación del feed, pero la aplicación no crashea, y vuelve a intentar tras 15 segundos de encedido seguro sin agotar memoria (gestionado directamente por los reportes `process.memoryUsage()`).
-- **Telemetry TypeSafety:** Datos como tipos de pensamiento (`ANALYSIS`, `DECISION`) estructurados fuertemente bajo Enums de TS previniendo incomprensiones en el volcado a UI.
-- **Observabilidad (Sentry):** El front-end integra `@sentry/nextjs` (Edge, Client, y Server) permitiendo que cualquier caída sutil de React Server Components sea monitorizada en vivo para asegurar un entorno ininterrumpible.
+El ecosistema actual asegura su grado institucional pasando de forma exitosa las siguientes validaciones operativas:
+- **Anchor Simulators:** Validadas y corroboradas localmente todas las transacciones `vault.rs` para verificar que es imposible alterar las métricas de un usuario B desde una cuenta A.
+- **Fail-Open Logging:** Si a algún nodo se le corta la conectividad RPC durante una ráfaga, el sistema detiene los *TradeIntents*, emitiendo registros de estado degradado sin agotar la memoria de contención del servidor ni corromper las secuencias o1.
+- **Compliance y Jurisdicción (Software puro):** El Portal evalúa localmente un "DFlow KYC Token Protocol", asegurando que aunque NeuralMarket no almacena Identidades (respetando PII), restringe el software ante IP americanas automatizando el filtro sin intervenir su lógica descentralizada fundamental mediante portales de aprobación de pruebas *DFlow Zero Knowledge*.
 
 ---
 
-## 5. Conclusión y Factibilidad de Despliegue (Release Status)
+## 4. Viabilidad de Despliegue e Interoperabilidad Inminente
 
-Actualmente la plataforma supera un estadio funcional Beta y califica como un "Mainnet Release Candidate". Ha madurado su red con Devnet Solana demostrando interconectividad sólida e infraestructura Docker/Supabase lista para escalamientos horizontales de la flota ElizaOS. Contiene todo lo necesario para iniciar la monetización P2P y posicionarse como la interfaz líder de Agentes Autónomos Cripto-Inteligentes operando en mercados reales.
+**Release Status:** `Candidate - Devnet Production Final`
+NeuralMarket V2 ha consolidado su meta inter-mercado entre finanzas automatizadas e inferencia cognitiva pesada y regulaciones. Las iteraciones actuales asocian las pruebas de caja blanca en Devnet para inyectar su funcionalidad en V2.1 Mainnet, listos para transformar USDC en posiciones tangibles dentro de protocolos DFlow Kalshi sin un milisegundo de intervención humana y con la robustez legal de una agencia de proveeduría SaaS Web3.
