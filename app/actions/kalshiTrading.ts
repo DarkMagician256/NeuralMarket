@@ -51,7 +51,7 @@ export async function placeKalshiOrder(params: PlaceOrderParams): Promise<PlaceO
         });
 
         if (!order) {
-            return { success: false, error: 'Order placement failed — Kalshi API returned null' };
+            return { success: false, error: 'Order rejected by Kalshi — check server logs for details (may need funded account or API trading permissions)' };
         }
 
         // Log for audit trail

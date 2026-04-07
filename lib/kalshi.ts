@@ -172,26 +172,42 @@ class KalshiClient {
 
     /**
      * Generate RSA-PSS signature for authenticated requests
+     * Kalshi requires RSA-PSS with SHA-256 and salt length = digest size
      */
     private sign(timestamp: string, method: string, path: string): string {
         if (!this.privateKey) return '';
 
         try {
             const message = `${timestamp}${method}${path}`;
-            const sign = crypto.createSign('RSA-SHA256');
-            sign.update(message);
-            sign.end();
 
-            let key = this.privateKey;
-            if (!key.includes('-----BEGIN')) {
-                key = `-----BEGIN PRIVATE KEY-----\n${key}\n-----END PRIVATE KEY-----`;
+            // Kalshi requires RSA-PSS (NOT RSA-SHA256 / PKCS1v15)
+            // Key must be in PKCS#8 format for Node.js crypto
+            let keyPem = this.privateKey;
+
+            // Convert PKCS#1 (RSA PRIVATE KEY) to PKCS#8 (PRIVATE KEY) if needed
+            if (keyPem.includes('BEGIN RSA PRIVATE KEY')) {
+                // Already in PKCS#1 — Node.js can handle this with createPrivateKey
+                // but we need to specify the format explicitly for RSA-PSS
             }
 
-            return sign.sign(key, 'base64');
+            // Ensure proper PEM line breaks
+            if (!keyPem.includes('\n') && keyPem.includes('-----BEGIN')) {
+                keyPem = keyPem.replace(/-----BEGIN ([\w\s]+)-----/, '-----BEGIN $1-----\n')
+                               .replace(/-----END ([\w\s]+)-----/, '\n-----END $1-----');
+            }
+
+            const privateKeyObj = crypto.createPrivateKey(keyPem);
+
+            const signature = crypto.sign('sha256', Buffer.from(message), {
+                key: privateKeyObj,
+                padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+                saltLength: crypto.constants.RSA_PSS_SALTLEN_DIGEST,
+            });
+
+            return signature.toString('base64');
         } catch (error) {
-            if (process.env.NODE_ENV === 'development') {
-                console.error('[Kalshi] Signing error:', error);
-            }
+            // Always log signing errors — they indicate credential issues
+            console.error('[Kalshi] RSA-PSS signing error:', error);
             return '';
         }
     }
@@ -221,8 +237,10 @@ class KalshiClient {
         });
 
         if (!response.ok) {
-            const error = await response.text();
-            throw new Error(`Kalshi API error: ${response.status} - ${error}`);
+            const errorBody = await response.text();
+            // Always log API errors with full detail for debugging
+            console.error(`[Kalshi] API ${method} ${path} → ${response.status}: ${errorBody}`);
+            throw new Error(`Kalshi API error: ${response.status} - ${errorBody}`);
         }
 
         return response.json();
