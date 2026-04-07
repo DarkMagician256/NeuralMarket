@@ -1,10 +1,81 @@
 use anchor_lang::prelude::*;
 
+pub mod vault;
+pub use vault::*;
+
 declare_id!("A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F");
 
 #[program]
 pub mod neural_vault {
     use super::*;
+
+    // =========== RISK-BOUND VAULT INSTRUCTIONS ===========
+
+    /// Initialize a non-custodial USDC vault for an institutional user
+    pub fn initialize_vault(
+        mut ctx: Context<InitializeVault>,
+        vault_id: u64,
+        max_position_size_bps: u16,
+        risk_level: u8,
+        usdc_mint: Pubkey,
+    ) -> Result<()> {
+        vault::init_user_vault(
+            &mut ctx,
+            vault_id,
+            max_position_size_bps,
+            risk_level,
+            usdc_mint,
+        )
+    }
+
+    /// Deposit USDC into vault (user retains custody via spl-token)
+    pub fn deposit_usdc(mut ctx: Context<DepositUSDC>, amount: u64) -> Result<()> {
+        vault::deposit_usdc(&mut ctx, amount)
+    }
+
+    /// Withdraw USDC from vault (user can exit at any time)
+    pub fn withdraw_usdc(mut ctx: Context<WithdrawUSDC>, amount: u64) -> Result<()> {
+        vault::withdraw_usdc(&mut ctx, amount)
+    }
+
+    /// Execute trade with automatic risk validation and 0.5% license fee
+    pub fn execute_trade_with_fee(
+        mut ctx: Context<ExecuteTrade>,
+        intent_id: [u8; 32],
+        market_ticker: [u8; 32],
+        side: u8,
+        amount: u64,
+        execution_price: u64,
+    ) -> Result<()> {
+        vault::execute_trade_with_fee(&mut ctx, intent_id, market_ticker, side, amount, execution_price)
+    }
+
+    /// Record trade outcome (P&L settlement)
+    pub fn record_trade_outcome(
+        mut ctx: Context<RecordOutcome>,
+        vault_id: u64,
+        intent_id: [u8; 32],
+        pnl: i64,
+        winning_side: u8,
+    ) -> Result<()> {
+        vault::record_trade_outcome(&mut ctx, vault_id, intent_id, pnl, winning_side)
+    }
+
+    /// Harvest accumulated license fees to protocol treasury
+    pub fn harvest_fees(mut ctx: Context<HarvestFees>, vault_id: u64) -> Result<()> {
+        vault::harvest_fees(&mut ctx, vault_id)
+    }
+
+    /// Update vault risk parameters (max position size and risk level)
+    pub fn update_risk_params(
+        mut ctx: Context<UpdateRiskParams>,
+        max_position_size_bps: u16,
+        risk_level: u8,
+    ) -> Result<()> {
+        vault::update_risk_params(&mut ctx, max_position_size_bps, risk_level)
+    }
+
+    // =========== LEGACY AGENT SYSTEM (Backward Compatibility) ===========
 
     /// Initialize user profile (one per wallet)
     pub fn initialize_user(ctx: Context<InitializeUser>) -> Result<()> {
@@ -366,6 +437,10 @@ pub struct SubmitTradeIntent<'info> {
     pub agent: Account<'info, Agent>,
     pub user: Signer<'info>,
 }
+
+// ============ VAULT ACCOUNT CONTEXTS ============
+// (Imported from vault.rs module)
+pub use vault::UpdateRiskParams;
 
 // ============ STATE ACCOUNTS ============
 
