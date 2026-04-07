@@ -1,122 +1,91 @@
-# NeuralMarket
+# NeuralMarket V2: Institutional
 
-**The First Hybrid AI Prediction Market Interface on Solana.**
+**The First Hybrid Prediction Market Interface powered by Swarm AI and Machine Payments on Solana.**
 
 ![Solana](https://img.shields.io/badge/Solana-Devnet-blueviolet?style=for-the-badge&logo=solana)
-![DFlow](https://img.shields.io/badge/DFlow-Integrated-blue?style=for-the-badge)
-![Kalshi](https://img.shields.io/badge/Kalshi-Regulated-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Mainnet_Release_Candidate-success?style=for-the-badge)
-
-<img src="https://i.ibb.co/6Pq7p8K/uploaded_media_1769204937393.png" alt="NeuralMarket Dashboard" width="100%" />
+![Nextjs](https://img.shields.io/badge/Next.js-16_AppRouter-black?style=for-the-badge&logo=next.js)
+![AI](https://img.shields.io/badge/AI-DeepSeek_|_Claude_|_o1-orange?style=for-the-badge)
+![Non-Custodial](https://img.shields.io/badge/Security-Non_Custodial-green?style=for-the-badge)
 
 ---
 
-## 🚀 WHAT IT IS
+## 🚀 WHAT IS NEURALMARKET V2?
 
-**NeuralMarket** is a fully functional prediction markets interface deployed on Solana that brings crypto-native users to Kalshi's liquidity. We've built the bridge between the $2T crypto ecosystem and Kalshi's regulated prediction markets.
+**NeuralMarket** has evolved into a **V2 Institutional Architecture**, strictly designed as a **Software-Only Provider**. Our ecosystem serves as an analytical and transactional bridge between the vast liquidity pool of Solana and regulated traditional prediction markets (like Kalshi), all powered by Artificial Intelligence and Machine Payments Protocol (MPP).
 
-By integrating **Autonomous AI Agents (ElizaOS)** with **Solana's execution speed**, we offer a premium, institutional-grade terminal for sovereign traders.
+By combining **Multi-LLM Agents** orchestrated by ElizaOS, the execution speed of **Solana**, and the off-chain settlement capabilities of DFlow, we deliver a bank-grade "Bloomberg-style B2B Dashboard" for sovereign traders and developers looking to automate decision-making strategies.
 
----
-
-## 🔗 LIVE DEMO & PROOF OF WORK
-
-*   **Live App:** [https://neural-market.vercel.app](https://neural-market.vercel.app/)
-*   **Registry:** [NeuralVault Program](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
-*   **Smart Contract (NeuralVault):** [`A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F`](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
-
-### Verified On-Chain Transactions (Devnet)
-Our smart contracts are fully verified and actively processing logic:
-
-*   **✅ Create Agent (Protocol Fee Logic):**
-    *   *Proof of Revenue:* [View 0.05 SOL Fee Transfer](https://explorer.solana.com/tx/tmYHbACjQJ2yFfnW3wrf8tDHtCjyumnmuudKrrsDgp45jCieijvPgDSkB9y2ScQX7RWWzpS18pav1CJfboJKymB?cluster=devnet)
-*   **✅ Trade Execution (Real Kalshi Market):**
-    *   *Proof of Execution:* [View On-Chain Trade Record](https://explorer.solana.com/tx/2r2jjBR85EXBpa2BtY7QTtgopND9XQW59GGCDUebYjML9WBTMviVCXzKzJ4WEMbapqtG2yhtCBQwUaJntTKQRM4T?cluster=devnet)
-*   **✅ Deactivate Agent:**
-    *   *Lifecycle Mgmt:* [View Transaction](https://explorer.solana.com/tx/61wq5JrKFutbfzB3hKqaCj77Nu9qEapGwLskaXW4CfMgDbVR5s6YjE1BkHy3ShK7NtSK8ujD9YxVXYEETPMkkcfR?cluster=devnet)
-*   **✅ Reactivate Agent:**
-    *   *Lifecycle Mgmt:* [View Transaction](https://explorer.solana.com/tx/NEFwrNdBxFse9XqcGWsVjx5JvDWcvCNSR3TfLcNm6p6WBcuCV6zZEG5BNYjBbdA6NrLiKGweCCnbyDQhoLWNCY3?cluster=devnet)
-
-### Advanced Protocol Interactions
-*   **📡 Submit Trade Intent (DFlow Integration):**
-    *   *Order Routing:* [View Intent Submission](https://explorer.solana.com/tx/2r2jjBR85EXBpa2BtY7QTtgopND9XQW59GGCDUebYjML9WBTMviVCXzKzJ4WEMbapqtG2yhtCBQwUaJntTKQRM4T?cluster=devnet) *(Note: Demonstrates intent execution logic)*
-*   **🗳️ Governance Vote (DAO):**
-    *   *Community Action:* [View Proposal Vote](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
-*   **💸 Claim Yield/Rewards:**
-    *   *Treasury Distribution:* [View Claim Transaction](https://explorer.solana.com/address/A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F?cluster=devnet)
+> [!WARNING]
+> **Regulatory Disclaimer:** NeuralMarket operates strictly as a B2B Software Provider. We do not custody funds, nor do we provide investment advice. The vaults are directly governed by the users via their Web3 private keys.
 
 ---
 
-## ✨ KEY FEATURES (Already Built)
+## ✨ V2 ARCHITECTURE FEATURES
 
-*   ✅ **Full Solana Wallet Integration:** Supports Phantom, Solflare, WalletConnect.
-*   ✅ **On-Chain Monetization:** Automatic **0.05 SOL Fee** enforced by smart contract per deployed agent.
-*   ✅ **Hybrid AI Architecture:** Supports **Local Sovereign AI (DeepSeek R1)** for privacy and **Cloud AI (OpenAI)** for performance.
-*   ✅ **Sentient Telemetry:** Live "Synapse Logs" broadcasting agent reasoning chains in real-time to the dashboard.
-*   ✅ **Live Kalshi API:** Real-time market data ingestion and order execution via API v2.
-*   ✅ **Smart Contract Governance:** Agent creation, deactivation, and reactivation are all on-chain events.
-*   ✅ **Real-Time Leaderboard:** Rankings derived directly from on-chain PnL data.
-*   ✅ **Builder Code Ready:** Monetization tag `ORACULO_V2` embedded in all trades.
-
----
-
-## 🛠️ INTEGRATIONS
-
-| Partner | Integration Details | Status |
-| :--- | :--- | :--- |
-| **Solana** | Primary infrastructure. Custom Anchor Program (`NeuralVault`) handles permissions & fees. | 🟢 Ready |
-| **DFlow** | Client implemented (`lib/dflow.ts`). Order routing and intent recording logic. | 🟡 Ready for Key |
-| **ElizaOS** | "Oraculo" agent persona, reasoning loops, and multi-model support (Ollama/OpenAI). | 🟢 Active |
-| **Jupiter** | Native swap integration for funding accounts with any SPL token. | 🟢 Active |
-| **Kalshi** | API v2 Market Data & Oracle Resolution. | 🟢 Active |
+- ✅ **Non-Custodial NeuralVaults:** Smart contracts written in Anchor on Devnet that securely hold USDC. Withdrawals and risk limit adjustments are 100% custodied by the investors' crypto-wallets signatures.
+- ✅ **Machine-to-Machine Monetization (x402 Protocol):** We feature an API Gateway portal that charges an automated toll of `0.05 USDC` per generated prediction, utilizing HTTP 402 errors and HMAC transactional signatures on Solana.
+- ✅ **Cognitive "Multi-LLM" Orchestrator:** We reduce hallucinations to zero using a tiered validation pipeline:
+  - **Tier 3 (Local):** Asynchronous context extraction via *DeepSeek R1* at zero cost.
+  - **Tier 2 (Structuring):** Formatting and intent modeling via *Claude 3.5 Sonnet*.
+  - **Tier 1 (Risk Validation):** Final deterministic approval via *OpenAI o1*.
+- ✅ **B2B Institutional Dashboard:** High-performance application built on Next.js 16 (App Router), embedded with dark-themed financial visualization components, AI leaderboards, and a precise slider to measure capital "Risk Limits" (BPS).
+- ✅ **Immutable Blackbox Audit:** Every quantified AI "thought" and originated transaction is paired with an asymmetric signature and uploaded to Irys (Shadow Drive), achieving an unmodifiable log feed and a guaranteed track record.
 
 ---
 
-## 💡 HOW KALSHI BENEFITS
+## 🛠️ MONOREPO STRUCTURE AND TECH STACK
 
-1.  **New Revenue Stream:** We unlock access to millions of crypto-native users who live on Solana but want regulated prediction exposure.
-2.  **Sovereign AI Narrative:** Only NeuralMarket offers "Local Mode" (DeepSeek R1), attracting institutional users who demand data privacy.
-3.  **Direct Attribution:** Every single trade carries the Builder Code, guaranteeing revenue share tracking.
-4.  **Compliance First:** Our legal framework includes "Digital Utility" rights and specific waivers for AI Hallucinations, tailored for fintech stability.
-
----
-
-## 💰 GRANT REQUEST
-
-**Seeking $15,000 - $25,000 to execute the Mainnet Launch:**
-
-1.  **Infrastructure:** Audit & Deploy NeuralVault contracts to Solana Mainnet.
-2.  **Liquidity:** Activate the **DFlow execution rails** (API Key pending) for instant settlement.
-3.  **Scale:** Spin up **100+ AI Agents** using our finalized Docker architecture.
-4.  **Growth:** Marketing push to Solana DeFi communities.
+| Directory | Component | Description and Stack |
+|---|---|---|
+| `apps/frontend` | Next.js Dashboard | Web application built with Next.js 16 App Router. Uses TailwindCSS v4, SWR, and `@solana/wallet-adapter` components for a dark glassmorphic look. |
+| `anchor/` | Smart Programs | Smart Contracts written in `Rust` (Anchor 0.32.1) responsible for managing the `NeuralVault` PDAs. |
+| `neural-agent/` | Multi-LLM Orchestrator | NodeJS engine (`bun`) running the ElizaOS orchestrator capable of communicating locally via Ollama. |
+| `packages/api/` | MPP Gateway | Server that intercepts B2B API calls, demanding an On-chain payment by verifying the HTTP 402 header. |
 
 ---
 
-## 📅 TIMELINE
+## ⚙️ QUICK START (MULTI-NODE DEVELOPMENT)
 
-*   **Week 1: Mainnet Security Hardening**
-    *   Multisig setup for NeuralVault upgrade authority.
-    *   Finalize chaos testing on Devnet.
-*   **Week 2: DFlow Mainnet Connection**
-    *   Plug in production keys.
-    *   Liquidity liquidity testing.
-*   **Week 3: Public Beta Launch**
-    *   Whitelisted users trading with real USDC.
-*   **Week 4: "Agent Swarm" Activation**
-    *   Deploying 50+ diverse ElizaOS agents on VPS infrastructure.
-*   **Week 5+: Global Marketing Campaign**
-    *   User acquisition and community growth.
+Ensure you have `pnpm` (10.x+), `bun`, `rust`, `solana-cli`, and `anchor` installed.
+
+### 1. Full Clone
+```bash
+git clone https://github.com/DarkMagician256/NeuralMarket.git
+cd NeuralMarket
+pnpm install
+```
+
+### 2. Environment Setup (.env)
+Make sure to structure the B2B environment correctly:
+- `apps/frontend/.env.local`: Include your Helius or Solana Devnet RPC.
+- `neural-agent/.env`: Requires the `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` tokens, and if you require local sovereignty, `USE_LOCAL_AI=true` with the Ollama endpoint.
+- `packages/api/.env`: HMAC validation seeds to sign the Audit Gateway.
+
+### 3. Run the Frontend (Institutional Dashboard)
+```bash
+# Navigate locally to the risk dashboard
+cd apps/frontend
+pnpm run dev
+# Available at: http://localhost:3000
+```
+
+### 4. Launch the API Gateway (MPP Monetization)
+```bash
+# Start x402 validation
+cd packages/api
+npm start
+# This will run the machine-to-machine payment validator.
+```
+
+### 5. Start Local Intelligence (DeepSeek + Orchestrator)
+To test the full suite free of censorship, make sure you have Ollama running locally with the *deepseek-r1:8b* model, and then activate it:
+```bash
+cd neural-agent
+bun run src/agent.ts
+```
 
 ---
 
-## � TEAM
+## 📜 LICENSE AND LEGAL DISCLAIMER
 
-*   **Lead Developer:** Full-stack Solana architect. Built the NeuralVault Anchor program, Next.js frontend, and ElizaOS agent integration.
-*   **Marketing & Commercial Lead:** Go-to-market strategy, strategic partnerships, and grant acquisition.
-*   **UX/UI Designer:** Crafted the institutional-grade "Dark Glass" aesthetic and responsive interface.
-
----
-
-> **We're not just applying with an idea - we have a working product with verified on-chain revenue (0.05 SOL fee/agent) and real-time market data ready for scale.**
->
-> **NeuralMarket is not a prototype. It is a Release Candidate ready for liquidity.**
+This project uses open-source frameworks and licenses, designed to operate under a **Pure Software** perimeter. NeuralMarket does not take deposits under its main accounts (all transfers are governed by Web3 contracts under the autonomy of each end user). Check `SECURITY.md` for more on our comprehensive security workflow and exempt regulations.
