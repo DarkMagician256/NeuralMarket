@@ -241,7 +241,7 @@ export default function NeuralVaultPanel() {
       )}
 
       {/* Header Card */}
-      <Card className="border-blue-500/20 bg-gradient-to-br from-slate-800/50 to-slate-900/50">
+      <Card className="border-blue-500/20 bg-linear-to-br from-slate-800/50 to-slate-900/50">
         <CardHeader className="space-y-4">
           <div className="flex items-center justify-between">
             <div>

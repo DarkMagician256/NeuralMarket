@@ -1,0 +1,80 @@
+{
+  "name": "@neuralmarket/sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript SDK for NeuralMarket V2 - AI-powered prediction market oracle on Solana",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./vault": {
+      "import": "./dist/clients/vault.js",
+      "require": "./dist/clients/vault.js",
+      "types": "./dist/clients/vault.d.ts"
+    },
+    "./oracle": {
+      "import": "./dist/clients/oracle.js",
+      "require": "./dist/clients/oracle.js",
+      "types": "./dist/clients/oracle.d.ts"
+    },
+    "./compliance": {
+      "import": "./dist/clients/compliance.js",
+      "require": "./dist/clients/compliance.js",
+      "types": "./dist/clients/compliance.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src --ext .ts",
+    "prepublish": "npm run build && npm run typecheck"
+  },
+  "keywords": [
+    "solana",
+    "prediction-market",
+    "kalshi",
+    "dflow",
+    "web3",
+    "blockchain",
+    "oracle",
+    "ai",
+    "multi-llm"
+  ],
+  "author": "NeuralMarket Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neural-market/neural-market.git",
+    "directory": "packages/sdk-ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.95.0",
+    "@project-serum/anchor": "^0.29.0",
+    "@solana/spl-token": "^0.4.5",
+    "bs58": "^5.0.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.5.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

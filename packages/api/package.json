@@ -1,0 +1,26 @@
+{
+  "name": "@neuralmarket/mpp-gateway",
+  "version": "1.0.0",
+  "description": "Machine Payments Protocol (MPP) Gateway for NeuralMarket V2",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "tsx src/test-gateway.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.1",
+    "@solana/web3.js": "^1.98.0",
+    "express": "^4.18.2",
+    "hono": "^4.4.10",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.3.3"
+  }
+}

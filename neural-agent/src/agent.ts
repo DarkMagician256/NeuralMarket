@@ -3,6 +3,7 @@ import { solanaPlugin } from '@elizaos/plugin-solana';
 import { config } from './config/env.js';
 import { executeKalshiTrade } from './actions/kalshiTrade.js';
 import { announceStrategy } from './actions/announce.js';
+import { multiLLMTradeIntentAction } from './actions/multiLLMTradeIntent.js';
 import { TelemetryService, ThoughtType } from './services/telemetry.js';
 
 // --- Neural Link Protocol: Logger Interceptor ---
@@ -212,7 +213,8 @@ async function startAgent() {
             // Register Custom Actions
             actions: [
                 executeKalshiTrade,
-                announceStrategy
+                announceStrategy,
+                multiLLMTradeIntentAction  // NEW: Multi-LLM orchestrated trade generation
             ]
         } as any);
 
