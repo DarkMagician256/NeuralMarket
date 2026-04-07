@@ -5,15 +5,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Loader2, Search, Filter, ArrowUpDown } from 'lucide-react';
 import MarketPredictionCard from '@/components/markets/MarketPredictionCard';
 import type { Market } from '@/app/actions/getMarkets';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface MarketsGridProps {
     initialMarkets: Market[];
 }
 
 const ITEMS_PER_PAGE = 12;
-const CATEGORIES = ['ALL', 'CRYPTO', 'ECONOMICS', 'POLITICS', 'SCIENCE', 'CULTURE'];
 
 export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
+    const { t } = useLanguage();
+
+    const CATEGORIES = [
+        { id: 'ALL', label: t('cat_all') },
+        { id: 'CRYPTO', label: t('cat_crypto') },
+        { id: 'ECONOMICS', label: t('cat_eco') },
+        { id: 'POLITICS', label: t('cat_pol') },
+        { id: 'SCIENCE', label: t('cat_sci') },
+        { id: 'CULTURE', label: t('cat_cul') }
+    ];
+
     const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -71,7 +82,7 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
                         </div>
                         <input
                             type="text"
-                            placeholder="SEARCH BY TICKER OR EVENT..."
+                            placeholder={t('search_placeholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm font-mono focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.08] transition-all placeholder:text-gray-600 uppercase tracking-wider"
@@ -80,15 +91,15 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
 
                     {/* Sort Dropdown */}
                     <div className="flex items-center gap-3 w-full lg:w-auto">
-                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:block">Sort By</span>
+                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:block">{t('sort_by')}</span>
                         <div className="relative flex-1 lg:flex-none">
                             <select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value as any)}
                                 className="w-full lg:w-48 bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-[10px] font-mono appearance-none focus:outline-none focus:border-cyan-500/50 transition-all cursor-pointer pr-10 text-white tracking-widest uppercase"
                             >
-                                <option value="volume">HIGHEST VOLUME</option>
-                                <option value="newest">NEWEST LISTED</option>
+                                <option value="volume">{t('sort_vol')}</option>
+                                <option value="newest">{t('sort_new')}</option>
                             </select>
                             <ArrowUpDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
                         </div>
@@ -100,17 +111,17 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
                     <Filter size={14} className="text-gray-500 mr-2 flex-shrink-0" />
                     {CATEGORIES.map(cat => (
                         <button
-                            key={cat}
+                            key={cat.id}
                             onClick={() => {
-                                setActiveCategory(cat);
+                                setActiveCategory(cat.id);
                                 setDisplayCount(ITEMS_PER_PAGE);
                             }}
-                            className={`px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest transition-all flex-shrink-0 whitespace-nowrap border ${activeCategory === cat
+                            className={`px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest transition-all flex-shrink-0 whitespace-nowrap border ${activeCategory === cat.id
                                     ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]'
                                     : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:border-white/20'
                                 }`}
                         >
-                            {cat}
+                            {cat.label}
                         </button>
                     ))}
                 </div>
@@ -145,12 +156,12 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
                     <div className="p-4 bg-white/5 rounded-full text-gray-700">
                         <Search size={48} strokeWidth={1} />
                     </div>
-                    <p className="text-gray-500 font-mono text-sm max-w-xs uppercase tracking-tighter">No matches found for your current filters.</p>
+                    <p className="text-gray-500 font-mono text-sm max-w-xs uppercase tracking-tighter">{t('no_matches')}</p>
                     <button
                         onClick={() => { setSearchQuery(''); setActiveCategory('ALL'); }}
                         className="text-cyan-400 text-xs font-mono hover:underline tracking-widest"
                     >
-                        CLEAR ALL FILTERS
+                        {t('clear_filters')}
                     </button>
                 </motion.div>
             )}
@@ -170,11 +181,11 @@ export default function MarketsGrid({ initialMarkets }: MarketsGridProps) {
                         {isLoadingMore ? (
                             <div className="flex items-center gap-2">
                                 <Loader2 size={16} className="animate-spin text-cyan-400" />
-                                ANALYZING...
+                                {t('analyzing')}
                             </div>
                         ) : (
                             <div className="flex items-center gap-2 text-gray-300 group-hover:text-cyan-400">
-                                REVEAL MORE
+                                {t('reveal_more')}
                                 <ChevronDown size={16} className="group-hover:translate-y-1 transition-transform" />
                             </div>
                         )}

@@ -4,12 +4,24 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { TrendingUp, Clock, BarChart3 } from 'lucide-react';
 import { Market } from '@/app/actions/getMarkets';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface Props {
     market: Market;
 }
 
 export default function MarketPredictionCard({ market }: Props) {
+    const { t } = useLanguage();
+
+    const categoryMap: Record<string, string> = {
+        'ALL': t('cat_all'),
+        'CRYPTO': t('cat_crypto'),
+        'ECONOMICS': t('cat_eco'),
+        'POLITICS': t('cat_pol'),
+        'SCIENCE': t('cat_sci'),
+        'CULTURE': t('cat_cul')
+    };
+
     // Handle both old format (yesPrice as decimal) and new format (probability as percentage)
     const yesPrice = market.yesPrice ?? market.probability / 100;
     const noPrice = market.noPrice ?? (100 - market.probability) / 100;
@@ -32,7 +44,7 @@ export default function MarketPredictionCard({ market }: Props) {
                                     market.category === 'SCIENCE' ? 'text-purple-400 border-purple-500/30 bg-purple-500/10' :
                                         'text-cyan-400 border-cyan-500/30 bg-cyan-500/10'
                             }`}>
-                            {market.category}
+                            {categoryMap[market.category] || market.category}
                         </span>
                         {market.expiration && (
                             <span className="text-[10px] font-mono text-gray-500 flex items-center gap-1">
@@ -51,8 +63,8 @@ export default function MarketPredictionCard({ market }: Props) {
                     <div className="flex gap-2">
                         <button className="flex-1 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 rounded-lg p-2 transition-colors group/yes relative overflow-hidden text-left">
                             <div className="flex justify-between items-center mb-0.5">
-                                <span className="text-[10px] text-green-500 font-mono font-bold uppercase">Yes</span>
-                                <span className="text-[10px] text-gray-500 font-mono">Price</span>
+                                <span className="text-[10px] text-green-500 font-mono font-bold uppercase">{t('yes')}</span>
+                                <span className="text-[10px] text-gray-500 font-mono uppercase">{t('price')}</span>
                             </div>
                             <div className="flex items-baseline gap-1.5">
                                 <span className="text-xl font-bold text-white tracking-tight">{(yesPrice * 100).toFixed(0)}%</span>
@@ -63,8 +75,8 @@ export default function MarketPredictionCard({ market }: Props) {
                         </button>
                         <button className="flex-1 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded-lg p-2 transition-colors group/no relative overflow-hidden text-left">
                             <div className="flex justify-between items-center mb-0.5">
-                                <span className="text-[10px] text-red-500 font-mono font-bold uppercase">No</span>
-                                <span className="text-[10px] text-gray-500 font-mono">Price</span>
+                                <span className="text-[10px] text-red-500 font-mono font-bold uppercase">{t('no')}</span>
+                                <span className="text-[10px] text-gray-500 font-mono uppercase">{t('price')}</span>
                             </div>
                             <div className="flex items-baseline gap-1.5">
                                 <span className="text-xl font-bold text-white tracking-tight">{(noPrice * 100).toFixed(0)}%</span>
@@ -88,8 +100,8 @@ export default function MarketPredictionCard({ market }: Props) {
                                 {market.cortexSignal}
                             </div>
                         )}
-                        <div className="flex items-center gap-1 text-[10px] text-cyan-400 font-mono group-hover:text-cyan-300 transition-colors">
-                            Trade <TrendingUp size={10} />
+                        <div className="flex items-center gap-1 text-[10px] text-cyan-400 font-mono group-hover:text-cyan-300 transition-colors uppercase">
+                            {t('trade')} <TrendingUp size={10} />
                         </div>
                     </div>
                 </div>
