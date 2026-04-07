@@ -59,10 +59,7 @@ export default function MarketsPageContent({ markets, totalVolume }: MarketsPage
                                 <Image src="/logos/jupiter.png" alt="Jupiter" fill className="object-contain" />
                             </div>
 
-                            <div className="h-2 sm:h-3 w-px bg-white/10" />
-                            <div className="relative h-5 sm:h-6 w-12 sm:w-16 opacity-80 hover:opacity-100 transition-opacity">
-                                <Image src="/logos/shipyard.png" alt="Shipyard" fill className="object-contain" />
-                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -72,10 +72,7 @@ export default function HeroSection() {
                             <Image src="/logos/jupiter.png" alt="Jupiter" fill className="object-contain" />
                         </div>
 
-                        <div className="h-3 sm:h-4 w-px bg-white/10" />
-                        <div className="relative h-6 sm:h-7 w-16 sm:w-20 opacity-80 hover:opacity-100 transition-opacity">
-                            <Image src="/logos/shipyard.png" alt="Shipyard" fill className="object-contain" />
-                        </div>
+
                     </div>
                 </div>
 
