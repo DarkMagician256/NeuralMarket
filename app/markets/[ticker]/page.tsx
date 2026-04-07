@@ -4,6 +4,7 @@ import NeuralChart from '@/components/market-detail/NeuralChart';
 import TradePanel from '@/components/market-detail/TradePanel';
 import CortexTerminal from '@/components/market-detail/CortexTerminal';
 import OrderBook from '@/components/market-detail/OrderBook';
+import { KYCGate } from '@/components/compliance/KYCGate';
 
 export default async function MarketPage({ params }: { params: Promise<{ ticker: string }> }) {
     const { ticker } = await params;
@@ -11,14 +12,13 @@ export default async function MarketPage({ params }: { params: Promise<{ ticker:
     // Fetch live market data
     const marketDetails = await getMarketDetails(ticker);
 
-    // If not found or error, create a basic fallback structure
     const market = marketDetails || {
         id: ticker,
         ticker: ticker,
         title: `Market Not Found: ${ticker}`,
         category: 'UNKNOWN',
         probability: 50,
-        volume: "$0",
+        volume: '$0',
         change24h: 0,
         yesPrice: 0.50,
         noPrice: 0.50
@@ -26,11 +26,11 @@ export default async function MarketPage({ params }: { params: Promise<{ ticker:
 
     return (
         <div className="min-h-screen pb-20 space-y-6 px-4 md:px-0">
-            {/* 1. Header Section */}
-            {/* @ts-ignore - Category type mismatch is handled visually */}
+            {/* 1. Header */}
+            {/* @ts-ignore */}
             <MarketHeader market={market} />
 
-            {/* 2. Main Grid Layout */}
+            {/* 2. Main Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:h-[800px]">
 
                 {/* Chart Area (8 cols) */}
@@ -39,17 +39,21 @@ export default async function MarketPage({ params }: { params: Promise<{ ticker:
                         <NeuralChart ticker={ticker} />
                     </div>
 
-                    {/* Bottom Modules */}
                     <div className="h-auto lg:h-[250px] grid grid-cols-1 md:grid-cols-2 gap-6">
                         <CortexTerminal ticker={ticker} />
                         <OrderBook ticker={ticker} yesPrice={market.yesPrice} />
                     </div>
                 </div>
 
-                {/* Trade Panel (4 cols) */}
+                {/* Trade Panel (4 cols) — gated behind DFlow Proof KYC */}
                 <div className="lg:col-span-4 h-auto lg:h-full">
-                    {/* @ts-ignore */}
-                    <TradePanel ticker={ticker} />
+                    <KYCGate>
+                        <TradePanel
+                            ticker={ticker}
+                            yesPrice={market.yesPrice}
+                            noPrice={market.noPrice}
+                        />
+                    </KYCGate>
                 </div>
             </div>
         </div>

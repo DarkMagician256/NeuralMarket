@@ -3,75 +3,82 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
-import { Transaction, PublicKey } from '@solana/web3.js';
-import { buildTradeTransaction, recordTrade } from '@/app/actions/executeTrade';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, TrendingUp, Loader2, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { placeKalshiOrder, getKalshiBalance } from '@/app/actions/kalshiTrading';
+import type { KalshiOrder } from '@/lib/kalshi';
 
-export default function TradePanel({ ticker }: { ticker: string }) {
-    const { publicKey, sendTransaction } = useWallet();
+export default function TradePanel({ ticker, yesPrice, noPrice }: {
+    ticker: string;
+    yesPrice?: number;
+    noPrice?: number;
+}) {
+    const { publicKey } = useWallet();
     const { connection } = useConnection();
-    const [outcome, setOutcome] = useState<'YES' | 'NO'>('YES');
-    const [amount, setAmount] = useState<string>('1');
+    const [outcome, setOutcome] = useState<'yes' | 'no'>('yes');
+    const [orderType, setOrderType] = useState<'market' | 'limit'>('market');
+    const [contracts, setContracts] = useState<string>('1');
+    const [limitPrice, setLimitPrice] = useState<string>('');
     const [isTrading, setIsTrading] = useState(false);
-    const [successTx, setSuccessTx] = useState<string | null>(null);
-    const [balance, setBalance] = useState<number | null>(null);
+    const [placedOrder, setPlacedOrder] = useState<KalshiOrder | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [kalshiBalance, setKalshiBalance] = useState<number | null>(null);
 
-    // Fetch real balance
+    // Fetch Kalshi platform balance
     useEffect(() => {
-        if (publicKey && connection) {
-            connection.getBalance(publicKey).then(bal => setBalance(bal / 1_000_000_000));
+        getKalshiBalance().then(bal => {
+            if (bal) setKalshiBalance(bal.balance);
+        });
+    }, []);
+
+    // Auto-set limit price from market data
+    useEffect(() => {
+        if (orderType === 'limit') {
+            const price = outcome === 'yes' ? yesPrice : noPrice;
+            if (price) setLimitPrice(price.toFixed(2));
         }
-    }, [publicKey, connection]);
+    }, [outcome, orderType, yesPrice, noPrice]);
+
+    const currentPrice = outcome === 'yes' ? yesPrice : noPrice;
+    const estimatedCost = currentPrice ? (parseFloat(contracts) || 0) * currentPrice : null;
 
     const handleTrade = async () => {
         if (!publicKey) {
-            alert("Please connect your wallet first!");
+            setError('Please connect your wallet first');
             return;
         }
 
+        const count = parseFloat(contracts);
+        if (isNaN(count) || count <= 0) {
+            setError('Invalid contract count');
+            return;
+        }
+
+        if (orderType === 'limit' && (!limitPrice || parseFloat(limitPrice) <= 0)) {
+            setError('Please enter a valid limit price');
+            return;
+        }
+
+        setIsTrading(true);
+        setError(null);
+
         try {
-            setIsTrading(true);
-            setSuccessTx(null); // Reset previous success
-
-            // 0. Pre-check Balance
-            if (balance !== null && Number(amount) > balance) {
-                throw new Error("Insufficient funds. Please lower amount or top up.");
-            }
-
-            // 1. Build transaction on server
-            const base64Tx = await buildTradeTransaction(
-                publicKey.toBase58(),
+            const result = await placeKalshiOrder({
                 ticker,
-                outcome,
-                Number(amount)
-            );
-
-            // 2. Deserialize and sign on client (Browser-Safe Method)
-            const binaryString = atob(base64Tx);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            const transaction = Transaction.from(bytes);
-
-            // 3. Send and confirm via wallet
-            const signature = await sendTransaction(transaction, connection);
-
-            // 4. Record for portfolio
-            await recordTrade({
-                user: publicKey.toBase58(),
-                ticker,
-                outcome,
-                amount: Number(amount),
-                signature
+                side: outcome,
+                type: orderType,
+                count: Math.floor(count),
+                limitPrice: orderType === 'limit' ? limitPrice : undefined,
+                walletAddress: publicKey.toBase58(),
             });
 
-            // Show beautiful success UI instead of alert
-            setSuccessTx(signature);
+            if (!result.success || !result.order) {
+                throw new Error(result.error || 'Order failed');
+            }
 
-        } catch (error: any) {
-            console.error("Trade execution failed:", error);
-            alert(`Execution Aborted: ${error?.message || 'Unknown error'}`);
+            setPlacedOrder(result.order);
+        } catch (err: any) {
+            console.error('Trade failed:', err);
+            setError(err.message || 'Trade execution failed');
         } finally {
             setIsTrading(false);
         }
@@ -79,9 +86,10 @@ export default function TradePanel({ ticker }: { ticker: string }) {
 
     return (
         <div className="glass-panel p-6 flex flex-col h-full bg-[#050505]/95 relative overflow-hidden">
-            {/* Success Overlay */}
+
+            {/* SUCCESS OVERLAY */}
             <AnimatePresence>
-                {successTx && (
+                {placedOrder && (
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -91,106 +99,193 @@ export default function TradePanel({ ticker }: { ticker: string }) {
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                            transition={{ type: 'spring', stiffness: 200, damping: 10 }}
                             className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-4 border border-green-500"
                         >
-                            <svg className="w-8 h-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
+                            <TrendingUp className="w-8 h-8 text-green-500" />
                         </motion.div>
 
-                        <h3 className="text-xl font-black text-white mb-2 tracking-tight">TRADE EXECUTED</h3>
-                        <p className="text-gray-400 text-sm mb-6 max-w-[200px]">
-                            Your order has been submitted to the Solana network.
+                        <h3 className="text-xl font-black text-white mb-1 tracking-tight">ORDER PLACED</h3>
+                        <p className="text-gray-400 text-sm mb-2">
+                            {placedOrder.side.toUpperCase()} — {placedOrder.count} contracts
                         </p>
 
-                        <a
-                            href={`https://explorer.solana.com/tx/${successTx}?cluster=devnet`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-mono text-xs mb-8 transition-colors border-b border-cyan-500/30 hover:border-cyan-500 pb-0.5"
-                        >
-                            VIEW TRANSACTION <ExternalLink size={12} />
-                        </a>
+                        <div className="bg-white/5 rounded-lg p-3 mb-4 w-full text-left space-y-1">
+                            <div className="flex justify-between text-xs font-mono">
+                                <span className="text-gray-500">Order ID</span>
+                                <span className="text-cyan-400 truncate max-w-[160px]">{placedOrder.order_id.slice(0, 16)}...</span>
+                            </div>
+                            <div className="flex justify-between text-xs font-mono">
+                                <span className="text-gray-500">Status</span>
+                                <span className={placedOrder.status === 'executed' ? 'text-green-400' : 'text-yellow-400'}>
+                                    {placedOrder.status.toUpperCase()}
+                                </span>
+                            </div>
+                            <div className="flex justify-between text-xs font-mono">
+                                <span className="text-gray-500">Market</span>
+                                <span className="text-white">{ticker}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-6">
+                            <ShieldCheck size={10} className="text-green-500" />
+                            <span>Powered by Kalshi • Builder Code: ORACULO_V2</span>
+                        </div>
 
                         <button
-                            onClick={() => setSuccessTx(null)}
+                            onClick={() => setPlacedOrder(null)}
                             className="w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 font-bold text-sm transition-all"
                         >
-                            CLOSE
+                            PLACE ANOTHER
                         </button>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            <h3 className="text-gray-400 font-mono text-xs tracking-widest mb-6 border-b border-white/5 pb-2">
-                EXECUTION ENGINE
-            </h3>
+            {/* HEADER */}
+            <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-2">
+                <h3 className="text-gray-400 font-mono text-xs tracking-widest">EXECUTION ENGINE</h3>
+                {kalshiBalance !== null && (
+                    <span className="text-[10px] font-mono text-gray-600">
+                        Pool: ${kalshiBalance.toFixed(2)} USDC
+                    </span>
+                )}
+            </div>
 
-            {/* Outcome Selector */}
-            <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
-                <button
-                    onClick={() => setOutcome('YES')}
-                    className={`py-3 md:py-4 rounded-xl font-black text-lg md:text-xl tracking-wider transition-all border ${outcome === 'YES'
-                        ? 'bg-green-500/20 text-green-400 border-green-500 shadow-[0_0_20px_rgba(74,222,128,0.3)]'
-                        : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'
+            {/* ORDER TYPE TOGGLE */}
+            <div className="flex gap-2 mb-4">
+                {(['market', 'limit'] as const).map(t => (
+                    <button
+                        key={t}
+                        onClick={() => setOrderType(t)}
+                        className={`flex-1 py-1.5 rounded text-xs font-mono font-bold uppercase tracking-widest transition-all border ${
+                            orderType === t
+                                ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
+                                : 'bg-white/5 text-gray-600 border-white/5 hover:bg-white/10'
                         }`}
+                    >
+                        {t}
+                    </button>
+                ))}
+            </div>
+
+            {/* OUTCOME SELECTOR */}
+            <div className="grid grid-cols-2 gap-3 mb-5">
+                <button
+                    onClick={() => setOutcome('yes')}
+                    className={`py-3 rounded-xl font-black text-lg tracking-wider transition-all border ${
+                        outcome === 'yes'
+                            ? 'bg-green-500/20 text-green-400 border-green-500 shadow-[0_0_20px_rgba(74,222,128,0.3)]'
+                            : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'
+                    }`}
                 >
-                    YES <span className="block text-[10px] md:text-xs font-mono font-normal opacity-70">LONG</span>
+                    YES
+                    {yesPrice && (
+                        <span className="block text-[10px] font-mono font-normal opacity-70">
+                            ${yesPrice.toFixed(2)}
+                        </span>
+                    )}
                 </button>
                 <button
-                    onClick={() => setOutcome('NO')}
-                    className={`py-3 md:py-4 rounded-xl font-black text-lg md:text-xl tracking-wider transition-all border ${outcome === 'NO'
-                        ? 'bg-red-500/20 text-red-400 border-red-500 shadow-[0_0_20px_rgba(248,113,113,0.3)]'
-                        : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'
-                        }`}
+                    onClick={() => setOutcome('no')}
+                    className={`py-3 rounded-xl font-black text-lg tracking-wider transition-all border ${
+                        outcome === 'no'
+                            ? 'bg-red-500/20 text-red-400 border-red-500 shadow-[0_0_20px_rgba(248,113,113,0.3)]'
+                            : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'
+                    }`}
                 >
-                    NO <span className="block text-[10px] md:text-xs font-mono font-normal opacity-70">SHORT</span>
+                    NO
+                    {noPrice && (
+                        <span className="block text-[10px] font-mono font-normal opacity-70">
+                            ${noPrice.toFixed(2)}
+                        </span>
+                    )}
                 </button>
             </div>
 
-            {/* Input */}
-            <div className="mb-6 md:mb-8 space-y-2">
-                <label className="text-[10px] md:text-xs text-gray-400 font-mono ml-1 uppercase">Amount (USDC)</label>
-                <div className="relative">
+            {/* INPUTS */}
+            <div className="space-y-3 mb-5">
+                <div>
+                    <label className="text-[10px] text-gray-500 font-mono ml-1 uppercase block mb-1">Contracts</label>
                     <input
                         type="number"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        className="w-full bg-black/50 border border-white/20 rounded-lg py-2 md:py-3 px-4 text-xl md:text-2xl font-bold text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                        value={contracts}
+                        onChange={e => setContracts(e.target.value)}
+                        min="1"
+                        step="1"
+                        className="w-full bg-black/50 border border-white/20 rounded-lg py-2 px-4 text-2xl font-bold text-white focus:outline-none focus:border-cyan-500 transition-colors"
                     />
-                    <button
-                        onClick={() => balance && setAmount(Math.max(0, balance - 0.01).toFixed(4))}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-500 text-[10px] md:text-xs font-bold hover:text-white"
-                    >
-                        MAX
-                    </button>
                 </div>
-                <div className="flex justify-between text-[10px] md:text-xs text-gray-500 px-1 font-mono">
-                    <span>Bal: {balance !== null ? balance.toFixed(4) : '---'} SOL</span>
-                    <span>Fee: ~0.00005 USDC</span>
-                </div>
+
+                {orderType === 'limit' && (
+                    <div>
+                        <label className="text-[10px] text-gray-500 font-mono ml-1 uppercase block mb-1">
+                            Limit Price (USDC)
+                        </label>
+                        <div className="relative">
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-bold">$</span>
+                            <input
+                                type="number"
+                                value={limitPrice}
+                                onChange={e => setLimitPrice(e.target.value)}
+                                min="0.01"
+                                max="0.99"
+                                step="0.01"
+                                className="w-full bg-black/50 border border-white/20 rounded-lg py-2 pl-7 pr-4 text-xl font-bold text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                            />
+                        </div>
+                    </div>
+                )}
+
+                {estimatedCost !== null && (
+                    <div className="flex justify-between text-[10px] font-mono px-1 text-gray-500">
+                        <span>Est. cost</span>
+                        <span className="text-gray-300">${estimatedCost.toFixed(2)} USDC</span>
+                    </div>
+                )}
             </div>
 
-            {/* Action Button */}
+            {/* ERROR */}
+            {error && (
+                <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4">
+                    <AlertTriangle size={14} className="text-red-400 shrink-0" />
+                    <p className="text-red-300 text-xs">{error}</p>
+                </div>
+            )}
+
+            {/* ACTION BUTTON */}
             <div className="mt-auto">
                 <motion.button
                     whileTap={{ scale: 0.98 }}
                     onClick={handleTrade}
-                    disabled={isTrading}
-                    className={`w-full py-4 md:py-5 rounded-none font-black text-xl md:text-2xl tracking-widest relative overflow-hidden group transition-all ${outcome === 'YES' ? 'bg-green-500 hover:bg-green-400 text-black' : 'bg-red-500 hover:bg-red-400 text-black'
-                        } ${isTrading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={isTrading || !publicKey}
+                    className={`w-full py-4 rounded-none font-black text-xl tracking-widest relative overflow-hidden group transition-all
+                        ${outcome === 'yes' ? 'bg-green-500 hover:bg-green-400 text-black' : 'bg-red-500 hover:bg-red-400 text-black'}
+                        ${(isTrading || !publicKey) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     style={{ clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)' }}
                 >
                     {isTrading ? (
-                        <span className="animate-pulse">CONFIRMING...</span>
+                        <span className="flex items-center justify-center gap-2">
+                            <Loader2 size={18} className="animate-spin" />
+                            PLACING...
+                        </span>
+                    ) : !publicKey ? (
+                        'CONNECT WALLET'
                     ) : (
                         <>
-                            PLACE TRADE
+                            PLACE {outcome.toUpperCase()} ORDER
                             <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out skew-x-12" />
                         </>
                     )}
                 </motion.button>
+
+                {/* Builder attribution */}
+                <div className="flex items-center justify-center gap-1.5 mt-3">
+                    <ShieldCheck size={10} className="text-gray-600" />
+                    <span className="text-[9px] font-mono text-gray-600 tracking-widest">
+                        POWERED BY KALSHI API • ORACULO_V2
+                    </span>
+                </div>
             </div>
         </div>
     );
