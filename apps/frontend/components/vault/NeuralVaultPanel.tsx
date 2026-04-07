@@ -356,7 +356,7 @@ export default function NeuralVaultPanel() {
                 type="number"
                 placeholder="Amount in USDC"
                 value={depositAmount}
-                onChange={(e) => setDepositAmount(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDepositAmount(e.target.value)}
                 disabled={isLoading || !connected}
                 min="0"
                 step="0.01"
@@ -394,7 +394,7 @@ export default function NeuralVaultPanel() {
                 type="number"
                 placeholder="Amount in USDC"
                 value={withdrawAmount}
-                onChange={(e) => setWithdrawAmount(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWithdrawAmount(e.target.value)}
                 disabled={isLoading || !connected || vaultState.balance === 0}
                 min="0"
                 max={vaultState.balance}
