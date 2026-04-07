@@ -23,18 +23,25 @@ interface KalshiMarket {
     event_ticker: string;
     title: string;
     subtitle: string;
-    yes_bid: number;
-    yes_ask: number;
-    no_bid: number;
-    no_ask: number;
-    last_price: number;
-    volume: number;
-    volume_24h: number;
-    open_interest: number;
+    yes_bid?: number;
+    yes_ask?: number;
+    no_bid?: number;
+    no_ask?: number;
+    last_price?: number;
+    volume?: number;
+    volume_24h?: number;
+    open_interest?: number;
     status: string;
     result: string;
     expiration_time: string;
     category: string;
+    yes_bid_dollars?: string;
+    yes_ask_dollars?: string;
+    no_bid_dollars?: string;
+    no_ask_dollars?: string;
+    last_price_dollars?: string;
+    volume_fp?: number | string;
+    volume_24h_fp?: number | string;
 }
 
 interface KalshiEvent {

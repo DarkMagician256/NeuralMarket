@@ -39,15 +39,15 @@ export async function getLiveMarkets(): Promise<Market[]> {
             kalshiEvents.forEach(event => {
                 if (event.markets && event.markets.length > 0) {
                     const eventMarkets = event.markets.map(market => {
-                        const priceValue = market.last_price || market.yes_ask || market.yes_bid || 50;
+                        const priceValue = parseFloat(market.last_price_dollars || market.yes_ask_dollars || market.yes_bid_dollars || "0.50") * 100;
                         const probability = priceValue;
 
                         let cortexSignal: 'BULLISH' | 'BEARISH' | 'NEUTRAL' = 'NEUTRAL';
                         if (probability > 60) cortexSignal = 'BULLISH';
                         else if (probability < 40) cortexSignal = 'BEARISH';
 
-                        const volumeTotal = market.volume || 0;
-                        const volume24h = market.volume_24h || 0;
+                        const volumeTotal = typeof market.volume_fp === 'number' ? market.volume_fp : parseFloat(market.volume_fp || '0');
+                        const volume24h = typeof market.volume_24h_fp === 'number' ? market.volume_24h_fp : parseFloat(market.volume_24h_fp || '0');
                         const bestVolume = Math.max(volumeTotal, volume24h);
 
                         const volumeStr = bestVolume >= 1000000
@@ -66,8 +66,8 @@ export async function getLiveMarkets(): Promise<Market[]> {
                             rawVolume: bestVolume,
                             change24h: 0,
                             cortexSignal,
-                            yesPrice: (market.yes_ask || market.last_price || market.yes_bid || 50) / 100,
-                            noPrice: (market.no_ask || (100 - (market.last_price || 50)) || market.no_bid || 50) / 100,
+                            yesPrice: parseFloat(market.yes_ask_dollars || market.last_price_dollars || market.yes_bid_dollars || "0.50"),
+                            noPrice: parseFloat(market.no_ask_dollars || market.no_bid_dollars || (1 - parseFloat(market.last_price_dollars || "0.50")).toString()),
                             expiration: market.expiration_time
                         };
                     });
@@ -155,17 +155,17 @@ export async function getMarketDetails(ticker: string): Promise<Market | null> {
         const market = await kalshiClient.getMarket(ticker);
 
         if (market) {
-            const yesPriceCents = market.yes_bid ?? market.last_price ?? 50;
+            const yesPriceDollars = parseFloat(market.yes_bid_dollars || market.last_price_dollars || "0.50");
             return {
                 id: market.ticker,
                 ticker: market.ticker,
                 title: market.title || market.ticker,
                 category: mapCategory(market.category, market.title, market.ticker),
-                probability: yesPriceCents,
-                volume: `$${((market.volume_24h || 0) / 1000000).toFixed(1)}M`,
+                probability: yesPriceDollars * 100,
+                volume: `$${((typeof market.volume_24h_fp === 'number' ? market.volume_24h_fp : parseFloat(market.volume_24h_fp || '0')) / 1000000).toFixed(1)}M`,
                 change24h: 0,
-                yesPrice: (market.yes_bid !== undefined && market.yes_bid !== null) ? market.yes_bid / 100 : undefined,
-                noPrice: (market.no_bid !== undefined && market.no_bid !== null) ? market.no_bid / 100 : undefined,
+                yesPrice: parseFloat(market.yes_ask_dollars || market.last_price_dollars || market.yes_bid_dollars || "0.50"),
+                noPrice: parseFloat(market.no_ask_dollars || market.no_bid_dollars || (1 - yesPriceDollars).toString()),
                 expiration: market.expiration_time
             };
         }
