@@ -1,64 +1,61 @@
 # NeuralMarket - Technical Paper Oficial
-**Versión del Documento:** 2.0 (Release Candidate / Institutional Architecture)
-**Ecosistema:** Solana, ElizaOS, Kalshi, Next.js, DeepSeek R1, OpenAI o1
+**Versión del Documento:** 2.5 (Institutional Hardening / Compliance First)
+**Ecosistema:** Solana, ElizaOS, Kalshi, Next.js, DFlow Proof
 **Idioma:** Español
 
 ---
 
 ## 1. Resumen Ejecutivo (Abstract)
 
-**NeuralMarket V2** se ha rediseñado desde sus cimientos para convertirse en la primera infraestructura híbrida a prueba de censuras y fallas cognitivas en el mercado criptográfico. Actuando puramente como un **Proveedor de Software Estricto (Software-Only Provider)**, NeuralMarket consolida un ecosistema "No-Custodial" interconectado, orquestando Agentes Avanzados (Multi-LLM) con Smart Contracts operando en Solana. 
+**NeuralMarket** se ha consolidado como la infraestructura definitiva de "Canonical Liquidity Layer" para agentes de IA en mercados de predicción reales. Actuando como un **Proveedor de Software Estricto (SaaS)**, NeuralMarket orquesta una arquitectura híbrida que conecta el ecosistema de $2T de criptoactivos (vía Solana) con la liquidez regulada de Kalshi. 
 
-Este proyecto combate tres dogmas fundamentales operativos:
-1. **El Problema del Arbitraje Lento en Fiat:** Facilitamos *NeuralVaults* apegadas en Solana (USDC) donde la ejecución del capital es instantánea y los cobros de licencias del protocolo son inmutables e incrustables en la cadena.
-2. **Las Alucinaciones y Costo de Inteligencias Artificiales:** Se provee una orquestación en *Pipeline Multi-LLM* capaz de inferir métricas sentimentales locales sin coste asíncrono (DeepSeek), formatear la información transaccionalmente (Claude) y aprobar rigurosamente el riesgo sin posibilidad matemática de error humano (o1).
-3. **El Costo B2B M2M:** Implementando el *Machine Payments Protocol (Gateway HTTP 402)* que obliga y verifica el pago automático entre servidores API antes de expeler las analíticas financieras.
-
----
-
-## 2. Arquitectura de los 4 Pilares (Integración V2)
-
-NeuralMarket opera verticalmente con 4 macro-estructuras sistémicas completamente autónomas y modulares.
-
-### Pilar 1: Capa Cognitiva Inmutable (API Gateway Multi-LLM)
-Refactorizada para evadir riesgos operacionales algorítmicos. La capa cognitiva no depende de una sola red neuronal. Consta de un orquestador híbrido (`neural-agent/src/services/multiLLMOrchestrator.ts`).
-
-- **Tier 3 (Sentiment local - $0 Costo):** Utiliza *Ollama* de forma asíncrona procesando grandes volúmenes de contexto en redes privadas empoderado por `deepseek-r1:8b`.
-- **Tier 2 (Structuring - Claude 3.5 Sonnet):** Pule el texto y genera el vector estructurado de decisión intent (`side, amount, confidence`).
-- **Tier 1 (Risk Validator - OpenAI o1):** La capa final no se usa para generar ideas; funciona como el auditor que impone las restricciones duras. Compara matemáticamente la orden Tier 2 con la balanza disponible de la bóveda (risk_bounds) para asegurar que nunca se dispare sobre los márgenes operativos del usuario. 
-
-### Pilar 2: Infraestructura No Custodial (Contratos Anchor)
-El **NeuralVault** es la garantía de confianza criptográfica del ecosistema institucional, codificada puramente en `Rust`. Los usuarios nunca depositan fondos en carteras controladas por NeuralMarket.
-
-- **Diseño de PDAs:** Cada fondo es una *Program Derived Address* vinculada 1:1 a la llave pública del usuario en cuestión.
-- **Micro-Lógica de Pago:** Todas las transacciones comerciales aprobadas por la IA y firmadas por la wallet son canalizadas por `execute_trade_with_fee()`. El cual liquida en milisegundos un *Software License Fee* automático del `0.5%` directo a la tesorería del desarrollador. 
-- **Verificación Constraint:** Se manejan variables estrictas en-cadena (`max_position_size_bps`) previniendo riesgos catastróficos por vulnerabilidades API o de validadores RPC.
-
-### Pilar 3: Machine Payments Protocol (MPP Gateway) 
-Resolviendo la "Monetización P2P Automatizada", la plataforma expone el portal B2B en `/packages/api/`, actuando como el cobrador de peajes para aplicaciones Web3 de terceros que quieren extraer inteligencia de Kalshi/Solana de nuestra IA. 
-
-- **Interceptación de Estatus 402:** Frente a llamados REST sin headers de validación, el gateway cancela y responde un código de Estado HTTP `402 Payment Required`, indicando el contrato Web3 a firmar. 
-- **Validación sin Base de Datos:** Usando los protocolos `x-\*` HTTP headers (ej. `x-solana-payment-tx`), la firma se contrasta contra el Devnet empleando `crypto.createHmac`. 
-- **El resultado es un oráculo API Software as a Service** (SaaS) monetizado criptográficamente donde la máquina que paga extrae el JSON enriquecido de la predicción en tiempo real. 
-
-### Pilar 4: Frente Institucional y Blackbox (Next.js 16)
-Reemplazando los MVP previos, NeuralMarket ahora alberga un *Swarm Intelligence Command Center* enfocado a Hedge Funds desarrollado en Next.js.
-
-- **Riesgos Deslizables (Risk-Slider):** Interface visual amigable que invoca `deposit_usdc` interactuando y alterando los Base Points (BPS) que la IA tiene permitido operar a discreción.
-- **Auditoría Transaccional y Criptográfica (Irys):** Toda intención completada genera un Payload HMAC-SHA256, incluyendo el *Sentiment Core, Intent format y el Risk Level*. Éste hash es escrito permanentemente sobre el shadow drive descentralizado Irys (`gateway.irys.xyz/[Hash]`) proveyendo *Certeza del 100% de que la IA y no un humano hizo el movimiento*, a través  del Modal Exploratorio *Blackbox Data Table*.
+En esta versión 2.5, el protocolo ha sido "endurecido" para cumplir con los estándares institucionales más exigentes, integrando:
+1. **Hardened Compliance**: Geolocalización por Edge y validación de identidad descentralizada vía DFlow Proof.
+2. **Real-Time Execution**: Integración nativa con la API v2 de Trading de Kalshi (REST authenticated).
+3. **Monetización Transparente**: Atribución de ingresos mediante Builder Codes (`ORACULO_V2`) inyectados en cada orden.
 
 ---
 
-## 3. Pruebas y Certificaciones de Riesgo
+## 2. Arquitectura de los 5 Pilares (Hardened Infrastructure)
 
-El ecosistema actual asegura su grado institucional pasando de forma exitosa las siguientes validaciones operativas:
-- **Anchor Simulators:** Validadas y corroboradas localmente todas las transacciones `vault.rs` para verificar que es imposible alterar las métricas de un usuario B desde una cuenta A.
-- **Fail-Open Logging:** Si a algún nodo se le corta la conectividad RPC durante una ráfaga, el sistema detiene los *TradeIntents*, emitiendo registros de estado degradado sin agotar la memoria de contención del servidor ni corromper las secuencias o1.
-- **Compliance y Jurisdicción (Software puro):** El Portal evalúa localmente un "DFlow KYC Token Protocol", asegurando que aunque NeuralMarket no almacena Identidades (respetando PII), restringe el software ante IP americanas automatizando el filtro sin intervenir su lógica descentralizada fundamental mediante portales de aprobación de pruebas *DFlow Zero Knowledge*.
+### Pilar 1: Capa de Cumplimiento Normativo (Compliance Engine)
+NeuralMarket implementa una capa de protección dual obligatoria para operar en entornos regulados:
+- **Geo-Blocking (Vercel Edge)**: Middleware de baja latencia que intercepta todas las peticiones y bloquea el acceso desde EE.UU. y jurisdicciones OFAC, garantizando el cumplimiento del Acuerdo de Miembros de Kalshi.
+- **DFlow Proof KYC Gate**: Una puerta de enlace de identidad (Proof of Personhood) que exige a los usuarios una verificación previa antes de interactuar con el panel de trading.
+
+### Pilar 2: Motor de Ejecución en Tiempo Real (Kalshi API v2)
+A diferencia de prototipos previos, NeuralMarket ahora gestiona órdenes reales directamente en los libros de Kalshi:
+- **RSA-PSS Authentication**: Implementación robusta de firmas criptográficas RSA-PSS (SHA-256) para segurizar todas las transacciones `POST/DELETE`.
+- **Order Management**: Soporte completo para órdenes de Mercado y Límite, gestión de posiciones abiertas, monitoreo de PnL no realizado y balance de plataforma en USDC.
+- **Builder Code Attribution**: Inyección sistemática del código `ORACULO_V2` en los parámetros `referral_code` y `client_order_id` para garantizar la atribución de ingresos al protocolo.
+
+### Pilar 3: Capa Cognitiva Inmutable (Multi-LLM ElizaOS)
+La inteligencia de los agentes orquestada por ElizaOS procesa flujos de datos en tiempo real de Kalshi para generar recomendaciones.
+- **Sentiment local (DeepSeek-R1)**: Procesamiento de grandes volúmenes de contexto sin coste asíncrono.
+- **Validation (o1/Claude)**: Auditoría rigurosa de riesgo antes de enviar el intent de trading a la capa de ejecución.
+
+### Pilar 4: Infraestructura No Custodial (Smart Contracts Anchor)
+El programa **NeuralVault** en Solana gestiona la custodia de las licencias y el registro inmutable de las operaciones:
+- **Seguridad**: Program Derived Addresses (PDAs) vinculadas 1:1 al usuario.
+- **Licencias**: Cobro automático de *Software License Fees* del 0.5% por operación, inyectado en la lógica del contrato.
+
+### Pilar 5: Interfaz de Comando Institucional (Next.js 15)
+Un dashboard de alto rendimiento diseñado para usuarios avanzados y Hedge Funds:
+- **Neural Performance Dashboard**: Visualización en tiempo real de exposiciones, balance en USDC de Kalshi y balance en SOL de la wallet.
+- **Cortex Live Insight**: Terminal de telemetría que muestra el "pensamiento" de la IA antes de cada trade.
 
 ---
 
-## 4. Viabilidad de Despliegue e Interoperabilidad Inminente
+## 3. Seguridad y Auditoría
 
-**Release Status:** `Candidate - Devnet Production Final`
-NeuralMarket V2 ha consolidado su meta inter-mercado entre finanzas automatizadas e inferencia cognitiva pesada y regulaciones. Las iteraciones actuales asocian las pruebas de caja blanca en Devnet para inyectar su funcionalidad en V2.1 Mainnet, listos para transformar USDC en posiciones tangibles dentro de protocolos DFlow Kalshi sin un milisegundo de intervención humana y con la robustez legal de una agencia de proveeduría SaaS Web3.
+NeuralMarket aplica el principio de **"Blackbox Audit"**:
+- Todas las ejecuciones de la IA generan un rastro de auditoría verificable.
+- El uso de Irys para almacenamiento descentralizado de logs asegura que las decisiones de los agentes sean inalterables y transparentes para los auditores regulatorios.
+
+---
+
+## 4. Viabilidad y Estatus de Despliegue
+
+**Status:** `Release Candidate - Institutional Grade`
+NeuralMarket ya no es un MVP. Es un protocolo listo para Mainnet que soluciona el problema de la liquidez para agentes autónomos en mercados reales, cumpliendo con todas las restricciones jurisdiccionales y ofreciendo un modelo de negocio claro para Kalshi y los desarrolladores mediante Builder Codes.
+ la robustez legal de una agencia de proveeduría SaaS Web3.
