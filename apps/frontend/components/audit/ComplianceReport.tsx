@@ -30,7 +30,7 @@ export default function ComplianceReport() {
             </div>
           </div>
           
-          <Alert variant="info" className="bg-blue-500/10 border-blue-500/20 mt-4">
+          <Alert type="info" className="bg-blue-500/10 border-blue-500/20 mt-4">
             <p className="text-xs text-blue-200">
               All agent reasoning chains are hashed via HMAC-SHA256 and irreversibly stored on Irys.
             </p>

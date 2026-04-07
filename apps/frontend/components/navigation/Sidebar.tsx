@@ -97,7 +97,7 @@ export default function Sidebar() {
               }`}
               title={isCollapsed ? item.label : undefined}
             >
-              <span className="text-xl flex-shrink-0">{item.icon}</span>
+              <span className="text-xl shrink-0">{item.icon}</span>
               {!isCollapsed && (
                 <div className="min-w-0">
                   <p className="font-medium text-sm truncate">{item.label}</p>
@@ -115,7 +115,7 @@ export default function Sidebar() {
           <>
             <p className="text-xs font-semibold text-slate-400 px-2">RESOURCES</p>
             <a
-              href="https://github.com/anthropics/neural-market"
+              href="https://github.com/DarkMagician256/NeuralMarket"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors text-sm"

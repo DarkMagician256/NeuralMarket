@@ -1,6 +1,6 @@
 'use client';
 
-import React, from 'react';
+import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/apps/frontend/components/ui/Card';
 import Input from '@/apps/frontend/components/ui/Input';
 import Button from '@/apps/frontend/components/ui/Button';

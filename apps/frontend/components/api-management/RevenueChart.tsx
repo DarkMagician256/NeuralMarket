@@ -18,7 +18,7 @@ export default function RevenueChart() {
            {[40, 60, 45, 80, 55, 90, 75, 110, 85, 120, 95, 140].map((height, i) => (
              <div 
                key={i} 
-               className="flex-1 bg-gradient-to-t from-green-500/20 to-green-400 rounded-t-sm"
+               className="flex-1 bg-linear-to-t from-green-500/20 to-green-400 rounded-t-sm"
                style={{ height: `${height}px` }}
              ></div>
            ))}

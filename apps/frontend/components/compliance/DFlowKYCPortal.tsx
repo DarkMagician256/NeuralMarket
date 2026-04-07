@@ -22,7 +22,7 @@ export default function DFlowKYCPortal() {
           </svg>
           <p className="text-slate-300 font-medium">Drop your DFlow Proof Token here</p>
           <p className="text-slate-500 text-xs mt-1">.json or ZKP binary format</p>
-          <Button variant="outline" className="mt-4 border-slate-600 text-slate-300">Browse Files</Button>
+          <Button variant="secondary" className="mt-4 border-slate-600 text-slate-300">Browse Files</Button>
         </div>
       </CardContent>
     </Card>
