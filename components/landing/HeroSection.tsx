@@ -11,7 +11,7 @@ export default function HeroSection() {
         <div className="relative min-h-screen flex flex-col justify-center pb-20 md:pb-40 items-center text-center overflow-hidden z-20 pt-20 md:pt-0">
 
             {/* Mesh Background Override for brighter load */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05050A]/50 to-[#05050A]" />
+            <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#05050A]/50 to-[#05050A]" />
 
             <motion.div
                 initial={{ y: 50, opacity: 0 }}
@@ -31,15 +31,16 @@ export default function HeroSection() {
 
                 {/* Main Headline - Responsive font sizes */}
                 <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter mb-3 md:mb-4 leading-[1.1]">
-                    AUTONOMOUS AGENTS<br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600 animate-pulse">
-                        FOR PREDICTION MARKETS.
+                    INSTITUTIONAL AI
+                    <br />
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-600 animate-pulse">
+                        PREDICTIONS. ON-CHAIN.
                     </span>
                 </h1>
 
                 {/* Subtitle - Responsive */}
                 <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-4 md:mb-6 max-w-2xl mx-auto font-mono px-2">
-                    Deploy neural swarms to analyze real-world events and execute trades autonomously.
+                    Multi-LLM Swarm (DeepSeek R1 → Claude 3.5 → OpenAI o1) + Non-Custodial NeuralVaults + Machine Payments Protocol (x402). Zero hallucinations. Full on-chain audit trail.
                 </p>
 
                 {/* Live Bot Status Indicator */}
@@ -82,8 +83,11 @@ export default function HeroSection() {
                             INITIALIZE TERMINAL <ArrowRight size={18} className="sm:w-5 sm:h-5" />
                         </button>
                     </Link>
-
-
+                    <Link href="/agents" className="w-full sm:w-auto">
+                        <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold text-sm sm:text-base md:text-lg rounded-full hover:scale-105 hover:bg-purple-500/30 transition-all flex items-center justify-center gap-2">
+                            🧠 SWARM COMMAND CENTER
+                        </button>
+                    </Link>
                 </div>
             </motion.div>
         </div>
