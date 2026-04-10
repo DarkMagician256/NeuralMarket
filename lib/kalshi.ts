@@ -177,18 +177,24 @@ class KalshiClient {
         const isDemo = (process.env.KALSHI_TRADING_ENV || 'demo') !== 'production';
 
         // Use demo credentials for trading when in demo mode
-        this.apiKeyId = isDemo
+        const rawApiKeyId = isDemo
             ? (process.env.KALSHI_DEMO_API_KEY_ID || process.env.KALSHI_API_KEY_ID || '')
             : (process.env.KALSHI_API_KEY_ID || '');
 
-        this.privateKey = isDemo
+        const rawPrivateKey = isDemo
             ? (process.env.KALSHI_DEMO_PRIVATE_KEY || process.env.KALSHI_PRIVATE_KEY || '')
             : (process.env.KALSHI_PRIVATE_KEY || '');
 
-        this.builderCode = process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2';
+        // Sanitize: remove whitespace and non-printable characters from IDs
+        this.apiKeyId = rawApiKeyId.trim().replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+        this.privateKey = rawPrivateKey.trim();
+        this.builderCode = (process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2').trim();
 
         if (process.env.NODE_ENV === 'development') {
-            console.log(`[Kalshi] Trading mode: ${isDemo ? 'DEMO (demo-api.kalshi.co)' : 'PRODUCTION'}`);
+            const baseUrl = isDemo ? KALSHI_DEMO_BASE : KALSHI_TRADING_BASE;
+            console.log(`[Kalshi] Trading mode: ${isDemo ? 'DEMO' : 'PRODUCTION'}`);
+            console.log(`[Kalshi] Connecting to: ${baseUrl}`);
+            console.log(`[Kalshi] Using API Key ID: ${this.apiKeyId.slice(0, 8)}...`);
         }
     }
 
@@ -200,22 +206,29 @@ class KalshiClient {
         if (!this.privateKey) return '';
 
         try {
-            const message = `${timestamp}${method}${path}`;
+            // For Kalshi v2, the path in the signature MUST include the full path after the hostname
+            // our 'path' variable passed to request() is just things like '/portfolio/orders'
+            const pathWithoutQuery = path.split('?')[0];
+            const fullPath = `/trade-api/v2${pathWithoutQuery}`;
+            const message = `${timestamp}${method}${fullPath}`;
 
-            // Kalshi requires RSA-PSS (NOT RSA-SHA256 / PKCS1v15)
-            // Key must be in PKCS#8 format for Node.js crypto
-            let keyPem = this.privateKey;
-
-            // Convert PKCS#1 (RSA PRIVATE KEY) to PKCS#8 (PRIVATE KEY) if needed
-            if (keyPem.includes('BEGIN RSA PRIVATE KEY')) {
-                // Already in PKCS#1 — Node.js can handle this with createPrivateKey
-                // but we need to specify the format explicitly for RSA-PSS
-            }
-
-            // Ensure proper PEM line breaks
+            // Ensure proper PEM format (PKCS#1 or PKCS#8)
+            // Remove any trailing spaces from EACH line individually
+            let keyPem = this.privateKey
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .join('\n');
+            
+            // If the key is in a single line (some environments do this), reconstruct it
             if (!keyPem.includes('\n') && keyPem.includes('-----BEGIN')) {
-                keyPem = keyPem.replace(/-----BEGIN ([\w\s]+)-----/, '-----BEGIN $1-----\n')
-                               .replace(/-----END ([\w\s]+)-----/, '\n-----END $1-----');
+                const header = keyPem.match(/-----BEGIN [\w\s]+-----/)?.[0] || '';
+                const footer = keyPem.match(/-----END [\w\s]+-----/)?.[0] || '';
+                const base64Content = keyPem.replace(header, '').replace(footer, '').replace(/\s/g, '');
+                
+                // Reconstruct with 64-char lines
+                const lines = base64Content.match(/.{1,64}/g) || [];
+                keyPem = `${header}\n${lines.join('\n')}\n${footer}`;
             }
 
             const privateKeyObj = crypto.createPrivateKey(keyPem);
@@ -223,8 +236,12 @@ class KalshiClient {
             const signature = crypto.sign('sha256', Buffer.from(message), {
                 key: privateKeyObj,
                 padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
-                saltLength: crypto.constants.RSA_PSS_SALTLEN_DIGEST,
+                saltLength: 32, // Explicitly 32 bytes for SHA-256
             });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log(`[Kalshi] Signed message: ${message}`);
+            }
 
             return signature.toString('base64');
         } catch (error) {
@@ -238,7 +255,11 @@ class KalshiClient {
      * Make authenticated request to Kalshi API
      */
     private async request(method: string, path: string, body?: any) {
-        const timestamp = Math.floor(Date.now() / 1000).toString();
+        const isDemo = (process.env.KALSHI_TRADING_ENV || 'demo') !== 'production';
+        const baseUrl = isDemo ? KALSHI_DEMO_BASE : KALSHI_API_BASE;
+        
+        // v2 requires milliseconds
+        const timestamp = Date.now().toString();
         const signature = this.sign(timestamp, method, path);
 
         const headers: Record<string, string> = {
@@ -246,12 +267,12 @@ class KalshiClient {
         };
 
         if (this.apiKeyId && signature) {
-            headers['KALSHI-ACCESS-KEY'] = this.apiKeyId;
-            headers['KALSHI-ACCESS-SIGNATURE'] = signature;
-            headers['KALSHI-ACCESS-TIMESTAMP'] = timestamp;
+            headers['kalshi-access-key'] = this.apiKeyId;
+            headers['kalshi-access-signature'] = signature;
+            headers['kalshi-access-timestamp'] = timestamp;
         }
 
-        const response = await fetchWithRetry(`${KALSHI_TRADING_BASE}${path}`, {
+        const response = await fetchWithRetry(`${baseUrl}${path}`, {
             method,
             headers,
             body: body ? JSON.stringify(body) : undefined,
@@ -346,34 +367,32 @@ class KalshiClient {
         type: 'limit' | 'market';
         count: number;
         limitPrice?: string; // Dollar string e.g. "0.45"
-    }): Promise<KalshiOrder | null> {
-        try {
-            const clientOrderId = `${this.builderCode}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    }): Promise<KalshiOrder> {
+        const clientOrderId = `${this.builderCode}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 
-            const body: Record<string, any> = {
-                ticker: params.ticker,
-                client_order_id: clientOrderId,
-                type: params.type,
-                action: 'buy',
-                side: params.side,
-                count: params.count,
-                referral_code: this.builderCode, // Revenue attribution
-            };
+        const body: Record<string, any> = {
+            ticker: params.ticker,
+            client_order_id: clientOrderId,
+            type: params.type,
+            action: 'buy',
+            side: params.side,
+            count: params.count,
+            referral_code: this.builderCode, // Revenue attribution
+        };
 
-            if (params.type === 'limit' && params.limitPrice) {
-                if (params.side === 'yes') {
-                    body['yes_price_dollars'] = params.limitPrice;
-                } else {
-                    body['no_price_dollars'] = params.limitPrice;
-                }
+        if (params.limitPrice) {
+            if (params.side === 'yes') {
+                body['yes_price_dollars'] = params.limitPrice;
+            } else {
+                body['no_price_dollars'] = params.limitPrice;
             }
-
-            const data = await this.request('POST', '/portfolio/orders', body);
-            return data.order || null;
-        } catch (error) {
-            console.error('[Kalshi] Error placing order:', error);
-            return null;
         }
+
+        const data = await this.request('POST', '/portfolio/orders', body);
+        if (!data.order) {
+            throw new Error('Kalshi response did not contain order info');
+        }
+        return data.order;
     }
 
     /**
@@ -458,9 +477,18 @@ class KalshiClient {
     async getBalance(): Promise<KalshiBalance | null> {
         try {
             const data = await this.request('GET', '/portfolio/balance');
+            
+            if (process.env.NODE_ENV === 'development') {
+                console.log('[Kalshi] Raw balance data:', data);
+            }
+
+            // April 2026 Update: Kalshi v2 simplified 'balance_cents' to just 'balance'
+            const cents = data.balance ?? data.balance_cents ?? 0;
+            const portCents = data.portfolio_value ?? data.payout_cents ?? 0;
+
             return {
-                balance: parseFloat(data.balance_dollars || '0'),
-                payout: parseFloat(data.potential_payout_dollars || '0'),
+                balance: cents / 100,
+                payout: portCents / 100,
             };
         } catch (error) {
             console.error('[Kalshi] Error fetching balance:', error);

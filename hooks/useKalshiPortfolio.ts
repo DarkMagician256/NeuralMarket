@@ -27,15 +27,23 @@ export const useKalshiPortfolio = () => {
         { refreshInterval: 10000 }
     );
 
+    const { data: history, isLoading: loadingHistory, mutate: mutateHistory } = useSWR(
+        connected ? ['kalshi-history', walletAddress] : null,
+        () => getKalshiOrders({ status: 'executed' }),
+        { refreshInterval: 30000 }
+    );
+
     return {
         positions: positions || [],
         balance: balance || { balance: 0, payout: 0 },
         orders: orders || [],
-        isLoading: loadingPositions || loadingBalance || loadingOrders,
+        history: history || [],
+        isLoading: loadingPositions || loadingBalance || loadingOrders || loadingHistory,
         refresh: () => {
             mutatePositions();
             mutateBalance();
             mutateOrders();
+            mutateHistory();
         }
     };
 };

@@ -50,10 +50,6 @@ export async function placeKalshiOrder(params: PlaceOrderParams): Promise<PlaceO
             limitPrice: params.limitPrice,
         });
 
-        if (!order) {
-            return { success: false, error: 'Order rejected by Kalshi — check server logs for details (may need funded account or API trading permissions)' };
-        }
-
         // Log for audit trail
         console.log(`[NeuralMarket] Order placed: ${order.order_id} | ${params.ticker} | ${params.side.toUpperCase()} | ${params.count} contracts | wallet: ${params.walletAddress}`);
 

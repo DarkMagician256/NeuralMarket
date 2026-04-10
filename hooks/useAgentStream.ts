@@ -26,7 +26,7 @@ export const useAgentStream = (initialThoughts: AgentThought[] = []) => {
                 .limit(5);
 
             if (error) {
-                console.error("❌ [HOOK] Error fetching history:", error);
+                console.error("❌ [HOOK] Error fetching history:", error.message || error);
             }
 
             if (data) {

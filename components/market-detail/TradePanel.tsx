@@ -67,7 +67,9 @@ export default function TradePanel({ ticker, yesPrice, noPrice }: {
                 side: outcome,
                 type: orderType,
                 count: Math.floor(count),
-                limitPrice: orderType === 'limit' ? limitPrice : undefined,
+                // For market orders, Kalshi v2 still needs a price limit protection.
+                // We use 0.99 as a "pseudo-market" price to ensure immediate fill.
+                limitPrice: orderType === 'limit' ? limitPrice : '0.99',
                 walletAddress: publicKey.toBase58(),
             });
 
@@ -107,13 +109,20 @@ export default function TradePanel({ ticker, yesPrice, noPrice }: {
 
                         <h3 className="text-xl font-black text-white mb-1 tracking-tight">ORDER PLACED</h3>
                         <p className="text-gray-400 text-sm mb-2">
-                            {placedOrder.side.toUpperCase()} — {placedOrder.count} contracts
+                            {placedOrder.side.toUpperCase()} — {placedOrder.count} {placedOrder.count === 1 ? 'contract' : 'contracts'}
                         </p>
 
                         <div className="bg-white/5 rounded-lg p-3 mb-4 w-full text-left space-y-1">
                             <div className="flex justify-between text-xs font-mono">
                                 <span className="text-gray-500">Order ID</span>
-                                <span className="text-cyan-400 truncate max-w-[160px]">{placedOrder.order_id.slice(0, 16)}...</span>
+                                <a 
+                                    href={process.env.NEXT_PUBLIC_KALSHI_ENV === 'production' ? 'https://kalshi.com/portfolio' : 'https://demo.kalshi.co/portfolio'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 transition-colors truncate max-w-[160px]"
+                                >
+                                    {placedOrder.order_id.slice(0, 16)}...
+                                </a>
                             </div>
                             <div className="flex justify-between text-xs font-mono">
                                 <span className="text-gray-500">Status</span>
