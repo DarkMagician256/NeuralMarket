@@ -82,7 +82,7 @@ export const multiLLMTradeIntentAction: Action = {
       const newsHeadlines = await fetchNewsHeadlines(marketTicker);
 
       // 4. Get user vault info (from contract state or local config)
-      const vaultId = runtime.character?.settings?.vaultId || "default_vault";
+      const vaultId = (runtime.character?.settings as any)?.vaultId || "default_vault";
       const vaultBalance = 10000; // TODO: Fetch from on-chain NeuralVault
       const vaultMaxPositionBps = 500; // 5%
       const vaultRiskLevel = 50;
@@ -116,7 +116,7 @@ export const multiLLMTradeIntentAction: Action = {
 
         // Create DFlowProof from environment or use mock for testing
         const userWallet = new PublicKey(
-          runtime.character?.settings?.solana_wallet || 'DFLOW1111111111111111111111111111111111111111'
+          (runtime.character?.settings as any)?.solana_wallet || 'DFLOW1111111111111111111111111111111111111111'
         );
 
         // Load DFlow proof from environment or use mock
@@ -181,7 +181,7 @@ export const multiLLMTradeIntentAction: Action = {
         return true; // Still return true (action executed, but rejected)
       }
     } catch (error) {
-      elizaLogger.error('[MULTI_LLM_TRADE] Error:', error);
+      elizaLogger.error(`[MULTI_LLM_TRADE] Error: ${error}`);
       return false;
     }
   }
@@ -265,7 +265,7 @@ function formatTradeIntentMessage(
 
     ✅ Status: ${dflowResponse ? 'Routed to DFlow' : 'Ready for DFlow routing'}
 
-    💰 Kalshi Builders Program: Builder Code "NEURAL" applied for rebate tracking
+    💰 Kalshi Builders Program: Builder Code "ORACULO_V2" applied for rebate tracking
   `;
 }
 
@@ -280,7 +280,7 @@ async function broadcastToTelemetry(
     `[TELEMETRY] Trade Intent: ${intent.market_ticker} ${intent.side} $${intent.amount_usdc} | DFlow Status: ${dflowResponse?.status || 'pending'}`
   );
   elizaLogger.info(
-    `[TELEMETRY] Builder Code: NEURAL | Risk Level: ${riskAssessment.risk_level}`
+    `[TELEMETRY] Builder Code: ORACULO_V2 | Risk Level: ${riskAssessment.risk_level}`
   );
 }
 

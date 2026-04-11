@@ -3,7 +3,6 @@
 import { Connection, PublicKey, Transaction, TransactionInstruction } from "@solana/web3.js";
 import { Program, Idl, AnchorProvider, BN } from "@coral-xyz/anchor";
 import idl from '../../lib/idl/neural_vault.json';
-import { supabase } from '@/lib/supabase';
 
 const PROGRAM_ID = new PublicKey("A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F");
 const DEFAULT_AGENT_ID = new BN(1001); // TITAN_ALPHA - our demo agent
@@ -139,6 +138,8 @@ function createPredictionHash(ticker: string, outcome: string): number[] {
     }
     return hash;
 }
+
+import { supabase } from '@/lib/supabase';
 
 // Record trade to Supabase for off-chain persistence
 export async function recordTrade(tradeData: {

@@ -117,7 +117,7 @@ TEST 3: TOP TRADERS CONTEXT
 
 ```typescript
 ✅ Builder Code Setup (line 16)
-   const BUILDER_CODE = 'NEURAL';
+   const BUILDER_CODE = 'ORACULO_V2';
 
 ✅ Intent Submission with Builder Code (lines 103-121)
    const dflowIntent: DFlowTradeIntent = {
@@ -130,23 +130,23 @@ TEST 3: TOP TRADERS CONTEXT
 ✅ Monetization Model Documentation (lines 200-208)
    export const MonetizationModel = {
      revenue_stream_4: 'Kalshi Builder Code Rebates',
-     builder_code: 'NEURAL',
+     builder_code: 'ORACULO_V2',
      description: 'Passive revenue from routing volume to Kalshi DFlow',
      program: 'Kalshi Builders Program ($1.99M Grant)',
      implementation: 'Included in every DFlow trade intent submission',
-     tracking: 'Visible in Kalshi dashboard under "Builder Code: NEURAL"',
+     tracking: 'Visible in Kalshi dashboard under "Builder Code: ORACULO_V2"',
    };
 ```
 
 **Revenue Calculation:**
 - Rebate Rate: 0.1% - 0.5% of traded volume
 - Conservative Estimate: $5K - $25K annually
-- Tracking: Kalshi dashboard under "Builder Code: NEURAL"
+- Tracking: Kalshi dashboard under "Builder Code: ORACULO_V2"
 
 **Test Status:** ✅ PASSED
 ```bash
 TEST 6: DFLOW INTENT ROUTING
-  ✓ Submits intent with builder_code: 'NEURAL'
+  ✓ Submits intent with builder_code: 'ORACULO_V2'
   ✓ Returns order_id and execution status
   ✓ Tracks filled price in BPS format
   ✓ Builder Code correctly included in every submission
@@ -483,7 +483,7 @@ npx tsx src/tests/kalshiIntegration.test.ts
   ```bash
   export ANTHROPIC_API_KEY=sk-ant-...
   export OPENAI_API_KEY=sk-...
-  export KALSHI_BUILDER_CODE=NEURAL
+  export KALSHI_BUILDER_CODE=ORACULO_V2
   export DFLOW_JURISDICTION=GLOBAL
   ```
 

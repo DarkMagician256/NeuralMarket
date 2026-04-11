@@ -247,7 +247,7 @@ async function testDFlowIntentRouting(): Promise<void> {
     audit_trail: 'audit_hash_12345',
   };
 
-  console.log(`Routing trade intent to DFlow with Builder Code "NEURAL"...`);
+  console.log(`Routing trade intent to DFlow with Builder Code "ORACULO_V2"...`);
   const response = await routeToDFlow(
     tradeIntent,
     TEST_USER_WALLET,

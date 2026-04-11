@@ -43,14 +43,14 @@ NeuralMarket V2 now implements all 4 critical Kalshi Builders Program requiremen
     ║ DFlow Routing ✨ NEW                           ║
     ║ ✅ NEW: Validate DFlow KYC Proof              ║
     ║ ✅ NEW: Enforce jurisdiction (no US)          ║
-    ║ ✅ NEW: Submit with Builder Code "NEURAL"     ║
+    ║ ✅ NEW: Submit with Builder Code "ORACULO_V2"     ║
     ║ → Order ID, execution status, fill price      ║
     ╚─────────┬──────────────────────────────────────╝
               │
               ▼
 ┌─────────────────────────────────────────────────────┐
 │ OUTPUT: Order submitted to Kalshi with:             │
-│ - Builder Code "NEURAL" (rebate tracking)           │
+│ - Builder Code "ORACULO_V2" (rebate tracking)           │
 │ - KYC proof validation (jurisdiction verified)      │
 │ - Fixed-point math (all prices in BPS)              │
 │ - Audit trail (immutable record)                    │
@@ -131,14 +131,15 @@ const dflowIntent = {
   market_ticker: 'FED_RATES_MAR26',
   side: 'YES',
   amount_usdc: 5000,
-  builder_code: 'NEURAL',  // 🔑 KEY FOR REBATES
+  builder_code: 'ORACULO_V2',  // 🔑 KEY FOR REBATES
   source: 'NEURAL_V2',
   // ... other fields
 };
 
-// Kalshi Builders Program tracks volume under "NEURAL"
+// Kalshi Builders Program tracks volume under "ORACULO_V2"
 // Generates rebates: 0.1% - 0.5% of traded volume
 // Conservative estimate: $5K - $25K annually
+// Tracking: Kalshi dashboard under "Builder Code: ORACULO_V2"
 ```
 
 ✅ **Status:** Implemented & Tested
@@ -238,7 +239,7 @@ const dflowResponse = await routeToDFlow(
 );
 
 // Response includes: order_id, status, filled_price_bps
-// Builder Code "NEURAL" automatically included
+// Builder Code "ORACULO_V2" automatically included
 ```
 
 ✅ **Integration Test:** PASSED
@@ -280,7 +281,7 @@ const dflowResponse = await routeToDFlow(
 **DFlow submission with KYC + Builder Code:**
 - `routeToDFlow()` — Main routing function
 - KYC validation gate (rejects US persons)
-- Builder Code "NEURAL" included in every submission
+- Builder Code "ORACULO_V2" included in every submission
 - Mock `submitToDFlowAPI()` for testing
 - `MonetizationModel` documentation
 - `KYCLegalBoundary` liability boundary statement
@@ -371,7 +372,7 @@ TEST 5: KALSHI-ENHANCED TIER 2
   ✓ Generates compliance summary
 
 TEST 6: DFLOW INTENT ROUTING
-  ✓ Submits with builder_code: 'NEURAL'
+  ✓ Submits with builder_code: 'ORACULO_V2'
   ✓ Returns order_id + status
   ✓ Tracks filled price in BPS
   ✓ Builder Code included
@@ -454,7 +455,7 @@ npx tsx src/tests/kalshiIntegration.test.ts
         market_ticker: 'FED_RATES_MAR26',
         side: 'YES',
         amount_cents: 500000,
-        builder_code: 'NEURAL',  // 🔑 Rebate tracking
+        builder_code: 'ORACULO_V2',  // 🔑 Rebate tracking
         source: 'NEURAL_V2',
         audit_trail_hash: 'hmac_...'
       }
@@ -559,7 +560,7 @@ audit_signature = HMAC_SHA256(JSON.stringify(auditData), AUDIT_SECRET)
 4. **Kalshi Builder Code Rebates** ✨ NEW
    - Rebate: 0.1% - 0.5% of traded volume
    - Conservative estimate: $5K - $25K annually
-   - Tracking: Kalshi dashboard under "Builder Code: NEURAL"
+   - Tracking: Kalshi dashboard under "Builder Code: ORACULO_V2"
 
 **Total Conservative Estimate:** $21K - $100K annually
 

@@ -13,7 +13,7 @@ import { validateDFlowProof, DFlowProof } from './kalshiIntegration';
 
 // ============ CONFIGURATION ============
 
-const BUILDER_CODE = 'NEURAL'; // Kalshi Builders Grant identifier
+const BUILDER_CODE = 'ORACULO_V2'; // Kalshi Builders Grant identifier
 const DFLOW_API_BASE = process.env.DFLOW_API_URL || 'https://api.dflow.io/v1';
 const DFLOW_PROOF_REQUIRED = true;
 
@@ -134,7 +134,7 @@ export async function routeToDFlow(
     elizaLogger.success(`[DFlow Router] Order submitted - ID: ${response.order_id}`);
     return response;
   } catch (error) {
-    elizaLogger.error('[DFlow Router] API submission error:', error);
+    elizaLogger.error(`[DFlow Router] API submission error: ${error}`);
     return {
       order_id: '',
       status: 'REJECTED',
@@ -204,7 +204,7 @@ export const MonetizationModel = {
     'Passive revenue from routing institutional trading volume to Kalshi DFlow',
   program: 'Kalshi Builders Program ($1.99M Grant)',
   implementation: 'Included in every DFlow trade intent submission',
-  tracking: 'Visible in Kalshi dashboard under "Builder Code: NEURAL"',
+  tracking: 'Visible in Kalshi dashboard under "Builder Code: ORACULO_V2"',
 };
 
 // ============ KYC LIABILITY BOUNDARY ============

@@ -301,13 +301,13 @@ npx tsx src/tests/kalshiIntegration.test.ts 2>&1 | grep "TEST 4"
 
 **Every DFlow submission includes:**
 ```typescript
-builder_code: 'NEURAL',  // Kalshi Builders Program
+builder_code: 'ORACULO_V2',  // Kalshi Builders Program
 ```
 
 **Revenue:**
 - Rebate rate: 0.1% - 0.5% of traded volume
 - Conservative estimate: $5K - $25K annually
-- Tracking: Kalshi dashboard under "Builder Code: NEURAL"
+- Tracking: Kalshi dashboard under "Builder Code: ORACULO_V2"
 
 ---
 
@@ -406,7 +406,7 @@ if (kyc.approved) {
 const response = await routeToDFlow(intent, userWallet, dflowProof);
 console.log(`Order ID: ${response.order_id}`);
 console.log(`Status: ${response.status}`);
-console.log(`Builder Code: NEURAL (rebate tracking)`);
+console.log(`Builder Code: ORACULO_V2 (rebate tracking)`);
 ```
 
 ---

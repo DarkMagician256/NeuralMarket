@@ -235,7 +235,7 @@ COMPLIANCE NOTES:
  *    - Implemented in Tier 2 (this file)
  *
  * ✅ 3. Builder Code Monetization
- *    - Builder Code: "NEURAL"
+ *    - Builder Code: "ORACULO_V2"
  *    - Included in every DFlow intent
  *    - Generates Kalshi rebates (passive revenue stream #4)
  *    - Implemented in dflowIntentRouter.ts

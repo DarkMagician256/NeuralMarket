@@ -271,7 +271,7 @@ const kyc = await validateDFlowProof(proof, userWallet);
 
 ### 6. Builder Code Monetization
 
-Every DFlow intent includes the Builder Code `"NEURAL"`:
+Every DFlow intent includes the Builder Code `"ORACULO_V2"`:
 
 ```typescript
 import { routeToDFlow } from './dflowIntentRouter';
@@ -285,7 +285,7 @@ const response = await routeToDFlow(
 // Internally, the intent is submitted with:
 {
   // ... other fields ...
-  builder_code: 'NEURAL',  // 🔑 Generates Kalshi rebates
+  builder_code: 'ORACULO_V2',  // 🔑 Generates Kalshi rebates
   source: 'NEURAL_V2',
 }
 ```
@@ -293,7 +293,7 @@ const response = await routeToDFlow(
 **Revenue Stream:** Kalshi Builders Program provides rebates on volume routed via Builder Code:
 - **Rebate Rate:** 0.1% - 0.5% of traded volume
 - **Conservative Estimate:** $5K - $25K annually
-- **Tracking:** Visible in Kalshi dashboard under "Builder Code: NEURAL"
+- **Tracking:** Visible in Kalshi dashboard under "Builder Code: ORACULO_V2"
 
 ---
 
@@ -462,7 +462,7 @@ All audit trails can be uploaded to Irys (Arweave) for immutable compliance reco
 export ANTHROPIC_API_KEY=sk-ant-...
 export OPENAI_API_KEY=sk-...
 export OLLAMA_SERVER_URL=http://localhost:11434
-export KALSHI_BUILDER_CODE=NEURAL
+export KALSHI_BUILDER_CODE=ORACULO_V2
 export DFLOW_JURISDICTION=GLOBAL
 export AUDIT_SECRET=your-secret
 ```
