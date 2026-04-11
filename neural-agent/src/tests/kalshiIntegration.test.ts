@@ -13,6 +13,7 @@
 import { orchestrateTradeIntent, KalshiMarketData } from '../services/multiLLMOrchestrator';
 import { routeToDFlow } from '../services/dflowIntentRouter';
 import { formatAndAuditViaKalshiTier2, KalshiBuildersCompliance } from '../services/kalshiEnhancedOrchestrator';
+import { AuditTrailService } from '../services/auditTrail';
 import {
   fetchKalshiMarketData,
   fetchTopTradersForMarket,
@@ -325,6 +326,33 @@ async function testFullPipeline(): Promise<void> {
   console.log('✅ Full Pipeline Orchestration: PASSED');
 }
 
+// ============ TEST 8: IMMUTABLE AUDIT TRAIL (IRYS) ============
+
+async function testAuditTrail(): Promise<void> {
+  console.log('\n🏛️ TEST 8: IMMUTABLE AUDIT TRAIL (Irys + Arweave)');
+  console.log('='.repeat(50));
+
+  const auditService = AuditTrailService.getInstance();
+  const reasoning = {
+    model: 'deepseek-r1',
+    sentiment: 85,
+    rationale: 'Massive institutional inflow detected in FED_RATES options.',
+  };
+
+  console.log('Anchoring reasoning to Irys...');
+  const receipt = await auditService.uploadReasoning(TEST_MARKET_TICKER, reasoning);
+
+  console.log(`✓ Receipt Received:`);
+  console.log(`  - TX ID: ${receipt.txId}`);
+  console.log(`  - Gateway: ${receipt.gateway_url}`);
+  console.log(`  - Reason Hash: ${receipt.reasoning_hash}`);
+
+  if (!receipt.txId.startsWith('irys_txn_')) throw new Error('Invalid Audit TX ID');
+  if (!receipt.gateway_url.includes('irys.xyz')) throw new Error('Invalid Gateway URL');
+
+  console.log('✅ Immutable Audit Trail: PASSED');
+}
+
 // ============ TEST RUNNER ============
 
 async function runAllTests(): Promise<void> {
@@ -342,6 +370,7 @@ async function runAllTests(): Promise<void> {
     await testKalshiEnhancedTier2();
     await testDFlowIntentRouting();
     await testFullPipeline();
+    await testAuditTrail();
 
     console.log('\n');
     console.log('╔═════════════════════════════════════════════════════════╗');

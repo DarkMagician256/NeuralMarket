@@ -19,6 +19,7 @@ import {
   SocialAPIContext,
   KalshiMarketSnapshot,
 } from './kalshiIntegration';
+import { AuditTrailService } from './auditTrail';
 import { PublicKey } from '@solana/web3.js';
 
 const anthropic = new Anthropic();
@@ -192,8 +193,15 @@ COMPLIANCE NOTES:
 
     const auditPayload = JSON.stringify(auditData);
 
+    // ========== STEP 5: ANCHOR TO ARWEAVE (IRYS AUDIT TRAIL) ==========
+    const auditService = AuditTrailService.getInstance();
+    const anchoringResult = await auditService.uploadReasoning(
+      market_ticker,
+      auditData
+    );
+
     elizaLogger.success(
-      `[Kalshi Tier 2] Intent formatted: ${parsed.side} @ ${parsed.confidence}% confidence`
+      `[Kalshi Tier 2] Intent anchored to Irys: ${anchoringResult.txId}`
     );
 
     return {
@@ -213,7 +221,7 @@ COMPLIANCE NOTES:
       },
     };
   } catch (error) {
-    elizaLogger.error('[Kalshi Tier 2] Claude error:', error);
+    elizaLogger.error(`[Kalshi Tier 2] Claude error: ${error}`);
     throw error;
   }
 }
@@ -239,8 +247,13 @@ COMPLIANCE NOTES:
  *    - Included in every DFlow intent
  *    - Generates Kalshi rebates (passive revenue stream #4)
  *    - Implemented in dflowIntentRouter.ts
- *
- * ✅ 4. DFlow KYC & Jurisdiction Abstraction
+ * 
+ * ✅ 4. Immutable Audit Trail (Irys)
+ *    - Anchors AI reasoning to Arweave
+ *    - Provides permanent, verifiable record for compliance
+ *    - Implemented in auditTrail.ts + this file
+ * 
+ * ✅ 5. DFlow KYC & Jurisdiction Abstraction
  *    - NeuralMarket does NOT perform KYC
  *    - Users must provide DFlow Proof (KYC certificate)
  *    - Liability on Institutional Vault Operator
