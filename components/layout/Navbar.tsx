@@ -69,7 +69,7 @@ export default function Navbar() {
                                 priority
                             />
                         </div>
-                        <span className="font-black text-base md:text-lg tracking-tighter group-hover:text-glow transition-all hidden sm:block">NEURAL</span>
+                        <span className="font-black text-base md:text-lg tracking-tighter group-hover:text-glow transition-all hidden sm:block">SENTINELY</span>
                     </Link>
 
                     {/* Desktop Navigation - Improved Spacing and Font Size */}

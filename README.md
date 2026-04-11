@@ -1,4 +1,4 @@
-# NeuralMarket V2: Institutional
+# Sentinely V2: Institutional
 
 **The First Hybrid Prediction Market Interface powered by Swarm AI and Machine Payments on Solana.**
 
@@ -11,12 +11,12 @@
 
 ## 🚀 WHAT IS NEURALMARKET V2?
 
-**NeuralMarket** has evolved into a **V2 Institutional Architecture**, strictly designed as a **Software-Only Provider**. Our ecosystem serves as an analytical and transactional bridge between the vast liquidity pool of Solana and regulated traditional prediction markets (like Kalshi), all powered by Artificial Intelligence and Machine Payments Protocol (MPP).
+**Sentinely** has evolved into a **V2 Institutional Architecture**, strictly designed as a **Software-Only Provider**. Our ecosystem serves as an analytical and transactional bridge between the vast liquidity pool of Solana and regulated traditional prediction markets (like Kalshi), all powered by Artificial Intelligence and Machine Payments Protocol (MPP).
 
 By combining **Multi-LLM Agents** orchestrated by ElizaOS, the execution speed of **Solana**, and the off-chain settlement capabilities of DFlow, we deliver a bank-grade "Bloomberg-style B2B Dashboard" for sovereign traders and developers looking to automate decision-making strategies.
 
 > [!WARNING]
-> **Regulatory Disclaimer:** NeuralMarket operates strictly as a B2B Software Provider. We do not custody funds, nor do we provide investment advice. The vaults are directly governed by the users via their Web3 private keys.
+> **Regulatory Disclaimer:** Sentinely operates strictly as a B2B Software Provider. We do not custody funds, nor do we provide investment advice. The vaults are directly governed by the users via their Web3 private keys.
 
 ---
 
@@ -50,8 +50,8 @@ Ensure you have `pnpm` (10.x+), `bun`, `rust`, `solana-cli`, and `anchor` instal
 
 ### 1. Full Clone
 ```bash
-git clone https://github.com/DarkMagician256/NeuralMarket.git
-cd NeuralMarket
+git clone https://github.com/DarkMagician256/Sentinely.git
+cd Sentinely
 pnpm install
 ```
 
@@ -88,4 +88,4 @@ bun run src/agent.ts
 
 ## 📜 LICENSE AND LEGAL DISCLAIMER
 
-This project uses open-source frameworks and licenses, designed to operate under a **Pure Software** perimeter. NeuralMarket does not take deposits under its main accounts (all transfers are governed by Web3 contracts under the autonomy of each end user). Check `SECURITY.md` for more on our comprehensive security workflow and exempt regulations.
+This project uses open-source frameworks and licenses, designed to operate under a **Pure Software** perimeter. Sentinely does not take deposits under its main accounts (all transfers are governed by Web3 contracts under the autonomy of each end user). Check `SECURITY.md` for more on our comprehensive security workflow and exempt regulations.

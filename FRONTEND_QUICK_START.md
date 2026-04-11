@@ -1,4 +1,4 @@
-# 🚀 NeuralMarket V2 Frontend: Quick Start
+# 🚀 Sentinely V2 Frontend: Quick Start
 
 **Setup Time:** 5 minutes  
 **Framework:** Next.js 16  

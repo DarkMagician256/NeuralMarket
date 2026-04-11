@@ -1,4 +1,4 @@
-# 🎨 NeuralMarket V2: Frontend Implementation Summary
+# 🎨 Sentinely V2: Frontend Implementation Summary
 
 **Status:** ✅ COMPLETE  
 **Framework:** Next.js 16 App Router  
@@ -171,7 +171,7 @@ lib/
 - Jurisdiction checks (no US persons)
 - Compliance status display
 - Legal disclaimers
-- "Delegate to Sentinel" unlock gate
+- "Delegate to Sentinely" unlock gate
 
 **Next Steps:**
 - Implement `DFlowKYCPortal.tsx` (integrates validateDFlowProof)
@@ -478,5 +478,5 @@ If you have questions about:
 
 **Status:** ✅ READY FOR DEVNET TESTING  
 **Last Updated:** April 6, 2026  
-**Maintainer:** @NeuralMarket  
+**Maintainer:** @Sentinely  
 **License:** MIT

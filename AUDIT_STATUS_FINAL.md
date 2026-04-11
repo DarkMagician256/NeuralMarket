@@ -1,4 +1,4 @@
-# Final Technical Audit Report: NeuralMarket
+# Final Technical Audit Report: Sentinely
 **Date:** January 22, 2026
 **Status:** RELEASE CANDIDATE (Grant Ready)
 

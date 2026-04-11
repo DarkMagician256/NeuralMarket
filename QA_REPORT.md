@@ -1,4 +1,4 @@
-# QA & Testing Report: NeuralMarket
+# QA & Testing Report: Sentinely
 
 ## 1. Testing Strategy
 

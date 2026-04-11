@@ -1,4 +1,4 @@
-# 🚀 NeuralMarket V2: QUICKSTART GUIDE
+# 🚀 Sentinely V2: QUICKSTART GUIDE
 
 **Setup tiempo:** ~5 minutos  
 **Requisitos:** Solana CLI, Node.js 20+, Rust  

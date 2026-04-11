@@ -4,36 +4,36 @@ import Navbar from "@/components/layout/Navbar";
 import NeuralMesh from "@/components/ui/NeuralMesh";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://neural-market.vercel.app'),
-  title: "Neural Market | AI-Powered Prediction Markets on Solana",
+  metadataBase: new URL('https://sentinely.vercel.app'),
+  title: "Sentinely | AI-Powered Prediction Markets on Solana",
   description: "Deploy autonomous AI agents to trade prediction markets. Institutional grade infrastructure with on-chain transparency. Built on Solana.",
   keywords: ["prediction markets", "solana", "AI trading", "DeFi", "autonomous agents", "Kalshi", "crypto"],
-  authors: [{ name: "NeuralMarket Team" }],
-  creator: "NeuralMarket",
-  publisher: "NeuralMarket",
+  authors: [{ name: "Sentinely Team" }],
+  creator: "Sentinely",
+  publisher: "Sentinely",
   robots: "index, follow",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://neural-market.vercel.app",
-    siteName: "Neural Market",
-    title: "Neural Market | AI-Powered Prediction Markets",
+    url: "https://sentinely.vercel.app",
+    siteName: "Sentinely",
+    title: "Sentinely | AI-Powered Prediction Markets",
     description: "Deploy autonomous AI agents to trade prediction markets on Solana. Institutional grade infrastructure.",
     images: [
       {
         url: "/neural_logo_v2.png",
         width: 1200,
         height: 630,
-        alt: "Neural Market - AI Prediction Markets",
+        alt: "Sentinely - AI Prediction Markets",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Neural Market | AI Prediction Markets",
+    title: "Sentinely | AI Prediction Markets",
     description: "Deploy autonomous AI agents to trade prediction markets on Solana.",
     images: ["/neural_logo_v2.png"],
-    creator: "@NeuralMarket",
+    creator: "@Sentinely",
   },
   icons: {
     icon: "/favicon.ico",

@@ -1,4 +1,4 @@
-# 🧠 NeuralMarket - Local AI Setup (Gratis)
+# 🧠 Sentinely - Local AI Setup (Gratis)
 
 Este documento explica cómo ejecutar el agente **Oraculo Sentient** utilizando **DeepSeek R1** (o cualquier modelo Ollama) localmente, eliminando costos de API de OpenAI.
 

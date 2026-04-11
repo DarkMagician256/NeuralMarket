@@ -117,7 +117,7 @@ npm whoami
 # Copy & paste this entire block into your terminal:
 
 # Navigate to SDK
-cd /home/vaiosvaios/NeuralMarket/packages/sdk-ts
+cd /home/vaiosvaios/Sentinely/packages/sdk-ts
 
 # Run everything
 npm install && \
@@ -186,7 +186,7 @@ npm install @neuralmarket/sdk
 Or import specific clients:
 
 ```typescript
-import { NeuralMarketSDK, VaultClient, OracleClient, ComplianceClient } from '@neuralmarket/sdk';
+import { SentinelySDK, VaultClient, OracleClient, ComplianceClient } from '@neuralmarket/sdk';
 
 // Or individual clients
 import VaultClient from '@neuralmarket/sdk/vault';

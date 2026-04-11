@@ -1,4 +1,4 @@
-# 🚀 NeuralMarket - Production Readiness Audit
+# 🚀 Sentinely - Production Readiness Audit
 ## Análisis Exhaustivo Archivo por Archivo
 
 **Fecha:** 2026-01-22  
@@ -280,10 +280,10 @@ import { PostgresDatabaseAdapter } from '@elizaos/adapter-postgres';
 ```typescript
 // app/layout.tsx - Agregar más metadata
 export const metadata: Metadata = {
-  title: "Neural Market | Prediction Layer",
+  title: "Sentinely | Prediction Layer",
   description: "Institutional Grade Prediction Markets on Solana",
   openGraph: {
-    title: "Neural Market",
+    title: "Sentinely",
     description: "AI-Powered Prediction Markets",
     images: ["/neural_logo_v2.png"],
   },

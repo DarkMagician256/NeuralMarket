@@ -1,5 +1,5 @@
 {
-    "name": "oraculo-sentient-agent",
+    "name": "sentinely-agent",
     "version": "1.0.0",
     "description": "Autonomous Prediction Market Agent for Solana (Kalshi + DFlow + ElizaOS)",
     "main": "dist/agent.js",

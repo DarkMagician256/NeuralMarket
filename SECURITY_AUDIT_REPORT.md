@@ -1,4 +1,4 @@
-# Security Audit Report - NeuralMarket
+# Security Audit Report - Sentinely
 **Date:** 2026-01-22T10:58:00.000Z
 **Standard:** Institutional-Grade (Jan 2026)
 **Scanner:** Custom SAST Engine + Manual Review

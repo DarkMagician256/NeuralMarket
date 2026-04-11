@@ -1,4 +1,4 @@
-# 🚀 NeuralMarket V2: RESUMEN DE DEPLOYMENT EXITOSO
+# 🚀 Sentinely V2: RESUMEN DE DEPLOYMENT EXITOSO
 
 **Fecha:** Abril 6, 2026  
 **Entorno:** Solana Devnet  
@@ -302,6 +302,6 @@ POST http://localhost:3002/api/predict (HMAC offline)
 
 ---
 
-**🎉 NeuralMarket V2 está LIVE en Devnet con arquitectura institucional de grado production.**
+**🎉 Sentinely V2 está LIVE en Devnet con arquitectura institucional de grado production.**
 
 *Construido con precisión. Auditable. Non-Custodial. Listo para escala.*

@@ -1,4 +1,4 @@
-# 🖥️ NeuralMarket V2: Institutional Frontend Architecture
+# 🖥️ Sentinely V2: Institutional Frontend Architecture
 
 **Status:** ✅ COMPLETE  
 **Tech Stack:** Next.js 16 (App Router), React 19, Tailwind CSS V4, Solana Wallet Adapter  
@@ -140,7 +140,7 @@ Re-fetch vault state (5s polling)
 
 **Non-Custodial Emphasis:**
 - Wallet required to sign all transactions
-- No private key custody by NeuralMarket
+- No private key custody by Sentinely
 - Every action requires explicit user approval
 
 ---
@@ -167,13 +167,13 @@ Check:
 - Jurisdiction != US?
 - Signature valid?
     ↓
-If approved: "Delegate to Sentinel" button unlocks
+If approved: "Delegate to Sentinely" button unlocks
 If rejected: Display jurisdiction block reason
 ```
 
 **Legal Boundary (CRITICAL):**
 ```
-"NeuralMarket is a Software-Only Provider. 
+"Sentinely is a Software-Only Provider. 
 We do NOT perform KYC. 
 The Institutional Vault Operator (you) assumes 
 FULL liability for jurisdiction compliance."
@@ -535,11 +535,11 @@ pnpm cypress:run
 ## 📞 Support
 
 - **Issues:** GitHub Issues
-- **Discord:** NeuralMarket Server
+- **Discord:** Sentinely Server
 - **Docs:** /docs folder
 
 ---
 
 **Status:** ✅ READY FOR DEVNET TESTING  
 **Last Updated:** April 6, 2026  
-**Maintainer:** @NeuralMarket
+**Maintainer:** @Sentinely

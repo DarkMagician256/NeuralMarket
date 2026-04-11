@@ -1,4 +1,4 @@
-# 🧪 NeuralMarket V2: Testing & Validation Guide
+# 🧪 Sentinely V2: Testing & Validation Guide
 
 ---
 

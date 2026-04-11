@@ -1,4 +1,4 @@
-# NeuralMarket V2: Institutional
+# Sentinely V2: Institutional
 
 **La Primera Interfaz Híbrida de Mercados de Predicción con Inteligencia de Enjambre (Swarm AI) y Pagos por Máquina en Solana.**
 
@@ -11,12 +11,12 @@
 
 ## 🚀 ¿QUÉ ES NEURALMARKET V2?
 
-**NeuralMarket** ha evolucionado hacia una **Arquitectura Institucional (V2)**, diseñada estrictamente como un proveedor de software (**Software-Only Provider**). Nuestro ecosistema sirve como puente analítico y de transacción on-chain entre el vasto ecosistema de liquidez de Solana y los mercados de predicción regulados tradicionales (como Kalshi) empoderado por Inteligencia Artificial y protocolos de pago por inferencia (MPP).
+**Sentinely** ha evolucionado hacia una **Arquitectura Institucional (V2)**, diseñada estrictamente como un proveedor de software (**Software-Only Provider**). Nuestro ecosistema sirve como puente analítico y de transacción on-chain entre el vasto ecosistema de liquidez de Solana y los mercados de predicción regulados tradicionales (como Kalshi) empoderado por Inteligencia Artificial y protocolos de pago por inferencia (MPP).
 
 Al combinar **Agentes de Múltiples Redes Neuronales (Multi-LLM)** orquestados por ElizaOS, la velocidad de **Solana**, y la liquidación off-chain de DFlow, entregamos un "Dashboard B2B tipo Bloomberg" de grado bancario para operadores comerciales y desarrolladores que buscan automatizar estrategias de toma de decisión.
 
 > [!WARNING]
-> **Descargo de Responsabilidad Regulatoria:** NeuralMarket opera estrictamente como un Proveedor de Software B2B. Ni custodiamos fondos ni brindamos asesoramiento de inversión. Las bóvedas (Vaults) son gobernadas directamente por los usuarios vía sus llaves privadas de Web3.
+> **Descargo de Responsabilidad Regulatoria:** Sentinely opera estrictamente como un Proveedor de Software B2B. Ni custodiamos fondos ni brindamos asesoramiento de inversión. Las bóvedas (Vaults) son gobernadas directamente por los usuarios vía sus llaves privadas de Web3.
 
 ---
 
@@ -50,8 +50,8 @@ Asegúrate de contar con `pnpm` (10.x+), `bun`, `rust`, `solana-cli` y `anchor` 
 
 ### 1. Clonación Completa
 ```bash
-git clone https://github.com/DarkMagician256/NeuralMarket.git
-cd NeuralMarket
+git clone https://github.com/DarkMagician256/Sentinely.git
+cd Sentinely
 pnpm install
 ```
 
@@ -88,4 +88,4 @@ bun run src/agent.ts
 
 ## 📜 LICENCIA Y EXENCIÓN LEGAL
 
-Este proyecto utiliza licencias y frameworks de código abierto, diseñado para operar bajo un perímetro de **Software Puro**. NeuralMarket no toma depósitos bajo sus cuentas principales (todas las transferencias son gobernadas por contratos Web3 bajo la autonomía de cada usuario final). Consulte `SECURITY.md` para conocer más sobre nuestro flujo de seguridad integral y regulaciones exentas.
+Este proyecto utiliza licencias y frameworks de código abierto, diseñado para operar bajo un perímetro de **Software Puro**. Sentinely no toma depósitos bajo sus cuentas principales (todas las transferencias son gobernadas por contratos Web3 bajo la autonomía de cada usuario final). Consulte `SECURITY.md` para conocer más sobre nuestro flujo de seguridad integral y regulaciones exentas.

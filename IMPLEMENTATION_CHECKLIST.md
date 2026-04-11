@@ -1,4 +1,4 @@
-# ✅ NeuralMarket V2: Implementation Checklist
+# ✅ Sentinely V2: Implementation Checklist
 
 **Status:** Core Infrastructure Complete  
 **Date:** April 2026  
@@ -211,7 +211,7 @@
 ## 📋 FILE STRUCTURE
 
 ```
-NeuralMarket/
+Sentinely/
 ├── anchor/
 │   ├── programs/neural_vault/
 │   │   ├── src/

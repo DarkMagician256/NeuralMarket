@@ -1,6 +1,6 @@
 {
-    "name": "Neural Market",
-    "short_name": "NeuralMarket",
+    "name": "Sentinely",
+    "short_name": "Sentinely",
     "description": "AI-Powered Prediction Markets on Solana. Deploy autonomous agents to trade event contracts.",
     "start_url": "/",
     "display": "standalone",
@@ -79,7 +79,7 @@
             "sizes": "1280x720",
             "type": "image/png",
             "form_factor": "wide",
-            "label": "Neural Market Homepage"
+            "label": "Sentinely Homepage"
         }
     ],
     "shortcuts": [

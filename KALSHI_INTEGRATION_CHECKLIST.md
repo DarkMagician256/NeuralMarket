@@ -200,7 +200,7 @@ TEST 6: DFLOW INTENT ROUTING
 ```
 
 **Critical Statement:**
-> "NeuralMarket is a Software-Only Provider. The platform does NOT perform KYC. Instead, we rely on DFlow's KYC infrastructure. The Institutional Vault Operator (end-user) bears FULL responsibility for obtaining a valid DFlow Proof and ensuring their jurisdiction is approved by Kalshi."
+> "Sentinely is a Software-Only Provider. The platform does NOT perform KYC. Instead, we rely on DFlow's KYC infrastructure. The Institutional Vault Operator (end-user) bears FULL responsibility for obtaining a valid DFlow Proof and ensuring their jurisdiction is approved by Kalshi."
 
 **Test Status:** ✅ PASSED
 ```bash
@@ -214,7 +214,7 @@ TEST 4: DFLOW KYC VALIDATION
 
 **Workflow:**
 1. End-user obtains DFlow KYC Proof from DFlow service
-2. NeuralMarket validates proof format + jurisdiction
+2. Sentinely validates proof format + jurisdiction
 3. If valid: Routes intent to DFlow
 4. If invalid: Returns rejection with jurisdiction info
 5. Liability remains on end-user (Vault Operator)

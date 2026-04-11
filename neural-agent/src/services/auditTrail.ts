@@ -85,7 +85,7 @@ export class AuditTrailService {
       // const receipt = await irys.upload(dataToUpload, { 
       //   tags: [
       //     { name: "Content-Type", value: "application/json" },
-      //     { name: "App-Name", value: "NeuralMarket" },
+      //     { name: "App-Name", value: "Sentinely" },
       //     { name: "Market-Ticker", value: market }
       //   ] 
       // });

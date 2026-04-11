@@ -9,7 +9,7 @@
 
 ## 📋 Overview
 
-NeuralMarket V2 has been fully integrated with the **Kalshi Builders Program**, implementing all 4 critical ecosystem requirements:
+Sentinely V2 has been fully integrated with the **Kalshi Builders Program**, implementing all 4 critical ecosystem requirements:
 
 1. **Fixed-Point Math & API Partitioning** — All prices in BPS (basis points 0-10000)
 2. **Social API Integration** — Top traders copy-trading context for "Market Alpha"
@@ -265,7 +265,7 @@ const kyc = await validateDFlowProof(proof, userWallet);
 }
 ```
 
-**Legal Boundary:** NeuralMarket is a **Software-Only Provider**. We do NOT perform KYC. Liability rests entirely on the **Institutional Vault Operator** (end-user).
+**Legal Boundary:** Sentinely is a **Software-Only Provider**. We do NOT perform KYC. Liability rests entirely on the **Institutional Vault Operator** (end-user).
 
 ---
 
@@ -431,7 +431,7 @@ export const KYCLegalBoundary = {
 };
 ```
 
-**Critical:** NeuralMarket DOES NOT perform KYC validation. We delegate to DFlow's KYC infrastructure. All liability for ensuring compliant users rests on the Institutional Vault Operator (you).
+**Critical:** Sentinely DOES NOT perform KYC validation. We delegate to DFlow's KYC infrastructure. All liability for ensuring compliant users rests on the Institutional Vault Operator (you).
 
 ### Audit Trail
 

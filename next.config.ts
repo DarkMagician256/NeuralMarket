@@ -19,9 +19,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  }
 };
 
 // Sentry configuration options
@@ -29,8 +26,8 @@ const sentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
-  org: process.env.SENTRY_ORG || "neuralmarket",
-  project: process.env.SENTRY_PROJECT || "neuralmarket",
+  org: process.env.SENTRY_ORG || "sentinely",
+  project: process.env.SENTRY_PROJECT || "sentinely",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,

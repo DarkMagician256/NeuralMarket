@@ -1,4 +1,4 @@
-# 📑 NeuralMarket V2: FILE INDEX
+# 📑 Sentinely V2: FILE INDEX
 
 Guía rápida para encontrar cualquier archivo en el proyecto.
 

@@ -2,7 +2,7 @@
 
 ## 🔐 Multisig Setup with Squads Protocol
 
-This document outlines the steps to secure the NeuralMarket smart contract's upgrade authority using a multisig wallet before Mainnet deployment.
+This document outlines the steps to secure the Sentinely smart contract's upgrade authority using a multisig wallet before Mainnet deployment.
 
 ### Prerequisites
 

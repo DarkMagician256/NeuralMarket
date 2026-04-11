@@ -9,7 +9,7 @@
 
 ## 📊 What Was Integrated
 
-NeuralMarket V2 now implements all 4 critical Kalshi Builders Program requirements:
+Sentinely V2 now implements all 4 critical Kalshi Builders Program requirements:
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -173,7 +173,7 @@ if (!kycCheck.approved) {
 **Legal Boundary (CRITICAL):**
 ```typescript
 export const KYCLegalBoundary = {
-  software_provider: true,                    // ← US: NeuralMarket
+  software_provider: true,                    // ← US: Sentinely
   performs_kyc: false,                        // ← DELEGATED TO DFLOW
   kyc_provider: 'DFlow (Kalshi)',
   liability_holder: 'Institutional Vault Operator (end-user)',  // ← YOUR LIABILITY

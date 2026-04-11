@@ -1,4 +1,4 @@
-# 🧠 NeuralMarket V2: Risk-Bound Institutional Architecture
+# 🧠 Sentinely V2: Risk-Bound Institutional Architecture
 
 **Status:** Devnet (Production-Ready Code)  
 **Date:** April 2026  
@@ -8,7 +8,7 @@
 
 ## 📋 EXECUTIVE SUMMARY
 
-NeuralMarket V2 is a **Multi-LLM orchestrated prediction market oracle** deployed on **Solana Devnet** with native support for **Devnet USDC** and **DFlow** integration. The architecture enforces strict Non-Custodial principles where:
+Sentinely V2 is a **Multi-LLM orchestrated prediction market oracle** deployed on **Solana Devnet** with native support for **Devnet USDC** and **DFlow** integration. The architecture enforces strict Non-Custodial principles where:
 
 - ✅ Users control their own vault private keys (via Phantom/Fireblocks)
 - ✅ AI proposes trades; Users approve via Phantom wallet signatures

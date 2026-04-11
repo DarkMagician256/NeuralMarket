@@ -1,4 +1,4 @@
-# 🚀 NeuralMarket V2 - Production Deployment Ready
+# 🚀 Sentinely V2 - Production Deployment Ready
 
 **Status**: ✅ **READY FOR DEPLOYMENT**
 
@@ -166,11 +166,11 @@ After `npm publish` succeeds, users can:
 npm install @neuralmarket/sdk
 
 # Then import
-const { NeuralMarketSDK, VaultClient } = require('@neuralmarket/sdk');
+const { SentinelySDK, VaultClient } = require('@neuralmarket/sdk');
 
 // Or TypeScript
-import { NeuralMarketSDK } from '@neuralmarket/sdk';
-const vault = new NeuralMarketSDK(config).vault;
+import { SentinelySDK } from '@neuralmarket/sdk';
+const vault = new SentinelySDK(config).vault;
 ```
 
 ---
@@ -226,7 +226,7 @@ const vault = new NeuralMarketSDK(config).vault;
                  │ useSDK() hook
                  │
     ┌────────────▼────────────────┐
-    │ NeuralMarketSDK (@npm)       │
+    │ SentinelySDK (@npm)       │
     │ - VaultClient                │
     │ - OracleClient               │
     │ - ComplianceClient           │
