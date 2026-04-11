@@ -16,6 +16,7 @@
         "@coral-xyz/anchor": "^0.32.1",
         "@elizaos/core": "^0.1.0",
         "@elizaos/plugin-solana": "^0.1.0",
+        "@irys/sdk": "^0.2.11",
         "@quantish/kalshi-sdk": "^1.0.5",
         "@solana/web3.js": "^1.91.0",
         "@supabase/supabase-js": "^2.90.1",
