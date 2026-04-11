@@ -123,7 +123,7 @@ export default function PerformanceChart() {
                     <Loader2 className="animate-spin text-cyan-500" size={32} />
                 </div>
             ) : (
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minHeight={200}>
                     <AreaChart data={chartData} margin={{ top: 50, right: 10, left: 10, bottom: 10 }}>
                         <defs>
                             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">

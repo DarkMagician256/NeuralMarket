@@ -3,6 +3,7 @@
 import { Connection, PublicKey, Transaction, TransactionInstruction } from "@solana/web3.js";
 import { Program, Idl, AnchorProvider, BN } from "@coral-xyz/anchor";
 import idl from '../../lib/idl/neural_vault.json';
+import { supabase } from '@/lib/supabase';
 
 const PROGRAM_ID = new PublicKey("A7FnyNVtkcRMEkhaBjgtKZ1Z7Mh4N9XLBN8AGneXNK2F");
 const DEFAULT_AGENT_ID = new BN(1001); // TITAN_ALPHA - our demo agent
@@ -148,18 +149,7 @@ export async function recordTrade(tradeData: {
     signature: string;
     agentId?: number;
 }) {
-    const { createClient } = await import('@supabase/supabase-js');
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    // Prefer service key for server-side operations
-    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
-
-    if (!supabaseUrl || !supabaseKey) {
-        logWarn("[Supabase] Not configured. Trade not persisted to DB.");
-        return { success: false, error: "Supabase not configured" };
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    log("[Supabase] Saving trade via shared client...");
 
     const { error } = await supabase.from('trades').insert({
         wallet_address: tradeData.user,

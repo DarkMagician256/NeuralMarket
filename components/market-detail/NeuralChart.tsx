@@ -21,7 +21,7 @@ export default function NeuralChart({ ticker }: { ticker: string }) {
                 </h3>
             </div>
 
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minHeight={300}>
                 <AreaChart data={data}>
                     <defs>
                         <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">

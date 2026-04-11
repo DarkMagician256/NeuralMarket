@@ -8,5 +8,9 @@ if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
     console.warn('⚠️ Supabase environment variables missing. Using fallback for build compatibility.');
 }
 
-// Client-side singleton
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// On server, use service key if available for full access
+// On client, only anon key is available
+const supabaseKey = (typeof window === 'undefined' ? process.env.SUPABASE_SERVICE_KEY : null) || supabaseAnonKey;
+
+// Client-side singleton (also used on server)
+export const supabase = createClient(supabaseUrl, supabaseKey);

@@ -185,9 +185,9 @@ class KalshiClient {
             ? (process.env.KALSHI_DEMO_PRIVATE_KEY || process.env.KALSHI_PRIVATE_KEY || '')
             : (process.env.KALSHI_PRIVATE_KEY || '');
 
-        // Sanitize: remove whitespace and non-printable characters from IDs
-        this.apiKeyId = rawApiKeyId.trim().replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-        this.privateKey = rawPrivateKey.trim();
+        // Sanitize: remove whitespace, quotes, and non-printable characters
+        this.apiKeyId = rawApiKeyId.trim().replace(/["']/g, "").replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+        this.privateKey = rawPrivateKey.trim().replace(/^["']|["']$/g, "");
         this.builderCode = (process.env.KALSHI_BUILDER_CODE || 'ORACULO_V2').trim();
 
         if (process.env.NODE_ENV === 'development') {
@@ -208,8 +208,9 @@ class KalshiClient {
         try {
             // For Kalshi v2, the path in the signature MUST include the full path after the hostname
             // our 'path' variable passed to request() is just things like '/portfolio/orders'
-            const pathWithoutQuery = path.split('?')[0];
-            const fullPath = `/trade-api/v2${pathWithoutQuery}`;
+            // For Kalshi v2, the path in the signature MUST include the full path after the hostname,
+            // INCLUDING all query parameters if present.
+            const fullPath = `/trade-api/v2${path}`;
             const message = `${timestamp}${method}${fullPath}`;
 
             // Ensure proper PEM format (PKCS#1 or PKCS#8)
