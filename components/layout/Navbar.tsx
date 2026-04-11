@@ -29,7 +29,6 @@ export default function Navbar() {
         { href: '/leaderboard', label: t('ai_agents'), hoverColor: 'hover:text-yellow-400' },
         { href: '/agents', label: t('swarm_ai'), hoverColor: 'hover:text-cyan-400' },
         { href: '/portfolio', label: t('portfolio'), hoverColor: 'hover:text-cyan-400' },
-        { href: '/governance', label: t('governance'), hoverColor: 'hover:text-purple-400' },
     ];
 
     const [scrolled, setScrolled] = React.useState(false);
@@ -207,12 +206,6 @@ export default function Navbar() {
                                     <Link href="/markets" className="block">
                                         <button className="w-full px-4 py-4 text-xs font-black tracking-widest bg-white text-black rounded-xl hover:bg-cyan-400 hover:scale-102 transition-all uppercase shadow-lg shadow-white/5">
                                             {t('launch_terminal')}
-                                        </button>
-                                    </Link>
-
-                                    <Link href="/governance" className="block">
-                                        <button className="w-full px-4 py-4 text-xs font-black tracking-widest bg-purple-500/10 border border-purple-500/20 text-purple-400 rounded-xl hover:bg-purple-500/20 transition-all uppercase">
-                                            {t('governance')}
                                         </button>
                                     </Link>
                                 </div>

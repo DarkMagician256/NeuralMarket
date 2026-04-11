@@ -70,7 +70,6 @@ Framework: Next.js 16.1.3 + React 19 + Tailwind CSS
 | `/leaderboard` | `app/leaderboard/page.tsx` | ✅ Rankings |
 | `/portfolio` | `app/portfolio/page.tsx` | ✅ Posiciones |
 | `/profile` | `app/profile/page.tsx` | ✅ Historial |
-| `/governance` | `app/governance/page.tsx` | ✅ Votaciones |
 | `/legal/*` | `app/legal/*/page.tsx` | ✅ Terms, Privacy, Risk |
 
 #### Componentes Clave
@@ -352,7 +351,6 @@ app/
 ├── leaderboard/page.tsx    ✅ Rankings
 ├── portfolio/page.tsx      ✅ Positions
 ├── profile/page.tsx        ✅ History
-├── governance/page.tsx     ✅ Voting
 └── legal/
     ├── terms/page.tsx      ✅ ToS
     ├── privacy/page.tsx    ✅ Privacy
